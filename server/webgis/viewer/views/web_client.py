@@ -27,8 +27,21 @@ class MapRedirectView(RedirectView):
     pattern_name = 'project_name'
 
     def get_redirect_url(self, *args, **kwargs):
-        return "/?PROJECT={user}/{project}/{project}".format(
+        user = models.GisquickUser.get_guest_user()
+        login(self.request, user)
+        return "/?PROJECT={project}/{project}/{project}".format(
             user="mapotip", project=kwargs["project_name"])
+
+class MapRedirectPrivateView(RedirectView):
+    permanent = False
+    query_string = True
+    pattern_name = 'project_name'
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = models.GisquickUser.get_guest_user()
+        login(self.request, user)
+        return "/?PROJECT={project}/{project}/{project}_private".format(
+            project=kwargs["project_name"])
 
 
 
