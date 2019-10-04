@@ -79,7 +79,7 @@ import MapAttributions from '@/components/MapAttributions.vue'
 import ToolsMenu from '@/components/ToolsMenu.vue'
 import MapControl from '@/components/MapControl.vue'
 import ScaleLine from '@/components/ol/ScaleLine.vue'
-import MapTools from '@/components/MapTools.vue'
+import MapTools from '@/components/MapToolsCustom.vue'
 import AppMenu from '@/components/AppMenu.vue'
 
 export default {
