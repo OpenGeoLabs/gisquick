@@ -70,7 +70,7 @@ import MapAttributions from './MapAttributions'
 import ToolsMenu from './ToolsMenu'
 import MapControl from './MapControl'
 import ScaleLine from './ol/ScaleLine'
-import MapTools from './MapTools'
+import MapTools from './MapToolsCustom'
 
 export default {
   name: 'Map',
