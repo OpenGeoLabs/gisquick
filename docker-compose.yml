@@ -1,0 +1,54 @@
+version: "2"
+services:
+  qgisserver:
+    restart: always
+    image: gisquick/qgis-server-qgis3:1.2.3
+    volumes:
+      - ./_data/publish:/publish/
+    ports:
+      - "9000:90"
+
+  django:
+    restart: always
+    image: gisquick/django:2.0.0
+    links:
+      - qgisserver
+    volumes:
+      - ./_data/data/:/var/www/gisquick/data/
+      - ./_data/media/:/var/www/gisquick/media/
+      - ./_data/static/:/var/www/gisquick/static/
+      - ./_data/publish:/publish/
+      - ./_data/logs:/var/logs/gisquick/
+      - ./settings_mapotip.py:/var/www/gisquick/djproject/settings_custom.py
+    environment:
+      - GUNICORN_WORKERS=9
+      - GUNICORN_ERRORLOG=/var/logs/gisquick/error.log
+      - GUNICORN_ACCESSLOG=/var/logs/gisquick/access.log
+      - DJANGO_DEBUG=False
+      - DJANGO_ACCOUNT_ACTIVATION_DAYS=3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  nginx:
+    restart: unless-stopped
+    image: gisquick/nginx
+    links:
+      - django
+    volumes_from:
+      - django:ro
+    volumes:
+      - ./_data/etc/letsencrypt/:/etc/letsencrypt/
+      - ./_data/var/www/certbot/:/var/www/certbot/
+      - ./_data/static/:/var/www/gisquick/static/
+    ports:
+      - "443:443"
+    environment:
+      - NGINX_HOST=portal.mapotip.cz
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
