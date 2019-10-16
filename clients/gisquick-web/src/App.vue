@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <map-app v-if="project"/>
+    <map-app v-if="projectStatus === 200"/>
 
     <!-- Main menu -->
     <v-menu
@@ -13,18 +13,18 @@
 
       <v-list>
         <v-list-tile v-if="user && !user.is_guest" @click="logout">
-          <v-list-tile-title>
+          <v-list-tile-title key="logout">
             <translate>Logout</translate>
           </v-list-tile-title>
         </v-list-tile>
         <v-list-tile v-else @click="showLogin = true">
-          <v-list-tile-title>
+          <v-list-tile-title key="login">
             <translate>Login</translate>
           </v-list-tile-title>
         </v-list-tile>
 
         <v-list-tile v-if="user && !user.is_guest" href="/user/">
-          <v-list-tile-title>
+          <v-list-tile-title key="profile">
             <translate>My profile</translate>
           </v-list-tile-title>
         </v-list-tile>
@@ -47,8 +47,9 @@
     </v-menu>
 
     <login-dialog
-      v-if="!project || showLogin"
-      :login-required="!project"
+      :value="showLogin"
+      :login-required="projectStatus !== 200"
+      :permission-denied="projectStatus === 403"
       :password-reset="app.reset_password_url"
       @login="onLogin"
       @close="showLogin = false"
@@ -75,7 +76,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['app', 'user', 'project'])
+    ...mapState(['app', 'user', 'project']),
+    projectStatus () {
+      return this.project && this.project.config.status
+    }
   },
   mounted () {
     if (process.env.NODE_ENV === 'development' && !location.search) {
@@ -91,6 +95,16 @@ export default {
         })
     }
   },
+  watch: {
+    project: {
+      immediate: true,
+      handler (project) {
+        if (!project || project.config.status !== 200) {
+          this.showLogin = true
+        }
+      }
+    }
+  },
   methods: {
     loadProject () {
       let project = new URLSearchParams(location.search).get('PROJECT')
@@ -98,19 +112,23 @@ export default {
         this.$http.project(project)
           .then(resp => {
             this.$store.commit('project', resp.data)
+            document.title = resp.data.root_title
           })
           .catch(err => {
             console.error(err)
-            this.showLogin = true
+            const project = err && err.response && err.response.data
+            if (project) {
+              this.$store.commit('project', project)
+            }
           })
       }
     },
     logout () {
-      this.$http.logout()
-        .then(() => location.reload())
+      this.$http.logout().then(() => location.reload())
     },
     onLogin (user) {
       this.$store.commit('user', user)
+      this.showLogin = false
       this.loadProject()
     },
     openHelp () {
