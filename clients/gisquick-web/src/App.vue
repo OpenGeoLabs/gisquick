@@ -23,12 +23,6 @@
           </v-list-tile-title>
         </v-list-tile>
 
-        <v-list-tile v-if="user && !user.is_guest" href="/user/">
-          <v-list-tile-title key="profile">
-            <translate>My profile</translate>
-          </v-list-tile-title>
-        </v-list-tile>
-
         <v-list-tile @click="toggleFullscreen">
           <v-list-tile-title>
             <translate>Full screen</translate>
