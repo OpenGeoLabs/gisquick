@@ -23,11 +23,11 @@
           </v-list-tile-title>
         </v-list-tile>
 
-        <v-list-tile v-if="user && !user.is_guest" href="/user/">
+        <!-- <v-list-tile v-if="user && !user.is_guest" href="/user/">
           <v-list-tile-title key="profile">
             <translate>My profile</translate>
           </v-list-tile-title>
-        </v-list-tile>
+        </v-list-tile> -->
 
         <v-list-tile @click="toggleFullscreen">
           <v-list-tile-title>
@@ -87,7 +87,7 @@ export default {
     this.loadProject()
   },
   mounted () {
-    if (process.env.NODE_ENV === 'development' && !location.search) {
+    if (process.env.NODE_ENV === 'development' && !location.search && !location.pathname) {
       // Show list of user projects
       this.$http.get('/api/projects/')
         .then((resp) => {
@@ -112,7 +112,19 @@ export default {
   },
   methods: {
     loadProject () {
-      let project = new URLSearchParams(location.search).get('PROJECT')
+      let project = null
+      const pathParts = location.pathname.split('/').filter(v => v !== '')
+      if (pathParts.length === 2) {
+        const [type, name ] = pathParts
+        if (type === 'obec') {
+          project = `${name}/${name}/${name}`
+        } else if (type === 'private') {
+          project = `${name}/${name}/${name}_private`
+        }
+      }
+      if (!project) {
+        project = new URLSearchParams(location.search).get('PROJECT')
+      }
       if (project) {
         this.$http.project(project)
           .then(data => {
