@@ -3,3 +3,4 @@ django-cors-headers==3.2.0
 Pillow==6.2.1
 OWSLib==0.14.0
 lxml
+zeep
