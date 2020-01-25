@@ -26,7 +26,7 @@ def lv(request, typ, vypis, lv_id):
         raise Http404
 
     username, project_dir = project.split(os.path.sep)[:2]
-    if not request.user.is_authenticated() or (not request.user.is_superuser and request.user.username != username):
+    if not request.user.is_authenticated or (not request.user.is_superuser and request.user.username != username):
         raise PermissionDenied
 
     project_dir = os.path.join(settings.GISQUICK_PROJECT_ROOT, username, project_dir)
