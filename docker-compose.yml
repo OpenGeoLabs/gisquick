@@ -2,7 +2,7 @@ version: "2"
 services:
   qgisserver:
     restart: always
-    image: gisquick/qgis-server-qgis3:1.2.3
+    image: gisquick/qgis-server:3.4
     volumes:
       - ./_data/publish:/publish/
     ports:
@@ -10,7 +10,7 @@ services:
 
   django:
     restart: always
-    image: gisquick/django:2.0.0
+    image: gisquick/django:2.0.3
     links:
       - qgisserver
     volumes:
@@ -20,12 +20,31 @@ services:
       - ./_data/publish:/publish/
       - ./_data/logs:/var/logs/gisquick/
       - ./settings_mapotip.py:/var/www/gisquick/djproject/settings_custom.py
+      - ./urls_custom.py:/var/www/gisquick/djproject/urls_custom.py
     environment:
       - GUNICORN_WORKERS=9
       - GUNICORN_ERRORLOG=/var/logs/gisquick/error.log
       - GUNICORN_ACCESSLOG=/var/logs/gisquick/access.log
       - DJANGO_DEBUG=False
-      - DJANGO_ACCOUNT_ACTIVATION_DAYS=3
+      - DJANGO_LANGUAGE_CODE=cs
+      - LANG=C.UTF-8
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  go:
+    restart: always
+    image: gisquick/settings
+    volumes:
+      - ./_data/publish:/publish/
+    ports:
+      - "8001:8001"
+    environment:
+      - PROJECTS_DIR=/publish
+      - SERVER_URL=http://django:8000
+      - MAX_FILE_UPLOAD=1024M
     logging:
       driver: json-file
       options:
@@ -40,10 +59,12 @@ services:
     volumes_from:
       - django:ro
     volumes:
-      - ./_data/etc/letsencrypt/:/etc/letsencrypt/
-      - ./_data/var/www/certbot/:/var/www/certbot/
+      - /etc/letsencrypt/:/etc/letsencrypt/
+      - /var/www/certbot/:/var/www/certbot/
       - ./_data/static/:/var/www/gisquick/static/
+      - ./gisquick.template:/etc/nginx/conf.d/gisquick.template
     ports:
+      - "80:80"
       - "443:443"
     environment:
       - NGINX_HOST=portal.mapotip.cz
