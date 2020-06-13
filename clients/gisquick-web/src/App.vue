@@ -53,7 +53,19 @@ export default {
   },
   methods: {
     loadProject () {
-      let project = new URLSearchParams(location.search).get('PROJECT')
+      let project = null
+      const pathParts = location.pathname.split('/').filter(v => v !== '')
+      if (pathParts.length === 2) {
+        const [type, name ] = pathParts
+        if (type === 'obec') {
+          project = `${name}/${name}/${name}`
+        } else if (type === 'private') {
+          project = `${name}/${name}/${name}_private`
+        }
+      }
+      if (!project) {
+        project = new URLSearchParams(location.search).get('PROJECT')
+      }
       if (project) {
         this.$http.project(project)
           .then(data => {
