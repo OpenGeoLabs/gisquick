@@ -210,7 +210,7 @@ export default {
       const identifyGeom = Polygon.fromCircle(new Circle(coords, radius), 6)
       const layers = this.identificationLayer ? [this.identificationLayer] : this.queryableLayers.map(l => l.name)
       const query = getFeaturesQuery(layers, identifyGeom)
-      const features = await this.getFeatures(query, { 'MAXFEATURES': 10 })
+      const features = await this.getFeatures(query, { 'MAXFEATURES': 100 })
       const categorizedFeatures = this.categorize(features)
       const items = this.tableData(categorizedFeatures)
       this.layersFeatures = items
