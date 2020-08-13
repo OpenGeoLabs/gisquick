@@ -60,7 +60,7 @@ export default {
       const height = parseInt(window.innerWidth * 0.85)
       const left = parseInt((window.innerWidth - width) / 2)
       const params = `left=${left},width=${width},height=${height},resizable=yes,menubar=no,scrollbars=yes,status=no`
-      const link = 'http://gisquick.readthedocs.io/en/latest/user-manual/user-interface.html'
+      const link = 'https://www.mapotip.cz/napoveda.html'
       // const link = this.project.gislab_documentation
       window.open(link, 'Gisquick Documentation', params)
     }
