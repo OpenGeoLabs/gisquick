@@ -46,7 +46,7 @@
           >
             <icon name="circle-i-outline"/>
           </td>
-          <td v-for="attr in layer.attributes" :key="attr.name">
+          <td v-for="attr in attributes" :key="attr.name">
             {{ item.get(attr.name) }}
           </td>
         </tr>
@@ -170,6 +170,7 @@
 </template>
 
 <script>
+import keyBy from 'lodash/keyBy'
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import Polygon from 'ol/geom/polygon'
 import GeoJSON from 'ol/format/geojson'
@@ -179,7 +180,7 @@ import FeaturesViewer from '@/components/ol/FeaturesViewer.vue'
 import NewFeatureEditor from '@/components/feature-editor/NewFeatureEditor.vue'
 import InfoPanel from '@/components/InfoPanel.vue'
 import { simpleStyle } from '@/map/styles'
-import { getFeaturesQuery } from '@/map/featureinfo'
+import { layerFeaturesQuery } from '@/map/featureinfo'
 import { ShallowArray } from '@/utils'
 
 function iconHeader (key) {
@@ -216,9 +217,16 @@ export default {
     ...mapState(['project']),
     ...mapState('attributeTable', ['page', 'limit', 'visibleAreaFilter', 'layer', 'features']),
     ...mapGetters('attributeTable', ['layerFilters']),
+    attributes () {
+      if (this.layer.attr_table_fields) {
+        const attrsMap = keyBy(this.layer.attributes, 'name')
+        return this.layer.attr_table_fields.map(name => attrsMap[name])
+      }
+      return this.layer.attributes
+    },
     headers () {
-      if (this.layer.attributes) {
-        const columns = this.layer.attributes.map(attr => ({
+      if (this.attributes) {
+        const columns = this.attributes.map(attr => ({
           text: attr.alias || attr.name,
           type: attr.type.toLowerCase(),
           value: attr.name,
@@ -281,6 +289,7 @@ export default {
   methods: {
     ...mapMutations('attributeTable', ['clearFilter', 'updateFilterComparator', 'updateFilterValue', 'updateFilterValidity']),
     async fetchFeatures (page = 1, lastQuery = false) {
+      const mapProjection = this.$map.getView().getProjection().getCode()
       const filters = Object.entries(this.layerFilters)
         // .filter(([name, filter]) => filter.comparator && filter.value !== null)
         .filter(([name, filter]) => filter.comparator && filter.valid)
@@ -296,9 +305,9 @@ export default {
       } else {
         let geom = null
         if (this.visibleAreaFilter) {
-          geom = Polygon.fromExtent(this.$map.ext.visibleAreaExtent())
+          geom = Polygon.fromExtent(this.$map.ext.visibleAreaExtent()).transform(mapProjection, this.layer.projection)
         }
-        query = getFeaturesQuery([this.layer.name], geom, filters)
+        query = layerFeaturesQuery(this.layer, geom, filters)
       }
 
       const baseParams = {
@@ -332,10 +341,9 @@ export default {
       }
 
       const parser = new GeoJSON()
-      const featureProjection = this.$map.getView().getProjection().getCode()
 
-      // const features = ShallowArray(parser.readFeatures(geojson, { featureProjection }))
-      const features = Object.freeze(parser.readFeatures(geojson, { featureProjection }))
+      // const features = ShallowArray(parser.readFeatures(geojson, { featureProjection: mapProjection }))
+      const features = Object.freeze(parser.readFeatures(geojson, { featureProjection: mapProjection }))
 
       if (this.selectedFeature && !features.find(f => f.getId() === this.selectedFeature.getId())) {
         this.selectedFeatureIndex = 0
