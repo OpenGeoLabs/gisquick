@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <intro-page v-if="!projectPath"/>
+    <!-- <intro-page v-if="!projectPath"/> -->
     <map-app v-if="projectStatus === 200"/>
     <login-dialog
       :value="showLogin"
@@ -16,7 +16,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import IntroPage from '@/IntroPage.vue'
+// import IntroPage from '@/IntroPage.vue'
 import ProjectNotFound from '@/ProjectNotFound.vue'
 import DesktopMap from '@/components/Map.vue'
 import MobileMap from '@/components/MobileMap.vue'
@@ -26,7 +26,7 @@ export default {
   components: {
     ProjectNotFound,
     LoginDialog,
-    IntroPage,
+    // IntroPage,
     MapApp: async () => window.env.mobile ? MobileMap : DesktopMap
   },
   computed: {
@@ -52,16 +52,13 @@ export default {
     }
   },
   methods: {
-    loadProject () {
+    async loadProject () {
       let project = null
       const pathParts = location.pathname.split('/').filter(v => v !== '')
-      if (pathParts.length === 2) {
-        const [type, name ] = pathParts
-        if (type === 'obec') {
-          project = `${name}/${name}/${name}`
-        } else if (type === 'private') {
-          project = `${name}/${name}/${name}_private`
-        }
+      const name = pathParts[pathParts.length - 1]
+      if (name) {
+        const { data } = await this.$http.get('/media/portal_path.json')
+        project = data[name]
       }
       if (!project) {
         project = new URLSearchParams(location.search).get('PROJECT')
