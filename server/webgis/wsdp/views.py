@@ -20,18 +20,13 @@ wsdl_url = 'https://katastr.cuzk.cz:443/ws/wsdp/2.8/sestavy?wsdl'
 # print(client.service.seznamUcelu())
 
 
-def lv(request, typ, vypis, lv_id):
-    project = request.GET.get("project")
-    if not project:
-        raise Http404
-
-    username, project_dir = project.split(os.path.sep)[:2]
-    if not request.user.is_authenticated or (not request.user.is_superuser and request.user.username != username):
+def lv(request, typ, vypis, lv_id, obec):
+    if not request.user.is_authenticated:
         raise PermissionDenied
 
-    project_dir = os.path.join(settings.GISQUICK_PROJECT_ROOT, username, project_dir)
+    config_file = os.path.join(settings.GISQUICK_WSDP_ROOT, '%s.json' % obec)
     try:
-        with open(os.path.join(project_dir, '.wsdp.json')) as f:
+        with open(config_file) as f:
             credentials = json.load(f)
             login = credentials["login"]
             password = credentials["password"]
