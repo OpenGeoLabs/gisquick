@@ -13,7 +13,7 @@ from zeep.wsse.username import UsernameToken
 
 
 logger = logging.getLogger('django.wsdl')
-wsdl_url = 'https://katastr.cuzk.cz:443/ws/wsdp/2.8/sestavy?wsdl'
+wsdl_url = 'https://katastr.cuzk.cz/dokumentace/ws28/wsdp/sestavy_v28.wsdl'
 
 
 # client = zeep.Client("https://katastr.cuzk.cz:443/ws/wsdp/2.8/ciselnik?wsdl", wsse=UsernameToken(login, password))
