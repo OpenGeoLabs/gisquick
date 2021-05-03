@@ -89,6 +89,7 @@
                 :layer="layer"
                 :expanded="expandedItems.overlay"
                 :depth="1"
+                :attribute-table-disabled="attributeTableDisabled"
                 @expanded="id => expandItem('overlay', id)"
               />
             </scroll-area>
@@ -118,10 +119,13 @@ import BaseLayerOpacity from './BaseLayerOpacity.vue'
 export default {
   name: 'content-panel',
   components: { MapLegend, OverlaysOpacity, BaseLayerOpacity },
+  props: {
+    attributeTableDisabled: Boolean
+  },
   data () {
     return {
       activeMainTab: 'overlays',
-      activeSecondaryTab: 'layers',
+      activeSecondaryTab: '',
       expandedItems: {
         baselayer: '',
         overlay: ''
@@ -147,6 +151,9 @@ export default {
     activeTopicIndex () {
       return this.topics.indexOf(this.activeTopic)
     }
+  },
+  created () {
+    this.activeSecondaryTab = this.topics?.length ? 'topics' : 'layers'
   },
   methods: {
     setBaseLayer (baseLayer) {

@@ -70,7 +70,7 @@ const AttributeFilters = {
   'IS NOT NULL': IsNotNullFilter
 }
 
-function _layerFeaturesQuery (layer, geom, filters) {
+function _layerFeaturesQuery (layer, geom, filters, propertyNames = []) {
   const ogcFilters = []
   if (geom) {
     const gmlGeom = new GML3({
@@ -95,12 +95,13 @@ function _layerFeaturesQuery (layer, geom, filters) {
   }
   return [
     `<gml:Query gml:typeName="${layer.name.replace(/ /g, '_')}">`,
+    propertyNames.map(n => `<ogc:PropertyName>${n}</ogc:PropertyName>`).join('\n'),
     rootFilter,
     '</gml:Query>'
   ].join('\n')
 }
 
-function getFeatureQuery (...queries) {
+export function getFeatureQuery (...queries) {
   // const d = new DOMParser().parseFromString('<xml>' + query + '</xml>', 'text/xml')
   // console.log(d.documentElement)
   // console.log(new XMLSerializer().serializeToString(d.documentElement))
@@ -119,8 +120,8 @@ function getFeatureQuery (...queries) {
   ].join('\n')
 }
 
-export function layerFeaturesQuery (layer, geom, filters) {
-  return getFeatureQuery(_layerFeaturesQuery(layer, geom, filters))
+export function layerFeaturesQuery (layer, geom, filters, propertyNames = []) {
+  return getFeatureQuery(_layerFeaturesQuery(layer, geom, filters, propertyNames))
 }
 
 export function layersFeaturesQuery (layers, geomFilter) {
