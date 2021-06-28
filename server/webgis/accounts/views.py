@@ -71,7 +71,7 @@ def create_account(request):
         # TODO: better error handling
        return JsonResponse({"status", 400}, status=400)
 
-    subject = "Gisquick Account"
+    subject = "Portál Mapotip"
     template_context = _email_context(request, user)
     template_context["portal_url"] = form.cleaned_data["url"]
     message = render_to_string("accounts/activation_email.txt", template_context)
@@ -126,7 +126,7 @@ def request_password_reset(request):
     if not users:
         return JsonResponse({"email": "No active account is associated with given email address."}, status=400)
 
-    subject = "Password Reset"
+    subject = "Zapomenuté heslo"
     for user in users:
         template_context = _email_context(request, user)
         message = render_to_string("accounts/reset_password_email.txt", template_context)
