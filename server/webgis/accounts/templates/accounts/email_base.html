@@ -6,6 +6,7 @@
   <style>
     p {
       font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    margin: 5px;
     }
     .md-button {
       display: inline-block;
@@ -27,37 +28,48 @@
       box-shadow: 0 1px 5px rgba(0,0,0,.2),0 2px 2px rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
     }
     .md-button.primary {
-      background-color: #2196f3;
+      background-color: #3d5aed;
       color: rgba(255, 255, 255, .87);
     }
     .md-button.primary:hover {
-      background-color: #1e88e5;
+      background-color: #1A35C1;
     }
     a.link, a.link :visited {
-      color: #2196F3;
+      color: #3d5aed;
       text-decoration: none;
     }
     a:hover, a.link:hover {
-      color: #1565C0;
+      color: #1A35C1;
     }
     .footer {
-      color: #777;
+      color: #4E4E4E;
     }
+  .bold {
+    font-weight: bold;
+  }
   </style>
 </head>
 <body>
 
 {% block greeting %}
-<p>Hi {{ user.get_full_name }},</p>
+{% load static %}
+<p>Dobrý den,</p>
+<br />
 {% endblock %}
 
 {% block content %}
 {% endblock %}
 
 {% block footer %}
-  <br />
-  <br />
-  <p class="footer">Best Regards, Gisquick Team</p>
+<br />
+<p>S pozdravem</p>
+<br />
+<div class="footer">
+  <p class="bold">Mapotip služba</p>
+  <p>Mapotip Česko s.r.o.</p>
+  <img width="100" src="{{ site_url }}{% static 'accounts/logo.png' %}" alt="logo.png">
+  <p><a class="link" href="www.mapotip.cz">www.mapotip.cz</a></p>
+</div>
 {% endblock %}
 </body>
 </html>

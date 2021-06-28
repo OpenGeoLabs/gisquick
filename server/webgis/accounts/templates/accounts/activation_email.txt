@@ -1,8 +1,35 @@
-Hi {{ user.get_full_name }},
+Dobrý den,
 
-Welcome to Gisquick! To activate your account, please click on the following link: {{ site_url }}/accounts/activate/?uid={{ uid }}&token={{ token }}
+zasíláme Vám odkaz na mapový portál Mapotip.
 
-If you received this email in error, you can safely ignore this email.
+{{ portal_url }}
+Uživatelské jméno: {{ user.username }}
 
 
-Best Regards, Gisquick Team
+Pro aktivaci Vašeho učtu použijte následující odkaz {{ site_url }}/accounts/activate/?uid={{ uid }}&token={{ token }}&portal={{ portal_url|urlencode }}
+
+
+Portál pro veřejnost
+- určeno pro veřejnost a běžné uživatele
+- bez nutnosti přihlášení
+- zobrazuje pouze základní (veřejné) informace
+
+Portál pro úřad
+V pravém horním rohu > tlačítko ... > Přihlásit se
+- určeno pro pracovníky úřadu
+- zobrazuje kompletní (i neveřejné) informace
+- možnost bezúplatného stahování ověřených LV z katastru nemovitostí
+
+Rozlišení dle popisu vrstev
+Parcely - nepřihlášený (pouze údaje pro veřejnost)
+Parcely (P) - přihlášený (kompletní vrstvy, včetně stahování LV)
+
+Kontakty
+Pro případné dotazy nás kontaktujte na tel. 704 11 22 00 nebo na email portal@mapotip.cz
+
+
+S pozdravem
+
+Mapotip služba
+Mapotip Česko s.r.o.
+www.mapotip.cz

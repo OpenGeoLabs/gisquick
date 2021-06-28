@@ -73,6 +73,7 @@ def create_account(request):
 
     subject = "Gisquick Account"
     template_context = _email_context(request, user)
+    template_context["portal_url"] = form.cleaned_data["url"]
     message = render_to_string("accounts/activation_email.txt", template_context)
     html_message = render_to_string("accounts/activation_email.html", template_context)
     recipient_list = [user.email]
@@ -89,9 +90,20 @@ def activate_account(request, uidb64, token):
     if user is None or not token_generator.check_token(user, token):
         return JsonResponse({"status": 400, "error": "Invalid activation uid/token"}, status=400)
 
-    if not user.is_active:
-        user.is_active = True
-        user.save()
+    if user.is_active or user.has_usable_password():
+        return JsonResponse({"status": 400, "error": "Account was already activated"}, status=400)
+
+    data = None
+    if request.content_type.startswith('application/json'):
+        data = json.load(request)
+    else:
+        data = request.POST
+    form = SetPasswordForm(user, data=data)
+    if not form.is_valid():
+        return JsonResponse(form.errors, status=400)
+
+    user.is_active = True
+    form.save()
     return JsonResponse({"status": 200})
 
 

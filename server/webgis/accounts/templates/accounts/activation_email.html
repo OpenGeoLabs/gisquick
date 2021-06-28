@@ -2,22 +2,45 @@
 
 {% block content %}
 <p>
-  Welcome to <a class="link" href="{{ site_url }}">Gisquick!</a>
-  To activate your account, please click on the following button
+	zasíláme Vám odkaz na mapový portál Mapotip.</p>
+<br />
+<p><a class="link" href="{{portal_url}}">{{ portal_url }}</a></p>
+<p><span class="bold">Uživatelské jméno:</span> {{ user.username }}</p>
+<br />
+
+<div>{{ site_url }}/accounts/activate/?uid={{ uid }}&token={{ token }}&portal={{ portal_url|urlencode }}</div>
+
+<p>Pro aktivaci Vašeho učtu použijte následující odkaz
   <a
     class="md-button raised primary"
-    href="{{ site_url }}/accounts/activate/?uid={{ uid }}&token={{ token }}"
+    href="{{ site_url }}/accounts/activate/?uid={{ uid }}&token={{ token }}&portal={{ portal_url|urlencode }}"
   >
-    Activate account
+    aktivovat účet
   </a>
 </p>
-<br />
-<p>If you received this email in error, you can safely ignore this email.</p>
-
 <p>
   <small>
-    If you can't get the button to work, paste this link into your browser:
-    {{ site_url }}/accounts/activate/?uid={{ uid }}&token={{ token }}
+    V případě, že vám nefunguje odkaz, zkopírujte tuto URL do svého prohlížeče:
+    {{ site_url }}/accounts/activate/?uid={{ uid }}&token={{ token }}&portal={{ portal_url|urlencode }}
 </small>
 </p>
+<br />
+<p class="bold">Portál pro veřejnost</p>
+<p>- určeno pro veřejnost a běžné uživatele</p>
+<p>- bez nutnosti přihlášení</p>
+<p>- zobrazuje pouze základní (veřejné) informace</p>
+<br />
+<p class="bold">Portál pro úřad</p>
+<p>V pravém horním rohu > tlačítko ... > Přihlásit se</p>
+<p>- určeno pro pracovníky úřadu</p>
+<p>- zobrazuje kompletní (i neveřejné) informace</p>
+<p>- možnost bezúplatného stahování ověřených LV z katastru nemovitostí</p>
+<br />
+<p class="bold">Rozlišení dle popisu vrstev</p>
+<p><b>Parcely</b> - nepřihlášený (pouze údaje pro veřejnost)</p>
+<p><b>Parcely (P)</b> - přihlášený (kompletní vrstvy, včetně stahování LV)</p>
+<br />
+<p class="bold">Kontakty</p>
+<p>Pro případné dotazy nás kontaktujte na tel. <b>704 11 22 00</b> nebo na email <b>portal@mapotip.cz</b></p>
+
 {% endblock %}
