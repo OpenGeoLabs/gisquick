@@ -98,6 +98,17 @@
         >
           <v-icon>add_circle_outline</v-icon>
         </v-btn>
+        <v-btn
+          v-if="user && !user.is_guest"
+          small
+          depressed
+          color="primary"
+          :disabled="!attributesToExport.length"
+          @click="exportFeatures"
+        >
+          <v-icon size="16" class="mr-1">file_download</v-icon>
+          <translate>Export</translate>
+        </v-btn>
       </template>
       <v-spacer/>
       <v-checkbox
@@ -174,6 +185,8 @@ import keyBy from 'lodash/keyBy'
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import Polygon from 'ol/geom/polygon'
 import GeoJSON from 'ol/format/geojson'
+import FileSaver from 'file-saver'
+
 import TabsHeader from '@/components/TabsHeader.vue'
 import AttributeFilter from '@/components/AttributeFilter.vue'
 import FeaturesViewer from '@/components/ol/FeaturesViewer.vue'
@@ -181,7 +194,8 @@ import NewFeatureEditor from '@/components/feature-editor/NewFeatureEditor.vue'
 import InfoPanel from '@/components/InfoPanel.vue'
 import { simpleStyle } from '@/map/styles'
 import { layerFeaturesQuery } from '@/map/featureinfo'
-import { ShallowArray } from '@/utils'
+// import { ShallowArray } from '@/utils'
+import { downloadExcel } from '@/xlsx-export'
 
 function iconHeader (key) {
   return {
@@ -214,7 +228,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['project']),
+    ...mapState(['project', 'user']),
     ...mapState('attributeTable', ['page', 'limit', 'visibleAreaFilter', 'layer', 'features']),
     ...mapGetters('attributeTable', ['layerFilters']),
     attributes () {
@@ -266,6 +280,13 @@ export default {
     },
     permissions () {
       return this.layer.permissions || {}
+    },
+    attributesToExport () {
+      if (this.layer.export_fields) {
+        const map = keyBy(this.attributes, 'name')
+        return this.layer.export_fields.map(n => map[n])
+      }
+      return []
     }
   },
   watch: {
@@ -288,8 +309,7 @@ export default {
   },
   methods: {
     ...mapMutations('attributeTable', ['clearFilter', 'updateFilterComparator', 'updateFilterValue', 'updateFilterValidity']),
-    async fetchFeatures (page = 1, lastQuery = false) {
-      const mapProjection = this.$map.getView().getProjection().getCode()
+    getFeaturesQuery (fields = []) {
       const filters = Object.entries(this.layerFilters)
         // .filter(([name, filter]) => filter.comparator && filter.value !== null)
         .filter(([name, filter]) => filter.comparator && filter.valid)
@@ -298,18 +318,16 @@ export default {
           operator: filter.comparator,
           value: filter.value
         }))
-
-      let query
-      if (lastQuery) {
-        query = this.pagination.query
-      } else {
-        let geom = null
-        if (this.visibleAreaFilter) {
-          geom = Polygon.fromExtent(this.$map.ext.visibleAreaExtent()).transform(mapProjection, this.layer.projection)
-        }
-        query = layerFeaturesQuery(this.layer, geom, filters)
+      let geom = null
+      if (this.visibleAreaFilter) {
+        const mapProjection = this.$map.getView().getProjection().getCode()
+        geom = Polygon.fromExtent(this.$map.ext.visibleAreaExtent()).transform(mapProjection, this.layer.projection)
       }
-
+      return layerFeaturesQuery(this.layer, geom, filters, fields)
+    },
+    async fetchFeatures (page = 1, lastQuery = false) {
+      const mapProjection = this.$map.getView().getProjection().getCode()
+      const query = lastQuery ? this.pagination.query : this.getFeaturesQuery()
       const baseParams = {
         VERSION: '1.1.0',
         SERVICE: 'WFS',
@@ -375,6 +393,45 @@ export default {
           this.clearFilter(name)
         }
       })
+    },
+    async exportFeatures1 (format) {
+      const params = {
+        VERSION: '1.1.0',
+        SERVICE: 'WFS',
+        REQUEST: 'GetFeature',
+        OUTPUTFORMAT: format.toUpperCase(),
+        STARTINDEX: 0
+      }
+      const headers = { 'Content-Type': 'text/xml' }
+      const resp = await this.$http.post(this.project.config.ows_url, this.pagination.query, { params, headers, responseType: 'blob' })
+      FileSaver.saveAs(resp.data, `${this.layer.title}.${format}`)
+      // const resp = await this.$http.post(this.project.config.ows_url, this.pagination.query, { params, headers, responseType: 'arraybuffer' })
+      // const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+      // const blob = new Blob([resp.data], { type: resp.headers['content-type'] })
+      // FileSaver.saveAs(blob, `${this.layer.title}.${format}`)
+    },
+    async exportFeatures () {
+      const params = {
+        VERSION: '1.1.0',
+        SERVICE: 'WFS',
+        REQUEST: 'GetFeature',
+        OUTPUTFORMAT: 'GeoJSON',
+        STARTINDEX: 0
+      }
+      const headers = { 'Content-Type': 'text/xml' }
+      const attrsNames = this.attributesToExport.map(a => a.name)
+      const query = this.getFeaturesQuery(attrsNames)
+      const { data } = await this.$http.post(this.project.config.ows_url, query, { params, headers })
+      const header = this.attributesToExport.map(a => a.alias || a.name)
+
+      const formatters = this.attributesToExport.map(attr => {
+        if (attr.content_type === 'url') {
+          return v => ({ v: 'odkaz', l: { Target: v } })
+        }
+        return v => v
+      })
+      const rows = data.features.map(f => attrsNames.map((n, i) => formatters[i](f.properties[n])))
+      downloadExcel(header, rows, this.layer.title, this.layer.title)
     }
   }
 }
