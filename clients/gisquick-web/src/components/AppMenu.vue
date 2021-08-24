@@ -1,47 +1,22 @@
 <template>
-  <v-list>
+  <div class="f-row">
     <change-password-dialog ref="changePasswordDialog"/>
-    <v-list-tile v-if="user && !user.is_guest" @click="logout">
-      <v-list-tile-title key="logout">
-        <translate>Logout</translate>
-      </v-list-tile-title>
-    </v-list-tile>
-    <v-list-tile v-if="user && !user.is_guest" @click="$refs.changePasswordDialog.show()">
-      <v-list-tile-title key="password">
-        <translate>Change password</translate>
-      </v-list-tile-title>
-    </v-list-tile>
-    <v-list-tile v-else @click="login">
-      <v-list-tile-title key="login">
-        <translate>Login</translate>
-      </v-list-tile-title>
-    </v-list-tile>
-
-<!--     <v-list-tile v-if="user && !user.is_guest" href="/user/">
-      <v-list-tile-title key="profile">
-        <translate>My profile</translate>
-      </v-list-tile-title>
-    </v-list-tile> -->
-
-    <v-list-tile @click="toggleFullscreen">
-      <v-list-tile-title>
-        <translate>Full screen</translate>
-      </v-list-tile-title>
-      <v-icon v-show="fullscreen" class="ml-3">check</v-icon>
-    </v-list-tile>
-
-    <portal-target name="app-menu" multiple/>
-    <slot/>
-
-    <v-list-tile @click="openHelp">
-      <v-list-tile-title>
-        <translate>Help</translate>
-      </v-list-tile-title>
-    </v-list-tile>
-  </v-list>
+    <v-menu
+      :items="items"
+      v-bind="$attrs"
+    >
+      <template
+        v-for="(index, name) in $scopedSlots"
+        v-slot:[name]="slotData"
+      >
+        <slot :name="name" v-bind="slotData"/>
+      </template>
+    </v-menu>
+  </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapState } from 'vuex'
 import FullscreenMixin from '@/mixins/Fullscreen'
 import ChangePasswordDialog from '@/components/ChangePasswordDialog.vue'
@@ -50,8 +25,57 @@ export default {
   name: 'AppMenu',
   mixins: [FullscreenMixin],
   components: { ChangePasswordDialog },
+  data () {
+    return {
+      // extraItems: {}
+      extraItems: []
+    }
+  },
   computed: {
-    ...mapState(['app', 'user'])
+    ...mapState(['app', 'user']),
+    userMenuItems () {
+      if (this.user && !this.user.is_guest) {
+        return [
+          {
+            key: 'logout',
+            text: this.$gettext('Logout'),
+            action: this.logout
+          }, {
+            key: 'change_password',
+            text: this.$gettext('Change password'),
+            action: () => this.$refs.changePasswordDialog.show()
+          }
+        ]
+      }
+      return [{
+        key: 'login',
+        text: this.$gettext('Login'),
+        action: this.login
+      }]
+    },
+    items () {
+      return [
+        ...this.userMenuItems,
+        ...this.extraItems,
+        {
+          key: 'fullscreen',
+          text: this.$gettext('Full screen'),
+          action: this.toggleFullscreen,
+          activated: this.fullscreen
+        }, {
+          key: 'help',
+          text: this.$gettext('Help'),
+          action: this.openHelp
+        }
+      ]
+    }
+  },
+  created () {
+    Vue.prototype.$menu = {
+      setItems: (items, key) => {
+        this.extraItems = items || []
+      }
+    }
   },
   methods: {
     logout () {
