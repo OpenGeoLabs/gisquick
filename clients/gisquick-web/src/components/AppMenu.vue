@@ -1,8 +1,14 @@
 <template>
   <v-list>
+    <change-password-dialog ref="changePasswordDialog"/>
     <v-list-tile v-if="user && !user.is_guest" @click="logout">
       <v-list-tile-title key="logout">
         <translate>Logout</translate>
+      </v-list-tile-title>
+    </v-list-tile>
+    <v-list-tile v-if="user && !user.is_guest" @click="$refs.changePasswordDialog.show()">
+      <v-list-tile-title key="password">
+        <translate>Change password</translate>
       </v-list-tile-title>
     </v-list-tile>
     <v-list-tile v-else @click="login">
@@ -38,10 +44,12 @@
 <script>
 import { mapState } from 'vuex'
 import FullscreenMixin from '@/mixins/Fullscreen'
+import ChangePasswordDialog from '@/components/ChangePasswordDialog.vue'
 
 export default {
   name: 'AppMenu',
   mixins: [FullscreenMixin],
+  components: { ChangePasswordDialog },
   computed: {
     ...mapState(['app', 'user'])
   },
