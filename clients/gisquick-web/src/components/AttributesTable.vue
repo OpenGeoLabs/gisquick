@@ -177,8 +177,8 @@
         :editMode.sync="editMode"
         @selection-change="selectedFeatureIndex = $event.featureIndex"
         @close="showInfoPanel = false"
-        @edit="fetchFeatures(pagination.page, true)"
-        @delete="fetchFeatures(pagination.page, true)"
+        @edit="onFeatureEdit"
+        @delete="onFeatureEdit"
       />
     </portal>
   </div>
@@ -416,6 +416,7 @@ export default {
         this.newFeatureMode = false
       }, 1500)
       this.fetchFeatures(this.pagination.page, true)
+      this.$map.ext.refreshOverlays()
     },
     clearAllFilters () {
       Object.entries(this.layerFilters).forEach(([name, filter]) => {
@@ -500,6 +501,10 @@ export default {
           this.resizing = false
         }
       })
+    },
+    onFeatureEdit () {
+      this.$map.ext.refreshOverlays()
+      this.fetchFeatures(this.pagination.page, true)
     }
   }
 }
