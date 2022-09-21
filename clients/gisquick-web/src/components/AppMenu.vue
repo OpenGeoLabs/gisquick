@@ -1,26 +1,31 @@
 <template>
-  <v-menu
-    :items="items"
-    v-bind="$attrs"
-    align="rr;bb"
-  >
-    <template
-      v-for="(index, name) in $scopedSlots"
-      v-slot:[name]="slotData"
+  <div class="f-row">
+    <change-password-dialog ref="changePasswordDialog"/>
+    <v-menu
+      :items="items"
+      v-bind="$attrs"
+      align="rr;bb"
     >
-      <slot :name="name" v-bind="slotData"/>
-    </template>
-  </v-menu>
+      <template
+        v-for="(index, name) in $scopedSlots"
+        v-slot:[name]="slotData"
+      >
+        <slot :name="name" v-bind="slotData"/>
+      </template>
+    </v-menu>
+  </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import { mapState } from 'vuex'
 import FullscreenMixin from '@/mixins/Fullscreen'
+import ChangePasswordDialog from '@/components/ChangePasswordDialog.vue'
 
 export default {
   name: 'AppMenu',
   mixins: [FullscreenMixin],
+  components: { ChangePasswordDialog },
   data () {
     return {
       // extraItems: {}
@@ -37,9 +42,9 @@ export default {
             text: this.$gettext('Logout'),
             action: this.logout
           }, {
-            key: 'profile',
-            text: this.$gettext('My profile'),
-            link: '/user/'
+            key: 'change_password',
+            text: this.$gettext('Change password'),
+            action: () => this.$refs.changePasswordDialog.show()
           }
         ]
       }
@@ -93,9 +98,8 @@ export default {
       const height = parseInt(window.innerWidth * 0.85)
       const left = parseInt((window.innerWidth - width) / 2)
       const params = `left=${left},width=${width},height=${height},resizable=yes,menubar=no,scrollbars=yes,status=no`
-      const link = 'http://gisquick.readthedocs.io/en/latest/user-manual/user-interface.html'
-      // const link = this.project.gislab_documentation
-      window.open(link, 'Gisquick Documentation', params)
+      const link = 'https://www.mapotip.cz/napoveda.html'
+      window.open(link, '_blank', params)
     },
     createPermalink () {
       const permalink = this.$map.ext.createPermalink()

@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const compile = require('./gettext-compile.js')
 
-const srcDir = 'i18n'
+const srcDir = 'i18n-mapotip'
 const destDir = 'src/assets/i18n'
 
 fs.readdirSync(srcDir)

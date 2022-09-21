@@ -49,7 +49,7 @@ export default {
     identificationSettings () {
       return Vue.observable({
         identificationLayer: '',
-        displayMode: 'both'
+        displayMode: 'info-panel'
       })
     },
     identificationTool () {

@@ -246,7 +246,7 @@ export default {
           projection: this.mapProjection
         }
         const query = layersFeaturesQuery(wfsLayers, geom)
-        tasks.push(this.getFeaturesByWFS(query, { 'MAXFEATURES': 10 }))
+        tasks.push(this.getFeaturesByWFS(query, { 'MAXFEATURES': 100 }))
       }
       const task = Promise.allSettled(tasks)
       const res = await watchTask(task, this.tasks.fetchFeatures)

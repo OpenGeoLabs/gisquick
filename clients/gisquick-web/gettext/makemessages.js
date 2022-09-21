@@ -37,6 +37,6 @@ extractor
   ])
   .parseFilesGlob('./src/**/*.vue')
 
-extractor.savePotFile('./i18n/messages.pot')
+extractor.savePotFile('./i18n-mapotip/messages.pot')
 
 extractor.printStats()

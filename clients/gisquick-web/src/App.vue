@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="app f-col">
-    <intro-page v-if="!projectPath"/>
+    <!-- <intro-page v-if="!projectPath"/> -->
     <map-app v-if="projectStatus === 200" :key="projectKey"/>
     <login-dialog
       :value="showLogin"
@@ -18,7 +18,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import IntroPage from '@/IntroPage.vue'
+// import IntroPage from '@/IntroPage.vue'
 import ProjectNotFound from '@/ProjectNotFound.vue'
 import DesktopMap from '@/components/Map.vue'
 import MobileMap from '@/components/MobileMap.vue'
@@ -31,7 +31,7 @@ export default {
     PopupLayer,
     ProjectNotFound,
     LoginDialog,
-    IntroPage,
+    // IntroPage,
     ServerError,
     MapApp: async () => window.env.mobile ? MobileMap : DesktopMap
   },
@@ -66,8 +66,17 @@ export default {
     }
   },
   methods: {
-    loadProject () {
-      let project = new URLSearchParams(location.search).get('PROJECT')
+    async loadProject () {
+      let project = null
+      const pathParts = location.pathname.split('/').filter(v => v !== '')
+      const name = pathParts[pathParts.length - 1]
+      if (name) {
+        const { data } = await this.$http.get('/media/portal_path.json')
+        project = data[name]
+      }
+      if (!project) {
+        project = new URLSearchParams(location.search).get('PROJECT')
+      }
       if (project) {
         this.$http.project(project)
           .then(data => {
@@ -77,6 +86,8 @@ export default {
           .catch(data => {
             this.$store.commit('project', data)
           })
+      } else {
+        this.$store.commit('project', { status: 404 })
       }
     },
     onLogin (user) {

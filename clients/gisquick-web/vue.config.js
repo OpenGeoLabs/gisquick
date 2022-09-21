@@ -51,6 +51,7 @@ module.exports = {
     proxy: {
       '^/api': {
         target: 'http://localhost',
+        // target: 'https://portal.mapotip.cz',
         onProxyReq (proxyReq, req) {
           // restream body when body-parser was used
           if (req.body && parseInt(req.headers['content-length']) !== 0) {
