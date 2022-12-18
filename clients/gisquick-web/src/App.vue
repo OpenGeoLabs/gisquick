@@ -1,6 +1,5 @@
 <template>
   <div id="app" class="app f-col">
-    <!-- <intro-page v-if="!projectPath"/> -->
     <map-app v-if="projectStatus === 200" :key="projectKey"/>
     <login-dialog
       :value="showLogin"
@@ -42,8 +41,8 @@ export default {
   },
   computed: {
     ...mapState(['app', 'user', 'project', 'showLogin']),
-    projectPath () {
-      return new URLSearchParams(location.search).get('PROJECT')
+    projectName () {
+      return new URLSearchParams(location.search).get('PROJECT') || this.app.landing_project
     },
     projectStatus () {
       return this.project && this.project.config.status
@@ -75,7 +74,7 @@ export default {
         project = data[name]
       }
       if (!project) {
-        project = new URLSearchParams(location.search).get('PROJECT')
+        project = this.projectName
       }
       if (project) {
         this.$http.project(project)
@@ -114,6 +113,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
+}
+body {
+  overscroll-behavior-x: none;
+  touch-action: none;
 }
 
 #app {
