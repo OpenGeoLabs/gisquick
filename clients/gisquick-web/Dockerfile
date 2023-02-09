@@ -1,9 +1,10 @@
-FROM node:14-alpine AS webapp
+FROM node:16-alpine AS webapp
 
 WORKDIR /gisquick-web/
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN npm run compilemessages
 RUN npm run build -- --modern
 
 

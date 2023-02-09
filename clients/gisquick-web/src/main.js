@@ -5,8 +5,8 @@ import PortalVue from 'portal-vue'
 import GetTextPlugin from 'vue-gettext'
 import { ReactiveRefs } from 'vue-reactive-refs'
 import Vue2TouchEvents from 'vue2-touch-events'
-import 'url-polyfill'
 
+import './registerServiceWorker'
 import Swiper from './swiper'
 import http from './client'
 import store from './store/index'
@@ -30,10 +30,6 @@ import {
   SwitchTransition,
   SlideTop
 } from './components/transitions'
-
-// import all icons
-const svgIcons = require.context('../icons', false, /.*\.svg$/)
-svgIcons.keys().map(svgIcons)
 
 Vue.config.productionTip = false
 const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)

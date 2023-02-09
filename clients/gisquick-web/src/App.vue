@@ -11,6 +11,25 @@
     />
     <project-not-found v-if="projectStatus === 400 || projectStatus === 404"/>
     <server-error v-if="projectStatus === 500"/>
+    <transition name="fade">
+      <div v-if="updateExists" class="notification f-col light">
+        <div class="content p-2 f-col-ac shadow-2">
+          <div class="msg my-2">
+            <v-icon name="circle-i-outline" size="22" color="#777"/>
+            <translate class="px-2">A new version of the map application is available</translate>
+          </div>
+          <div class="actions f-row-ac mx-auto">
+            <div class="f-grow"/>
+            <v-btn class="small outlined round mx-4" color="#777" @click="updateExists = false">
+              <translate>Not now</translate>
+            </v-btn>
+            <v-btn class="small round mx-4" color="green" @click="refreshApp">
+              <translate translate-context="verb">Update</translate>
+            </v-btn>
+          </div>
+        </div>
+      </div>
+    </transition>
     <popup-layer class="light"/>
   </div>
 </template>
@@ -24,8 +43,11 @@ import MobileMap from '@/components/MobileMap.vue'
 import LoginDialog from '@/components/LoginDialog.vue'
 import PopupLayer from '@/ui/PopupLayer.vue'
 import ServerError from './ServerError.vue'
+import projectsHistory from '@/projects-history'
+import Update from '@/mixins/update'
 
 export default {
+  mixins: [ Update ],
   components: {
     PopupLayer,
     ProjectNotFound,
@@ -50,6 +72,17 @@ export default {
   },
   created () {
     this.loadProject()
+  },
+  mounted () {
+    if (window.env.mobile) {
+      const setHeightStyle = () => {
+        const vh = window.innerHeight / 100
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+      }
+      window.addEventListener('resize', setHeightStyle)
+      setHeightStyle()
+      this.$once('hook:beforeDestroy', () => window.removeEventListener('resize', setHeightStyle))
+    }
   },
   watch: {
     projectStatus: {
@@ -81,6 +114,7 @@ export default {
           .then(data => {
             this.$store.commit('project', data)
             document.title = data.root_title
+            projectsHistory.push(this.projectName)
           })
           .catch(data => {
             this.$store.commit('project', data)
@@ -118,8 +152,37 @@ body {
   overscroll-behavior-x: none;
   touch-action: none;
 }
+</style>
 
-#app {
-  min-height: 100vh;
+<style lang="scss" scoped>
+.notification {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 6px;
+  .content {
+    background-color: #fff;
+    min-width: 300px;
+    border-radius: 6px;
+    .msg {
+      line-height: 1.25;
+      padding-left: 40px;
+      text-indent: -34px;
+      padding-right: 10px;
+      text-align: center;
+      .icon {
+        vertical-align: top;
+        margin-right: 6px;
+      }
+      .span {
+        vertical-align: middle;
+      }
+    }
+  }
 }
 </style>

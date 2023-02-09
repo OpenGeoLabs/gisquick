@@ -11,7 +11,7 @@
           Web platform for publishing your maps from QGIS desktop
         </translate>
         <!-- <img src="@/assets/map.svg" class="image my-2"/> -->
-        <svg-map class="image my-2"/>
+        <svg-map class="map-img my-2" height="220"/>
       </div>
       <div class="footer f-col-ac light">
         <div class="sign-info">
@@ -60,23 +60,24 @@ export default {
       return this.user && !this.user.is_guest
     },
     showUserProjects () {
-      return this.userSignedIn && process.env.NODE_ENV === 'development'
+      return true
+      // return this.userSignedIn && (process.env.NODE_ENV === 'development' || window.env.mobile)
     }
   },
   watch: {
-    userSignedIn: {
-      immediate: true,
-      handler (userSignedIn) {
-        if (userSignedIn && process.env.NODE_ENV !== 'development') {
-          this.showUserProfile()
-        }
-      }
-    }
+    // userSignedIn: {
+    //   immediate: true,
+    //   handler (userSignedIn) {
+    //     if (userSignedIn && process.env.NODE_ENV !== 'development' && !window.env.mobile) {
+    //       this.redirectToUserProfile()
+    //     }
+    //   }
+    // }
   },
   methods: {
-    showUserProfile () {
-      window.location.replace(`${location.origin}/user/`)
-    },
+    // redirectToUserProfile () {
+    //   window.location.replace(`${location.origin}/user/`)
+    // },
     showLogin () {
       this.$store.commit('showLogin', true)
     }
@@ -93,12 +94,7 @@ export default {
   object-fit: contain;
 }
 .page {
-  /* possible fixes for issue with filling height (1fr) in chrome inside flexbox with flex-grow:1 */
-  min-height: inherit;
-  // min-height: 100vh;
-  // height: 1px;
-  // height: 100vh;
-
+  min-height: calc(var(--vh, 1vh) * 100);
   text-align: center;
   // display: grid;
   // grid-template-rows: 120px 1fr auto;
@@ -106,6 +102,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #eee;
+  overflow: auto;
 
   h1 {
     font-weight: 500;
@@ -116,11 +113,11 @@ export default {
     font-size: 25px;
   }
   .header {
-    background-color: #333;
+    background-color: var(--color-dark);
     height: 120px;
   }
   .header-small {
-    background-color: #333;
+    background-color: var(--color-dark);
   }
   .main {
     max-width: 960px;
@@ -132,6 +129,7 @@ export default {
     flex-grow: 1;
     flex-basis: 0;
   }
+
   .footer {
     background-color: #ddd;
     padding: 12px;
@@ -175,6 +173,23 @@ export default {
     @media (min-width: 960px) {
       margin-top: 12px;
       margin-bottom: 12px;
+    }
+  }
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 28px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    .header {
+      height: 72px;
+    }
+    .logo {
+      max-height: 36px;
+    }
+    .map-img {
+      height: 200px;
     }
   }
 }

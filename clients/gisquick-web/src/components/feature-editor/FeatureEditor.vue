@@ -8,8 +8,9 @@
     >
       <generic-edit-form
         ref="editForm"
+        class="f-grow"
         :layer="layer"
-        :initial="originalFields"
+        :initial="initialFields"
         :fields="fields"
         :project="project"
         :status.sync="formStatus"
@@ -19,7 +20,7 @@
       <v-radio-btn val="error" v-model="status" label="Error"/>
       <v-radio-btn val="" v-model="status" label="None"/> -->
     </slot>
-    <portal to="infopanel-tool">
+    <portal :to="toolbarTarget">
       <div class="toolbar f-row-ac">
         <v-btn
           class="icon flat"
@@ -114,6 +115,7 @@ import omit from 'lodash/omit'
 import isEqual from 'lodash/isEqual'
 import Style from 'ol/style/Style'
 import Feature from 'ol/Feature'
+import format from 'date-fns/format'
 
 import { wfsTransaction } from '@/map/wfs'
 import { queuedUpdater } from '@/utils'
@@ -144,14 +146,15 @@ export default {
   props: {
     layer: Object,
     feature: Object,
-    project: Object
+    project: Object,
+    toolbarTarget: String
   },
   data () {
     return {
       status: '',
       errorMsg: '',
       fields: null,
-      originalFields: null,
+      initialFields: null,
       editGeometry: false,
       showConfirmDelete: false,
       formStatus: null
@@ -170,7 +173,7 @@ export default {
       }[this.layer.geom_type]
     },
     fieldsModified () {
-      return !isEqual(this.fields, this.originalFields)
+      return !isEqual(this.fields, this.initialFields)
     },
     geomModified () {
       const editor = this.$refs.geometryEditor
@@ -191,7 +194,7 @@ export default {
       immediate: true,
       handler (feature, old) {
         this.fields = getFeatureFields(feature)
-        this.originalFields = getFeatureFields(feature)
+        this.initialFields = getFeatureFields(feature)
       }
     }
   },
@@ -242,14 +245,25 @@ export default {
         this.statusController.set(null, 100)
       }
     },
-    async save () {
+    createFeature (fields) {
+      const properties = { ...fields }
+      Object.entries(properties).forEach(([name, value]) => {
+        if (typeof value === 'boolean') {
+          properties[name] = value ? '1' : '0'
+        }
+      })
       const f = new Feature()
+      f.setProperties(properties)
+      return f
+    },
+    async resolveFields (operation) {
       const resolvedFields = {}
       for (const name in this.fields) {
         let value = this.fields[name]
         if (typeof value === 'function') {
           try {
             value = await value()
+            this.fields[name] = value // important for MediaImageField for check in afterFeatureUpdated
           } catch (err) {
             // this.statusController.set('error', 3000)
             // this.statusController.set(null, 100)
@@ -258,12 +272,31 @@ export default {
         }
         resolvedFields[name] = value
       }
-      const changedFields = difference(resolvedFields, this.originalFields)
-      f.setProperties(changedFields)
+      this.layer.attributes.filter(a => a.widget === 'Autofill').forEach(a => {
+        if (a.config.operations?.includes(operation)) {
+          let value
+          if (a.config.value === 'user') {
+            value = this.$store.state.user.username
+          } else if (a.config.value === 'current_datetime') {
+            value = new Date().toISOString()
+          } else if (a.config.value === 'current_date') {
+            value = format(new Date(), a.config?.field_format || 'yyyy-MM-dd')
+          } else {
+            return
+          }
+          resolvedFields[a.name] = value
+        }
+      })
+      return resolvedFields
+    },
+    async save () {
+      const resolvedFields = await this.resolveFields('update')
+      const changedFields = difference(resolvedFields, this.initialFields)
+      const f = this.createFeature(changedFields)
       if (this.geomModified) {
         let newGeom = this.$refs.geometryEditor.getGeometry()
         const mapProjection = this.$map.getView().getProjection().getCode()
-        if (mapProjection !== this.layer.projection) {
+        if (newGeom && mapProjection !== this.layer.projection) {
           newGeom = newGeom.clone()
           newGeom.transform(mapProjection, this.layer.projection)
         }
@@ -284,8 +317,6 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar {
-  background-color: #e0e0e0;
-  border-top: 1px solid #bbb;
   ::v-deep .btn.icon {
     margin: 3px 2px;
     width: 26px;

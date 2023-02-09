@@ -1,7 +1,8 @@
+const { defineConfig } = require('@vue/cli-service')
 const CompressionPlugin = require('compression-webpack-plugin')
 const SpritePlugin = require('./svg-sprite.js')
 
-module.exports = {
+module.exports = defineConfig({
   lintOnSave: 'warning',
   publicPath: process.env.NODE_ENV === 'production' ? '/map/' : '/',
   assetsDir: 'static',
@@ -9,44 +10,46 @@ module.exports = {
     extract: process.env.NODE_ENV === 'production' && process.env.CSS_EXTRACT !== 'False'
   },
   configureWebpack: {
+    resolve: {
+      fallback: {
+        path: require.resolve('path-browserify'),
+        https: require.resolve('agent-base')
+      }
+    },
     plugins: [
       new CompressionPlugin(),
       new SpritePlugin({ path: './icons' })
     ]
   },
   chainWebpack: config => {
+    // https://github.com/damianstasik/vue-svg-loader/issues/185
     const svgRule = config.module.rule('svg')
-    svgRule.uses.clear()
 
-    config.module
-      .rule('svg')
+    // Remove regular svg config from root rules list
+    config.module.rules.delete('svg')
 
-      .oneOf('inline-svg')
+    config.module.rule('svg')
+      // Use svg component rule
+      .oneOf('svg_as_component')
         .resourceQuery(/inline/)
-        .use('babel')
+        .test(/\.(svg)(\?.*)?$/)
+        .use('babel-loader')
           .loader('babel-loader')
           .end()
         .use('vue-svg-loader')
           .loader('vue-svg-loader')
           .end()
         .end()
-
-      .oneOf('other')
-        .use('file-loader')
-          .loader('file-loader')
-          .options({
-            name: 'static/img/[name].[hash:8].[ext]'
-          })
-          .end()
+      // Otherwise use original svg rule
+      .oneOf('svg_as_regular')
+        .merge(svgRule.toConfig())
         .end()
+
   },
   devServer: {
-    before (app) {
-      // const npm_argv = JSON.parse(process.env.npm_config_argv).original
-      if (process.env.WEBPACK_DEV_SERVER) {
-        const ErrorsModule = require('./proxy-interceptors.js')
-        app.use('/', ErrorsModule({ config: './proxy-errors.js'}))
-      }
+    onBeforeSetupMiddleware (devServer) {
+      const ErrorsModule = require('./proxy-interceptors.js')
+      devServer.app.use('/', ErrorsModule({ config: './proxy-errors.js'}))
     },
     proxy: {
       '^/api': {
@@ -67,5 +70,85 @@ module.exports = {
         }
       }
     }
+  },
+  pwa: {
+    name: "Gisquick",
+    themeColor: "#242424",
+    manifestOptions: {
+      icons: [
+        {
+          src: "./img/icons/android-chrome-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/android-chrome-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/android-chrome-maskable-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "maskable",
+        },
+        {
+          src: "./img/icons/android-chrome-maskable-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "maskable",
+        },
+        {
+          src: "./img/icons/apple-touch-icon-60x60.png",
+          sizes: "60x60",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/apple-touch-icon-76x76.png",
+          sizes: "76x76",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/apple-touch-icon-120x120.png",
+          sizes: "120x120",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/apple-touch-icon-152x152.png",
+          sizes: "152x152",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/apple-touch-icon-180x180.png",
+          sizes: "180x180",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/apple-touch-icon.png",
+          sizes: "180x180",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/favicon-16x16.png",
+          sizes: "16x16",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/favicon-32x32.png",
+          sizes: "32x32",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/msapplication-icon-144x144.png",
+          sizes: "144x144",
+          type: "image/png",
+        },
+        {
+          src: "./img/icons/mstile-150x150.png",
+          sizes: "150x150",
+          type: "image/png",
+        }
+      ]
+    }
   }
-}
+})

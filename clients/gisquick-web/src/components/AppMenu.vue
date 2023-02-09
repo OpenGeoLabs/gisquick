@@ -40,7 +40,8 @@ export default {
           {
             key: 'logout',
             text: this.$gettext('Logout'),
-            action: this.logout
+            action: this.logout,
+            icon: 'logout'
           }, {
             key: 'change_password',
             text: this.$gettext('Change password'),
@@ -51,7 +52,8 @@ export default {
       return [{
         key: 'login',
         text: this.$gettext('Login'),
-        action: this.login
+        action: this.login,
+        icon: 'login'
       }]
     },
     items () {

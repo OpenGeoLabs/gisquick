@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>Mapotip</title>
-    <meta name="theme-color" content="#222">
+    <meta name="theme-color" content="#242424">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBXFBTTFJ4"></script>
     <script>
@@ -29,12 +29,14 @@
     </script>
     <!--End of Tawk.to Script-->
   </head>
-  <body>
+  <body tabindex="0">
     <noscript>
       <strong>We're sorry but portal doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <%= htmlWebpackPlugin.options.svgSprite %>
+    <!-- svg-sprite -->
+    <svg-sprite/>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <div tabindex="0"></div>
   </body>
 </html>

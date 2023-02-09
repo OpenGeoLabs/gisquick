@@ -7,6 +7,7 @@
       :layer="layer"
     >
       <generic-edit-form
+        class="f-grow"
         :layer="layer"
         :fields="fields"
         :project="project.config"
@@ -50,6 +51,7 @@
 <script>
 import { mapState } from 'vuex'
 import Feature from 'ol/Feature'
+import format from 'date-fns/format'
 
 import { queuedUpdater, ShallowObj } from '@/utils'
 import { wfsTransaction } from '@/map/wfs'
@@ -100,15 +102,25 @@ export default {
     this.statusController = queuedUpdater(v => { this.status = v })
   },
   methods: {
-    async save () {
+    createFeature (fields) {
+      const properties = { ...fields }
+      Object.entries(properties).forEach(([name, value]) => {
+        if (typeof value === 'boolean') {
+          properties[name] = value ? '1' : '0'
+        }
+      })
       const f = new Feature()
-      const geom = this.references.geometryEditor.getGeometry()
+      f.setProperties(properties)
+      return f
+    },
+    async resolveFields (operation) {
       const resolvedFields = {}
       for (const name in this.fields) {
         let value = this.fields[name]
         if (typeof value === 'function') {
           try {
             value = await value()
+            this.fields[name] = value
           } catch (err) {
             // this.statusController.set('error', 3000)
             // this.statusController.set(null, 100)
@@ -117,7 +129,27 @@ export default {
         }
         resolvedFields[name] = value
       }
-      f.setProperties(resolvedFields)
+      this.layer.attributes.filter(a => a.widget === 'Autofill').forEach(a => {
+        if (a.config.operations?.includes(operation)) {
+          let value
+          if (a.config.value === 'user') {
+            value = this.$store.state.user.username
+          } else if (a.config.value === 'current_datetime') {
+            value = new Date().toISOString()
+          } else if (a.config.value === 'current_date') {
+            value = format(new Date(), a.config?.field_format || 'yyyy-MM-dd')
+          } else {
+            return
+          }
+          resolvedFields[a.name] = value
+        }
+      })
+      return resolvedFields
+    },
+    async save () {
+      const resolvedFields = await this.resolveFields('insert')
+      const f = this.createFeature(resolvedFields)
+      const geom = this.references.geometryEditor.getGeometry()
       f.setGeometry(geom)
 
       this.statusController.set('loading', 1000)
@@ -139,8 +171,6 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar {
-  background-color: #e0e0e0;
-  border-top: 1px solid #bbb;
   ::v-deep .btn.icon {
     margin: 3px 2px;
     width: 26px;

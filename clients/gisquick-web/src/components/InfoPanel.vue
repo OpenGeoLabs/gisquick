@@ -37,6 +37,7 @@
           <feature-editor
             v-if="editMode"
             class="edit-form"
+            toolbar-target="infopanel-tool"
             :feature="feature"
             :layer="layer"
             :project="$store.state.project.config"
@@ -142,8 +143,8 @@ export default {
   background-color: #fff;
   overflow: hidden;
   @media (max-width: 500px) {
-    width: calc(100vw - 24px);
-    max-width: calc(100vw - 24px);
+    width: calc(100vw - 26px);
+    max-width: calc(100vw - 26px);
   }
   @media (min-width: 501px) {
     .generic-infopanel, .edit-form {
@@ -202,6 +203,9 @@ export default {
     .toolbar-portal {
       grid-row: 2 / 3;
       grid-column: 1 / 2;
+      background-color: #e0e0e0;
+      border-top: 1px solid #bbb;
+      align-self: end;
     }
   }
 }

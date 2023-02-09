@@ -58,13 +58,19 @@
       <div class="f-grow"/>
     </div>
 
-    <map-tools ref="tools" hidden-identification/>
+    <map-tools ref="tools" hidden-identification mobile/>
+    <transition name="fade">
+      <div v-if="status.overlays.loading || status.baseLayer.loading" class="status f-row-ac m-2 shadow-2">
+        <v-spinner color="primary" width="3" size="20"/>
+      </div>
+    </transition>
     <location-tool v-if="geolocationEnabled"/>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import debounce from 'lodash/debounce'
 
 import Map from '@/mixins/Map'
 import ContentPanel from '@/components/content-panel/ContentPanel.vue'
@@ -98,6 +104,11 @@ export default {
       setStatusBarVisible: () => {}
     }
   },
+  mounted () {
+    const updateMapSize = debounce(() => this.$map.updateSize(), 100)
+    window.addEventListener('resize', updateMapSize)
+    this.$once('hook:beforeDestroy', () => window.removeEventListener('resize', updateMapSize))
+  },
   methods: {
     toggleTool (tool) {
       const value = this.activeTool !== tool.name ? tool.name : null
@@ -114,7 +125,8 @@ export default {
 
 .map-container {
   width: 100%;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  // height: 100vh; // allow to hide browser's address bar, but makes UI slightly worse
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -137,14 +149,13 @@ export default {
     // justify-items: center;
     min-height: 0;
     max-height: 100%;
-    margin: 8px;
+    margin: 3px 0px 8px 18px;
     pointer-events: none;
 
     ::v-deep * {
       // prevent Swipe to go back navigation (Android)
       // touch-action: none;
-      touch-action: pan-y;
-      overscroll-behavior-x: none; // maybe not needed
+      // touch-action: pan-y;
     }
     > * {
       pointer-events: auto;
@@ -203,6 +214,18 @@ export default {
     max-height: 100%;
     z-index: 1;
   }
+  .status {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    align-self: start;
+    justify-self: end;
+    z-index: 10;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    color: var(--color-primary);
+    padding: 4px;
+  }
 }
 
 .map {
@@ -229,6 +252,7 @@ export default {
     }
     .app-toolbar {
       background-color: #212121;
+      background-color: var(--color-dark);
       height: 44px;
       border: solid;
       border-width: 1px 0;
@@ -246,6 +270,13 @@ export default {
     .app-menu {
       .btn {
         margin: 3px;
+      }
+    }
+    ::v-deep .panel-header {
+      height: 22px;
+      .title {
+        font-size: 12px;
+        letter-spacing: 1px;
       }
     }
   }
