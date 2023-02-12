@@ -72,7 +72,7 @@ module.exports = defineConfig({
     }
   },
   pwa: {
-    name: "Gisquick",
+    name: "Mapotip",
     themeColor: "#242424",
     manifestOptions: {
       icons: [
