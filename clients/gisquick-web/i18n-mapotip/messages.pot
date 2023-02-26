@@ -29,6 +29,10 @@ msgstr ""
 msgid "Add new feature"
 msgstr ""
 
+#: ./src/App.vue:38
+msgid "Add to Home screen?"
+msgstr ""
+
 #: src/components/Identification.vue:141
 msgid "All visible layers"
 msgstr ""
@@ -316,6 +320,10 @@ msgstr ""
 msgid "Integer,Integer,..."
 msgstr ""
 
+#: ./src/App.vue:40
+msgid "It will give you the experience of a native app, with easy access and a standalone window without the browser's address bar and other controls."
+msgstr ""
+
 #: src/ui/DatePicker.vue:172
 msgid "January"
 msgstr ""
@@ -423,6 +431,7 @@ msgid ""
 "own maps!"
 msgstr ""
 
+#: ./src/App.vue:45
 #: ./src/components/feature-editor/FeatureEditor.vue:101
 msgid "No"
 msgstr ""
@@ -684,6 +693,7 @@ msgstr ""
 msgid "Welcome to the Gisquick"
 msgstr ""
 
+#: ./src/App.vue:48
 #: ./src/components/feature-editor/FeatureEditor.vue:104
 msgid "Yes"
 msgstr ""

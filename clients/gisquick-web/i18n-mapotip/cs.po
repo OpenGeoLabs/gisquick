@@ -39,6 +39,10 @@ msgstr "Přidat geometrii"
 msgid "Add new feature"
 msgstr "Přidat nový objekt"
 
+#: src/App.vue:38
+msgid "Add to Home screen?"
+msgstr "Přidat na plochu?"
+
 #: src/components/Identification.vue:141
 msgid "All visible layers"
 msgstr "Všechny viditelné vrstvy"
@@ -318,6 +322,14 @@ msgstr "Celé číslo,Celé číslo"
 msgid "Integer,Integer,..."
 msgstr "Celé číslo,..."
 
+#: src/App.vue:40
+msgid ""
+"It will give you the experience of a native app, with easy access and a "
+"standalone window without the browser's address bar and other controls."
+msgstr ""
+"Poskytne vám zážitek jako nativní aplikace. Se snadným přístupem a "
+"samostatným oknem, bez adresního řádku a dalších ovládacích prvků prohlížeče."
+
 #: src/ui/DatePicker.vue:172
 msgid "January"
 msgstr "Leden"
@@ -421,7 +433,7 @@ msgid ""
 "own maps!"
 msgstr ""
 
-#: src/components/feature-editor/FeatureEditor.vue:101
+#: src/App.vue:45 src/components/feature-editor/FeatureEditor.vue:101
 msgid "No"
 msgstr "Ne"
 
@@ -680,13 +692,13 @@ msgstr "Středa"
 msgid "Welcome to the Gisquick"
 msgstr ""
 
-#: src/components/feature-editor/FeatureEditor.vue:104
+#: src/App.vue:48 src/components/feature-editor/FeatureEditor.vue:104
 msgid "Yes"
 msgstr "Ano"
 
 #: src/UserDashboard.vue:85
 msgid "You didn't publish any project yet!"
-msgstr ""
+msgstr "Dosud jste nepublikovali žádný projekt!"
 
 #: src/components/measure/Measure.vue:187
 #: src/components/measure/Measure.vue:198
