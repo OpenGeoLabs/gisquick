@@ -2,6 +2,7 @@
 node_modules
 /dist
 /i18n/*.mo
+/i18n-mapotip/*.mo
 /src/assets/i18n/*.json
 
 # local env files
