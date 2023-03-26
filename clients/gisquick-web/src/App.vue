@@ -6,6 +6,7 @@
       :login-required="projectStatus !== 200"
       :permission-denied="projectStatus === 403"
       :password-reset-url="app.reset_password_url"
+      :project="project"
       @login="onLogin"
       @close="$store.commit('showLogin', false)"
     />
@@ -67,6 +68,7 @@ import PopupLayer from '@/ui/PopupLayer.vue'
 import ServerError from './ServerError.vue'
 import projectsHistory from '@/projects-history'
 import Update from '@/mixins/update'
+import { parseColor } from '@/ui/utils/colors'
 
 export default {
   mixins: [ Update ],
@@ -165,6 +167,16 @@ export default {
             this.$store.commit('project', data)
             document.title = data.root_title
             projectsHistory.push(project)
+            const app = data.app || {}
+            if (app.theme_color) {
+              document.documentElement.style.setProperty('--color-primary', app.theme_color)
+              try {
+                const rgba = parseColor(app.theme_color)
+                document.documentElement.style.setProperty('--color-primary-rgb', rgba.slice(0, 3).join(','))
+              } catch (err) {
+                console.error(`Invalid theme color: ${app.theme_color}`)
+              }
+            }
           })
           .catch(data => {
             this.$store.commit('project', data)
