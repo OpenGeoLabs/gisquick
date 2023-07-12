@@ -157,7 +157,8 @@ export default {
       const pathParts = location.pathname.split('/').filter(v => v !== '')
       let name = pathParts[pathParts.length - 1]
       if (name) {
-        const { data } = await this.$http.get('/media/portal_path.json')
+        const portal = location.hostname.split('.').pop()
+        const { data } = await this.$http.get(`/media/portal_${portal}.json`)
         project = data[name]
       }
       if (!project) {
