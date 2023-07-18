@@ -57,8 +57,8 @@ module.exports = defineConfig({
     },
     proxy: {
       '^/api': {
-        target: 'http://localhost',
-        // target: 'https://portal.mapotip.cz',
+        // target: 'http://localhost',
+        target: 'https://portal.mapotip.cz',
         onProxyReq (proxyReq, req) {
           // restream body when body-parser was used
           if (req.body && parseInt(req.headers['content-length']) !== 0) {
@@ -72,6 +72,11 @@ module.exports = defineConfig({
             }
           }
         }
+      },
+      '^/arcgis/': {
+        target: 'https://geocode.arcgis.com',
+        changeOrigin: true,
+        secure: false
       }
     }
   },
