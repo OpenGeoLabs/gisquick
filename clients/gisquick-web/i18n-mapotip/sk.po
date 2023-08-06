@@ -16,7 +16,7 @@ msgstr ""
 msgid "1st coordinate"
 msgstr "Prvá súradnica"
 
-#: src/components/measure/Measure.vue:13
+#: src/components/measure/Measure.vue:10
 msgid "2nd coordinate"
 msgstr "Druhá súradnica"
 
@@ -61,7 +61,7 @@ msgstr "Aplikovať"
 msgid "April"
 msgstr "Apríl"
 
-#: src/components/measure/Measure.vue:71 src/components/measure/Measure.vue:174
+#: src/components/measure/Measure.vue:97 src/components/measure/Measure.vue:221
 msgid "Area"
 msgstr "Plocha"
 
@@ -69,7 +69,7 @@ msgstr "Plocha"
 msgid "Attributes"
 msgstr "Atribúty"
 
-#: src/components/MapTools.vue:94
+#: src/components/MapTools.vue:102
 msgid "Attributes Table"
 msgstr "Tabuľka atribútov"
 
@@ -104,6 +104,14 @@ msgstr "Zrušiť"
 msgid "Change password"
 msgstr "Zmeniť heslo"
 
+#: src/components/measure/Measure.vue:188
+msgid "Clear"
+msgstr "Zmazať"
+
+#: src/components/measure/Measure.vue:189
+msgid "Clear all"
+msgstr "Zmazať všetko"
+
 #: src/components/AttributesTable.vue:142
 #: src/components/MobileAttributesTable.vue:323
 msgid "Clear attributes filters"
@@ -134,7 +142,7 @@ msgstr "Obsah"
 msgid "Continue as Guest"
 msgstr "Pokračovať ako hosť"
 
-#: src/components/measure/Measure.vue:192
+#: src/components/measure/Measure.vue:190
 msgid "Coordinate systems"
 msgstr "Súradnicové systémy"
 
@@ -158,7 +166,7 @@ msgstr "Data"
 msgid "Data Filters"
 msgstr "Dátové filtre"
 
-#: src/components/feature-editor/FeatureEditor.vue:88
+#: src/components/feature-editor/FeatureEditor.vue:89
 #: src/components/feature-editor/NewFeatureEditor.vue:43
 msgid "Data updated"
 msgstr "Údaje aktualizované"
@@ -167,15 +175,15 @@ msgstr "Údaje aktualizované"
 msgid "December"
 msgstr "December"
 
-#: src/components/feature-editor/FeatureEditor.vue:97
+#: src/components/feature-editor/FeatureEditor.vue:98
 msgid "Delete current object?"
 msgstr "Odstrániť aktuálny objekt?"
 
-#: src/components/feature-editor/FeatureEditor.vue:54
+#: src/components/feature-editor/FeatureEditor.vue:55
 msgid "Delete object"
 msgstr "Odstrániť objekt"
 
-#: src/components/feature-editor/FeatureEditor.vue:63
+#: src/components/feature-editor/FeatureEditor.vue:64
 msgid "Discard changes"
 msgstr "Zrušiť zmeny"
 
@@ -183,11 +191,11 @@ msgstr "Zrušiť zmeny"
 msgid "Display attributions"
 msgstr "Zobraziť autorské práva"
 
-#: src/components/measure/Measure.vue:173
+#: src/components/measure/Measure.vue:220
 msgid "Distance"
 msgstr "Vzdialenosť"
 
-#: src/AppNotifications.vue:53
+#: src/AppNotifications.vue:57
 msgid "Don't show this message again"
 msgstr "Túto správu už nezobrazovať"
 
@@ -199,7 +207,7 @@ msgstr "Upraviť"
 msgid "Edit feature"
 msgstr "Upraviť objekt"
 
-#: src/components/feature-editor/FeatureEditor.vue:31
+#: src/components/feature-editor/FeatureEditor.vue:32
 msgid "Edit geometry"
 msgstr "Upraviť geometriu"
 
@@ -228,7 +236,7 @@ msgstr ""
 msgid "equal to"
 msgstr "rovná sa"
 
-#: src/components/feature-editor/FeatureEditor.vue:228
+#: src/components/feature-editor/FeatureEditor.vue:229
 #: src/components/feature-editor/NewFeatureEditor.vue:117
 #: src/ui/ListTable.vue:105 src/ui/Table.vue:211
 msgid "Error"
@@ -357,10 +365,6 @@ msgstr "Jún"
 msgid "Keywords list"
 msgstr "Kľúčové slová"
 
-#: src/components/measure/Measure.vue:34
-msgid "Last segment"
-msgstr "Posledný segment"
-
 #: src/components/Identification.vue:180
 #: src/components/MobileAttributesTable.vue:241
 msgid "Layer"
@@ -370,7 +374,7 @@ msgstr "Vrstva"
 msgid "Layers"
 msgstr "Vrstvy"
 
-#: src/components/print/Print.vue:83
+#: src/components/print/Print.vue:87
 msgid "Layout"
 msgstr "Rozloženie"
 
@@ -390,7 +394,7 @@ msgstr "odkaz"
 msgid "Loading"
 msgstr "Načítavam"
 
-#: src/components/measure/Measure.vue:172
+#: src/components/measure/Measure.vue:219
 msgid "Location"
 msgstr "Poloha"
 
@@ -411,9 +415,9 @@ msgstr "Marcel"
 msgid "May"
 msgstr "Máj"
 
-#: src/components/Identification.vue:181 src/components/measure/Measure.vue:144
+#: src/components/Identification.vue:181 src/components/measure/Measure.vue:187
 #: src/components/MobileAttributesTable.vue:243
-#: src/components/print/Print.vue:82 src/UserDashboard.vue:210
+#: src/components/print/Print.vue:86 src/UserDashboard.vue:210
 msgid "Menu"
 msgstr "Menu"
 
@@ -444,7 +448,7 @@ msgid ""
 "own maps!"
 msgstr ""
 
-#: src/App.vue:47 src/components/feature-editor/FeatureEditor.vue:101
+#: src/App.vue:47 src/components/feature-editor/FeatureEditor.vue:102
 msgid "No"
 msgstr "Nie"
 
@@ -518,7 +522,7 @@ msgstr "Viditeľnosť základnej vrstvy"
 msgid "Opacity of overlay layers"
 msgstr "Viditeľnosť prekryvných vrstiev"
 
-#: src/components/print/Print.vue:110
+#: src/components/print/Print.vue:114
 msgid "Output format"
 msgstr "Výstupný formát"
 
@@ -535,7 +539,7 @@ msgstr "Počet riadkov"
 msgid "Password"
 msgstr "Heslo"
 
-#: src/components/measure/Measure.vue:67
+#: src/components/measure/Measure.vue:96
 msgid "Perimeter"
 msgstr "Obvod"
 
@@ -551,7 +555,7 @@ msgstr "Prístup zamietnutý"
 msgid "Print Preview"
 msgstr "Náhľad pred tlačou"
 
-#: src/components/print/Print.vue:112
+#: src/components/print/Print.vue:116
 msgid "Print quality"
 msgstr "Kvalita tlače"
 
@@ -581,13 +585,20 @@ msgstr "Rozlíšenie"
 msgid "Saturday"
 msgstr "Sobota"
 
-#: src/components/feature-editor/FeatureEditor.vue:73
+#: src/components/feature-editor/FeatureEditor.vue:74
 msgid "Save changes"
 msgstr "Uložiť zmeny"
 
 #: src/components/BottomToolbar.vue:6 src/components/print/Preview.vue:11
 msgid "Scale"
 msgstr "Mierka"
+
+#: src/components/RuianSearch1.vue:161
+#, fuzzy
+#| msgctxt "noun"
+#| msgid "Search"
+msgid "Search"
+msgstr "Vyhľadávanie"
 
 #: src/components/feature-editor/MediaFileField.vue:59
 msgid "Select"
@@ -648,7 +659,7 @@ msgstr "Štvrtok"
 msgid "Topics"
 msgstr "Témy"
 
-#: src/components/measure/Measure.vue:38
+#: src/components/measure/Measure.vue:50
 msgid "Total length"
 msgstr "Celková dĺžka"
 
@@ -660,8 +671,7 @@ msgstr "Utorok"
 msgid "Type"
 msgstr "Typ"
 
-#: src/components/measure/Measure.vue:199
-#: src/components/measure/Measure.vue:206
+#: src/components/measure/Measure.vue:191
 msgid "Units"
 msgstr "Jednotky"
 
@@ -673,7 +683,7 @@ msgstr "do"
 msgid "Updated"
 msgstr "Aktualizované"
 
-#: src/components/feature-editor/FeatureEditor.vue:87
+#: src/components/feature-editor/FeatureEditor.vue:88
 #: src/components/feature-editor/NewFeatureEditor.vue:42
 msgid "Updating data"
 msgstr "Údaje sa aktualizujú"
@@ -708,7 +718,7 @@ msgstr "Streda"
 msgid "Welcome to the Gisquick"
 msgstr ""
 
-#: src/App.vue:50 src/components/feature-editor/FeatureEditor.vue:104
+#: src/App.vue:50 src/components/feature-editor/FeatureEditor.vue:105
 msgid "Yes"
 msgstr "Áno"
 
@@ -716,9 +726,6 @@ msgstr "Áno"
 msgid "You didn't publish any project yet!"
 msgstr "Zatiaľ ste nevytvorili žiaden projekt!"
 
-#: src/components/measure/Measure.vue:187
-#: src/components/measure/Measure.vue:198
-#: src/components/measure/Measure.vue:205
 #: src/components/MobileAttributesTable.vue:339
 msgid "Zoom to"
 msgstr "Priblížiť"
@@ -728,17 +735,17 @@ msgctxt "adverb"
 msgid "Next"
 msgstr "Ďalej"
 
-#: src/components/MapTools.vue:60
+#: src/components/MapTools.vue:64
 msgctxt "noun"
 msgid "Identification"
 msgstr "Identifikácia"
 
-#: src/components/MapTools.vue:76
+#: src/components/MapTools.vue:80
 msgctxt "noun"
 msgid "Measure"
 msgstr "Meranie"
 
-#: src/components/MapTools.vue:84
+#: src/components/MapTools.vue:89
 msgctxt "noun"
 msgid "Print"
 msgstr "Tlač"
@@ -757,6 +764,9 @@ msgstr "Otvoriť"
 msgctxt "verb"
 msgid "Update"
 msgstr "Aktualizovať"
+
+#~ msgid "Last segment"
+#~ msgstr "Posledný segment"
 
 #~ msgid "Back"
 #~ msgstr "Späť"
