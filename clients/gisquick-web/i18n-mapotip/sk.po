@@ -43,6 +43,10 @@ msgstr "Pridať nový objekt"
 msgid "Add to Home screen?"
 msgstr "Pridať na plochu?"
 
+#: src/components/MapotipSearch.vue:77
+msgid "Addresses"
+msgstr "Adresy"
+
 #: src/components/Identification.vue:147
 msgid "All visible layers"
 msgstr "Všetky viditeľné vrstvy"
@@ -124,7 +128,7 @@ msgstr "Zavrieť"
 
 #: src/components/ChangePasswordDialog.vue:67
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdiť"
 
 #: src/components/ChangePasswordDialog.vue:97
 msgid "Confirm password"
@@ -259,7 +263,7 @@ msgstr "Údaje sa nepodarilo sa načítať"
 msgid "Failed to process your request."
 msgstr "Spracovanie požiadavky zlyhalo."
 
-#: src/components/feature-editor/MediaFileField.vue:223
+#: src/components/feature-editor/MediaFileField.vue:226
 msgid "Failed to upload file"
 msgstr "Nahranie súboru zlyhalo"
 
@@ -390,7 +394,7 @@ msgstr "je menší"
 msgid "link"
 msgstr "odkaz"
 
-#: src/components/Map.vue:48
+#: src/components/Map.vue:51
 msgid "Loading"
 msgstr "Načítavam"
 
@@ -535,6 +539,10 @@ msgstr "Prekryvné vrstvy"
 msgid "Page size"
 msgstr "Počet riadkov"
 
+#: src/components/MapotipSearch.vue:80
+msgid "Parcels"
+msgstr "Parcely"
+
 #: src/components/ChangePassword.vue:143 src/components/LoginDialog.vue:166
 msgid "Password"
 msgstr "Heslo"
@@ -559,7 +567,7 @@ msgstr "Náhľad pred tlačou"
 msgid "Print quality"
 msgstr "Kvalita tlače"
 
-#: src/components/feature-editor/MediaFileField.vue:221
+#: src/components/feature-editor/MediaFileField.vue:224
 msgid "Project size limit reached"
 msgstr "Dosiahli ste limit pre veľkosť projektu"
 
@@ -593,12 +601,13 @@ msgstr "Uložiť zmeny"
 msgid "Scale"
 msgstr "Mierka"
 
-#: src/components/RuianSearch1.vue:161
-#, fuzzy
-#| msgctxt "noun"
-#| msgid "Search"
-msgid "Search"
-msgstr "Vyhľadávanie"
+#: src/components/MapotipSearch.vue:103
+msgid "Search address"
+msgstr "Vyhľadať adresu"
+
+#: src/components/MapotipSearch.vue:104
+msgid "Search parcel"
+msgstr "Vyhľadať parcelu"
 
 #: src/components/feature-editor/MediaFileField.vue:59
 msgid "Select"

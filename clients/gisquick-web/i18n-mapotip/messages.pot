@@ -33,6 +33,10 @@ msgstr ""
 msgid "Add to Home screen?"
 msgstr ""
 
+#: src/components/MapotipSearch.vue:77
+msgid "Addresses"
+msgstr ""
+
 #: src/components/Identification.vue:147
 msgid "All visible layers"
 msgstr ""
@@ -257,7 +261,7 @@ msgstr ""
 msgid "Failed to process your request."
 msgstr ""
 
-#: src/components/feature-editor/MediaFileField.vue:223
+#: src/components/feature-editor/MediaFileField.vue:226
 msgid "Failed to upload file"
 msgstr ""
 
@@ -384,7 +388,7 @@ msgstr ""
 msgid "link"
 msgstr ""
 
-#: ./src/components/Map.vue:48
+#: ./src/components/Map.vue:51
 msgid "Loading"
 msgstr ""
 
@@ -534,6 +538,10 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
+#: src/components/MapotipSearch.vue:80
+msgid "Parcels"
+msgstr ""
+
 #: src/components/ChangePassword.vue:143
 #: src/components/LoginDialog.vue:166
 msgid "Password"
@@ -560,7 +568,7 @@ msgstr ""
 msgid "Print quality"
 msgstr ""
 
-#: src/components/feature-editor/MediaFileField.vue:221
+#: src/components/feature-editor/MediaFileField.vue:224
 msgid "Project size limit reached"
 msgstr ""
 
@@ -596,8 +604,12 @@ msgstr ""
 msgid "Scale"
 msgstr ""
 
-#: src/components/RuianSearch1.vue:161
-msgid "Search"
+#: src/components/MapotipSearch.vue:103
+msgid "Search address"
+msgstr ""
+
+#: src/components/MapotipSearch.vue:104
+msgid "Search parcel"
 msgstr ""
 
 #: ./src/components/feature-editor/MediaFileField.vue:59
