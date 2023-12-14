@@ -17,14 +17,15 @@
     "date-fns": "^2.29.3",
     "file-saver": "^2.0.5",
     "idb-keyval": "^6.2.0",
-    "ol": "6.14.1",
-    "ol-mapbox-style": "8.1.2",
+    "lodash": "^4.17.21",
+    "ol": "^7.5.2",
+    "ol-mapbox-style": "^12.1.0",
     "path-browserify": "^1.0.1",
     "pdf-lib": "^1.17.1",
     "portal-vue": "2",
     "proj4": "^2.8.1",
     "register-service-worker": "^1.7.2",
-    "vue": "^2.6.14",
+    "vue": "^2.7.15",
     "vue-gettext": "^2.1.12",
     "vue-reactive-refs": "^0.0.2",
     "vue2-touch-events": "^3.2.2",
@@ -48,7 +49,7 @@
     "svgo": "^3.0.2",
     "vue-docgen-api": "^4.56.2",
     "vue-svg-loader": "^0.16.0",
-    "vue-template-compiler": "^2.6.14"
+    "vue-template-compiler": "^2.7.15"
   },
   "vetur": {
     "tags": "./vetur/tags.json",

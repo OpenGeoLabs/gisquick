@@ -5,12 +5,16 @@ import mapKeys from 'lodash/mapKeys'
 import { boundingExtent, buffer as bufferExtent } from 'ol/extent'
 import { unByKey } from 'ol/Observable'
 import 'ol/ol.css'
-import axios from 'axios'
 
 import { createMap, registerProjections } from '@/map/map-builder'
 
 function getTileKey (tile) {
   return tile.tileCoord.join('/')
+}
+
+function round (num, precision) {
+  const m = Math.pow(10, precision)
+  return Math.round(num * m) / m
 }
 
 export default {
@@ -29,7 +33,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['project']),
+    ...mapState(['project', 'activeTool']),
     ...mapGetters(['visibleBaseLayer', 'visibleLayers'])
   },
   watch: {
@@ -41,7 +45,7 @@ export default {
     if (config.projections) {
       registerProjections(config.projections)
     }
-    this.queryParams = mapKeys(Object.fromEntries(new URLSearchParams(location.search)), (v, k) => k.toLowerCase())
+    this.queryParams = mapKeys(Object.fromEntries(new URLSearchParams(location.search)), (_, k) => k.toLowerCase())
     if (this.queryParams.overlays) {
       this.$store.commit('visibleLayers', this.queryParams.overlays.split(','))
     }
@@ -120,21 +124,31 @@ export default {
         map.overlay.getSource().refresh()
       },
       createPermalink: () => {
+        const toolParams = this.$refs.tools.getActiveComponent()?.getPermalinkParams?.()
         const extent = map.ext.visibleAreaExtent()
         const overlays = this.visibleLayers.filter(l => !l.hidden).map(l => l.name)
+        const precision = this.project.config.units.position_precision
         const params = {
-          extent: extent.join(','),
+          extent: extent.map(v => round(v, precision)).join(','),
           overlays: overlays.join(','),
           baselayer: this.visibleBaseLayer?.name ?? '',
-          activeTool: this.activeTool
+          ...toolParams
         }
-        return axios.getUri({url: location.href, params })
+        const url = new URL(location.href)
+        Array.from(url.searchParams.keys()).filter(k => k !== 'PROJECT').forEach(k => url.searchParams.delete(k))
+        Object.keys(params).forEach(name => url.searchParams.set(name, params[name]))
+        return decodeURIComponent(url.toString()) // unescaped url
+        // return url.toString()
       }
     }
     const extentParam = this.queryParams.extent?.split(',').map(parseFloat)
     const extent = extentParam || this.project.config.zoom_extent || this.project.config.project_extent
     const padding = map.ext.visibleAreaPadding()
     map.getView().fit(extent, { padding })
+    if (this.queryParams.tool) {
+      this.$store.commit('activeTool', this.queryParams.tool)
+    }
+    this.$nextTick(() => this.$refs.tools.getActiveComponent()?.loadPermalink?.(this.queryParams))
   },
   methods: {
     async setVisibleBaseLayer (layer) {

@@ -165,29 +165,29 @@ export default {
         project = this.projectName
       }
       if (this.isStandaloneApp) {
-        const recent = await projectsHistory.getProjectsHistory()
+        const recent = await projectsHistory.getProjectsHistory(this.user)
         project = recent[0]
       }
       if (project) {
-        this.$http.project(project)
-          .then(data => {
-            this.$store.commit('project', data)
-            document.title = data.root_title
-            projectsHistory.push(project)
-            const app = data.app || {}
-            if (app.theme_color) {
-              document.documentElement.style.setProperty('--color-primary', app.theme_color)
-              try {
-                const rgba = parseColor(app.theme_color)
-                document.documentElement.style.setProperty('--color-primary-rgb', rgba.slice(0, 3).join(','))
-              } catch (err) {
-                console.error(`Invalid theme color: ${app.theme_color}`)
-              }
-            }
-          })
-          .catch(data => {
-            this.$store.commit('project', data)
-          })
+        const data = await this.$http.project(project).catch(data => data)
+        this.$store.commit('project', data)
+        if (data.status === 200) {
+          projectsHistory.push(this.user, project)
+        }
+        const title = data.title || data.root_title
+        if (title) {
+          document.title = title
+        }
+        const themeColor = data.app?.theme_color
+        if (themeColor) {
+          document.documentElement.style.setProperty('--color-primary', themeColor)
+          try {
+            const rgba = parseColor(themeColor)
+            document.documentElement.style.setProperty('--color-primary-rgb', rgba.slice(0, 3).join(','))
+          } catch (err) {
+            console.error(`Invalid theme color: ${themeColor}`)
+          }
+        }
       } else {
         this.$store.commit('project', { status: 404 })
       }

@@ -32,7 +32,7 @@
     </portal>
 
     <identify-pointer v-if="!editMode" @click="onClick"/>
-    <features-viewer :features="displayedFeaures"/>
+    <features-viewer :features="displayedFeatures"/>
     <point-marker
       :coords="mapCoords"
       :error="!!tasks.fetchFeatures.error"
@@ -44,7 +44,7 @@
         <info-panel
           v-if="displayMode === 'info-panel' || displayMode === 'both'"
           class="mx-1 mb-2 shadow-2"
-          :features="displayedFeaures"
+          :features="displayedFeatures"
           :layer="displayedLayer"
           :layers="resultLayers"
           :selected="selection"
@@ -166,11 +166,11 @@ export default {
     displayedLayer () {
       return this.resultItem && this.resultItem.layer
     },
-    displayedFeaures () {
+    displayedFeatures () {
       return this.resultItem && this.resultItem.features
     },
     selectedFeature () {
-      return this.selection && this.displayedFeaures[this.selection.featureIndex]
+      return this.selection && this.displayedFeatures[this.selection.featureIndex]
     },
     mapProjection () {
       return this.$map.getView().getProjection().getCode()
@@ -220,6 +220,17 @@ export default {
       const { data } = await this.$http.post(this.project.config.ows_url, query, config)
       return this.readFeatures(data)
     },
+    async getFeatureById (fid) {
+      const params = {
+        VERSION: '1.1.0',
+        SERVICE: 'WFS',
+        REQUEST: 'GetFeature',
+        OUTPUTFORMAT: 'GeoJSON',
+        FEATUREID: fid,
+      }
+      const { data } = await this.$http.get(this.project.config.ows_url, { params })
+      return this.readFeatures(data)
+    },
     async getFeatureInfo (evt, layers) {
       const { map, coordinate } = evt
       const r = map.getView().getResolution()
@@ -259,10 +270,49 @@ export default {
         const query = layersFeaturesQuery(wfsLayers, geom)
         tasks.push(this.getFeaturesByWFS(query, { 'MAXFEATURES': 100 }))
       }
+      this.mapCoords = coordinate
+      const features = await this.fetchFeatures(tasks)
+      this.setFeatures(features)
+    },
+    /* Fetch multiple features by id in single request. (It would require to know id/pk field name) */
+    /*
+    queryFeaturesByIds (ids) {
+      const queryableLayers = this.project.overlays.list.filter(l => l.queryable)
+      const layersQueries = {}
+      ids.forEach((id) => {
+        const [layername, fid] = id.split('.')
+        const layer = queryableLayers.find(l => l.name === layername)
+        if (layer) {
+          if (!layersQueries[layername]) {
+            layersQueries[layername] = [fid]
+          } else {
+            layersQueries[layername].push(fid)
+          }
+        }
+      })
+      const queries = Object.entries(layersQueries).map(([layername, ids]) => {
+        const l = this.project.overlays.list.find(l => l.name === layername)
+        const filters = [{
+          attribute: '???',
+          operator: ids.length === 1 ? '=' : 'IN',
+          value: ids.join(',')
+        }]
+        return formatLayerQuery(l, null, filters)
+      })
+      return getFeatureQuery(queries)
+    },
+    */
+    /**
+     * @returns {Promise<Feature[]>}
+     */
+    async fetchFeatures (tasks) {
       const task = Promise.allSettled(tasks)
       const res = await watchTask(task, this.tasks.fetchFeatures)
       this.tasks.fetchFeatures.error = res.some(i => i.status === 'rejected')
       const features = [].concat(...res.filter(i => i.value).map(i => i.value))
+      return features
+    },
+    setFeatures (features) {
       const categorizedFeatures = this.categorize(features)
       const items = this.tableData(categorizedFeatures)
       this.layersFeatures = items
@@ -273,6 +323,7 @@ export default {
           layer: items[index].layer.name,
           featureIndex: 0
         }
+        return features
       } else {
         this.selection = null
       }
@@ -290,18 +341,19 @@ export default {
       this.queryableLayers.forEach(l => {
         WfsToLayerName[l.name.replace(/ /g, '_')] = l.name
       })
-
       // group features by layer name
       const layersFeatures = {}
       if (features.length > 0) {
         features.forEach(feature => {
           if (feature instanceof Feature) {
             const fid = feature.getId()
-            const layer = WfsToLayerName[fid.substring(0, fid.lastIndexOf('.'))] ?? fid
-            if (!layersFeatures[layer]) {
-              layersFeatures[layer] = []
+            const layername = WfsToLayerName[fid.substring(0, fid.lastIndexOf('.'))]
+            if (layername) {
+              if (!layersFeatures[layername]) {
+                layersFeatures[layername] = []
+              }
+              layersFeatures[layername].push(feature)
             }
-            layersFeatures[layer].push(feature)
           }
         })
       }
@@ -339,25 +391,39 @@ export default {
     async onFeatureEdit (feature) {
       const fid = feature.getId()
       const index = this.resultItem.features.findIndex(f => f.getId() === fid)
-
-      const params = {
-        VERSION: '1.1.0',
-        SERVICE: 'WFS',
-        REQUEST: 'GetFeature',
-        OUTPUTFORMAT: 'GeoJSON',
-        FEATUREID: feature.getId()
-      }
-      const task = this.$http.get(this.project.config.ows_url, { params })
-      const resp = await watchTask(task, this.tasks.fetchFeatures)
+      const task = this.getFeatureById(fid)
+      const features = await watchTask(task, this.tasks.fetchFeatures)
       if (this.tasks.fetchFeatures.success) {
-        const features = this.readFeatures(resp.data)
         formatFeatures(this.project, this.displayedLayer, features)
-        const newFeature = features[0]
-        if (newFeature) {
-          // this.displayedFeaures.splice(index, 1, newFeature)
-          this.$set(this.displayedFeaures, index, newFeature)
+        const updatedFeature = features[0]
+        if (updatedFeature) {
+          // this.displayedFeatures.splice(index, 1, updatedFeature)
+          this.$set(this.displayedFeatures, index, updatedFeature)
         }
         this.$map.ext.refreshOverlays()
+      }
+    },
+    getPermalinkParams () {
+      if (this.selection) {
+        return {
+          features: this.displayedFeatures[this.selection.featureIndex].getId()
+        }
+      }
+    },
+    async loadPermalink (params) {
+      const { extent: originalExtent, features: initialFeatureIds } = params
+      if (!initialFeatureIds) return
+      const tasks = initialFeatureIds.split(',').map(fid => this.getFeatureById(fid))
+      const features = await this.fetchFeatures(tasks)
+      this.setFeatures(features)
+
+      if (originalExtent) return
+      if (features.length === 1) {
+        this.$map.ext.zoomToFeature(features[0], { duration: 0 })
+      } else if (features.length > 1) {
+        const extents = features.map(f => f.getGeometry().getExtent())
+        const finalExtent = extents.reduce((prev, current) => extend(prev, current), extents[0])
+        this.$map.ext.fitToExtent(finalExtent, { duration: 0 })
       }
     }
   }
