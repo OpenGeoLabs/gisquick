@@ -34,7 +34,7 @@ msgstr "Popis"
 msgid "Add geometry"
 msgstr "Přidat geometrii"
 
-#: src/components/AttributesTable.vue:115
+#: src/components/AttributesTable.vue:119
 #: src/components/MobileAttributesTable.vue:278
 msgid "Add new feature"
 msgstr "Přidat nový objekt"
@@ -65,7 +65,7 @@ msgstr "Aplikovat"
 msgid "April"
 msgstr "Duben"
 
-#: src/components/measure/Measure.vue:97 src/components/measure/Measure.vue:221
+#: src/components/measure/Measure.vue:97 src/components/measure/Measure.vue:222
 msgid "Area"
 msgstr "Plocha"
 
@@ -73,7 +73,7 @@ msgstr "Plocha"
 msgid "Attributes"
 msgstr "Atributy"
 
-#: src/components/MapTools.vue:102
+#: src/components/MapTools.vue:103
 msgid "Attributes Table"
 msgstr "Tabulka atributů"
 
@@ -108,15 +108,15 @@ msgstr "Zrušit"
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: src/components/measure/Measure.vue:188
+#: src/components/measure/Measure.vue:189
 msgid "Clear"
 msgstr "Vymazat"
 
-#: src/components/measure/Measure.vue:189
+#: src/components/measure/Measure.vue:190
 msgid "Clear all"
 msgstr "Vymazat vše"
 
-#: src/components/AttributesTable.vue:142
+#: src/components/AttributesTable.vue:146
 #: src/components/MobileAttributesTable.vue:323
 msgid "Clear attributes filters"
 msgstr "Vymazat filtry atributů"
@@ -146,7 +146,7 @@ msgstr "Obsah"
 msgid "Continue as Guest"
 msgstr "Pokračovat jako host"
 
-#: src/components/measure/Measure.vue:190
+#: src/components/measure/Measure.vue:191
 msgid "Coordinate systems"
 msgstr "Souřadnicové systémy"
 
@@ -162,6 +162,7 @@ msgstr "Vytvořeno"
 msgid "Current password"
 msgstr "Aktuálne heslo"
 
+#: src/components/content-panel/LayersTree.vue:95
 #: src/components/MobileAttributesTable.vue:95
 msgid "Data"
 msgstr "Data"
@@ -195,13 +196,21 @@ msgstr "Zrušit změny"
 msgid "Display attributions"
 msgstr "Zobrazit autorská práva"
 
-#: src/components/measure/Measure.vue:220
+#: src/components/measure/Measure.vue:221
 msgid "Distance"
 msgstr "Vzdálenost"
 
 #: src/AppNotifications.vue:57
 msgid "Don't show this message again"
 msgstr "Tuto zprávu již nezobrazovat"
+
+#: src/components/content-panel/LayersTree.vue:110
+msgid "Download"
+msgstr "Stáhnout"
+
+#: src/components/AppMenu.vue:64
+msgid "DTM Storage"
+msgstr "Úložiště DTM"
 
 #: src/components/MobileAttributesTable.vue:351
 msgid "Edit"
@@ -240,13 +249,14 @@ msgstr ""
 msgid "equal to"
 msgstr "rovná se"
 
+#: src/components/content-panel/JsonLegend.vue:12
 #: src/components/feature-editor/FeatureEditor.vue:229
 #: src/components/feature-editor/NewFeatureEditor.vue:117
 #: src/ui/ListTable.vue:105 src/ui/Table.vue:211
 msgid "Error"
 msgstr "Chyba"
 
-#: src/components/AttributesTable.vue:126
+#: src/components/AttributesTable.vue:130
 #: src/components/MobileAttributesTable.vue:285
 msgid "Export"
 msgstr "Export"
@@ -255,7 +265,7 @@ msgstr "Export"
 msgid "Failed to change the password!"
 msgstr "Heslo se nepodařilo změnit!"
 
-#: src/components/AttributesTable.vue:448
+#: src/components/AttributesTable.vue:457
 msgid "Failed to load data"
 msgstr "Data se nepodařilo načíst"
 
@@ -277,7 +287,7 @@ msgstr "Únor"
 msgid "File exceeds maximum allowed size"
 msgstr "Soubor překračuje maximální povolenou velikost"
 
-#: src/components/AttributesTable.vue:152
+#: src/components/AttributesTable.vue:156
 #: src/components/AttributeFilter.vue:255
 msgid "Filter"
 msgstr "Filtr"
@@ -286,7 +296,7 @@ msgstr "Filtr"
 msgid "Filter by attribute value"
 msgstr "Filtrovat podle hodnoty atributu"
 
-#: src/components/AttributesTable.vue:317
+#: src/components/AttributesTable.vue:321
 msgid "Filter to visible area"
 msgstr "Filtrovat viditelnou oblast"
 
@@ -303,7 +313,7 @@ msgstr "Formát"
 msgid "Friday"
 msgstr "Pátek"
 
-#: src/components/AppMenu.vue:65
+#: src/components/AppMenu.vue:73
 msgid "Full screen"
 msgstr "Celá obrazovka"
 
@@ -315,7 +325,7 @@ msgstr "Geolokační chyba"
 msgid "greater than"
 msgstr "je větší"
 
-#: src/components/AppMenu.vue:75
+#: src/components/AppMenu.vue:83
 msgid "Help"
 msgstr "Nápověda"
 
@@ -389,7 +399,7 @@ msgstr "Legenda"
 msgid "less than"
 msgstr "je menší"
 
-#: src/components/AttributesTable.vue:319
+#: src/components/AttributesTable.vue:324
 msgid "link"
 msgstr "odkaz"
 
@@ -397,7 +407,7 @@ msgstr "odkaz"
 msgid "Loading"
 msgstr "Načítám"
 
-#: src/components/measure/Measure.vue:219
+#: src/components/measure/Measure.vue:220
 msgid "Location"
 msgstr "Umístění"
 
@@ -418,7 +428,7 @@ msgstr "Březen"
 msgid "May"
 msgstr "Květen"
 
-#: src/components/Identification.vue:181 src/components/measure/Measure.vue:187
+#: src/components/Identification.vue:181 src/components/measure/Measure.vue:188
 #: src/components/MobileAttributesTable.vue:243
 #: src/components/print/Print.vue:86 src/UserDashboard.vue:210
 msgid "Menu"
@@ -436,7 +446,7 @@ msgstr "Můj profil"
 msgid "My Projects"
 msgstr "Moje projekty"
 
-#: src/components/AttributesTable.vue:163
+#: src/components/AttributesTable.vue:167
 #: src/components/MobileAttributesTable.vue:34
 msgid "New Feature"
 msgstr "Nový objekt"
@@ -458,6 +468,10 @@ msgstr "Ne"
 #: src/components/MobileAttributesTable.vue:137
 msgid "No Data"
 msgstr "Žádná data"
+
+#: src/components/AttributesTable.vue:323
+msgid "No geometry"
+msgstr "Žádná geometrie"
 
 #: src/components/feature-editor/ImageInput.vue:75
 msgid "No image assigned"
@@ -533,7 +547,7 @@ msgstr "Výstupní formát"
 msgid "Overlay Layers"
 msgstr "Překryvné vrstvy"
 
-#: src/components/AttributesTable.vue:318
+#: src/components/AttributesTable.vue:322
 #: src/components/MobileAttributesTable.vue:290
 msgid "Page size"
 msgstr "Počet řádků"
@@ -550,7 +564,7 @@ msgstr "Heslo"
 msgid "Perimeter"
 msgstr "Obvod"
 
-#: src/components/AppMenu.vue:71
+#: src/components/AppMenu.vue:79
 msgid "Permalink"
 msgstr "Permalink"
 
@@ -679,7 +693,7 @@ msgstr "Úterý"
 msgid "Type"
 msgstr "Typ"
 
-#: src/components/measure/Measure.vue:191
+#: src/components/measure/Measure.vue:192
 msgid "Units"
 msgstr "Jednotky"
 
@@ -714,6 +728,10 @@ msgstr "Uživatelské jméno"
 msgid "Username / Email"
 msgstr "Uživatelské jméno / Email"
 
+#: src/components/content-panel/LayersTree.vue:101
+msgid "Visit"
+msgstr "Navštívit"
+
 #: src/IntroPage.vue:10
 msgid "Web platform for publishing your maps from QGIS desktop"
 msgstr ""
@@ -743,17 +761,17 @@ msgctxt "adverb"
 msgid "Next"
 msgstr "Dále"
 
-#: src/components/MapTools.vue:64
+#: src/components/MapTools.vue:65
 msgctxt "noun"
 msgid "Identification"
 msgstr "Identifikace"
 
-#: src/components/MapTools.vue:80
+#: src/components/MapTools.vue:81
 msgctxt "noun"
 msgid "Measure"
 msgstr "Měření"
 
-#: src/components/MapTools.vue:89
+#: src/components/MapTools.vue:90
 msgctxt "noun"
 msgid "Print"
 msgstr "Tisk"

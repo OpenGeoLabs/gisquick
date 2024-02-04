@@ -84,7 +84,7 @@ const renderItem = (h, item) => [
 const renderLinkItem = (h, item) => {
   const content = renderItem(h, item)
   if (!item.disabled) {
-    return h('a', { staticClass: 'f-row-ac f-grow', attrs: { href: item.link } }, content)
+    return h('a', { staticClass: 'f-row-ac f-grow', attrs: { href: item.link, target: '_blank' } }, content)
   }
   return content
 }

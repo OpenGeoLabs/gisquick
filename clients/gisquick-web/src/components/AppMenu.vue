@@ -57,6 +57,14 @@ export default {
       }]
     },
     items () {
+      const customItems = []
+      if (this.user && !this.user.is_guest) {
+        customItems.push({
+          key: 'dtm-link',
+          text: this.$gettext('DTM Storage'),
+          link: 'https://dtm.mapotip.cz/'
+        })
+      }
       return [
         ...this.userMenuItems,
         ...this.extraItems,
@@ -74,7 +82,8 @@ export default {
           key: 'help',
           text: this.$gettext('Help'),
           action: this.openHelp
-        }
+        },
+        ...customItems
       ]
     }
   },
