@@ -60,7 +60,8 @@ export default {
       scales: config.scales,
       owsUrl: config.ows_url,
       legendUrl: config.legend_url,
-      mapcacheUrl: config.mapcache_url
+      mapcacheUrl: config.mapcache_url,
+      mapTiling: config.map_tiling
     }
     const map = createMap(mapConfig, { zoom: false, attribution: false, rotate: false })
     Vue.prototype.$map = map
@@ -86,6 +87,7 @@ export default {
     const map = this.$map
     map.setTarget(this.$refs.mapEl)
 
+    const precision = this.project.config.units.position_precision
     // extra map functions
     map.ext = {
       visibleAreaPadding: () => {
@@ -127,7 +129,6 @@ export default {
         const toolParams = this.$refs.tools.getActiveComponent()?.getPermalinkParams?.()
         const extent = map.ext.visibleAreaExtent()
         const overlays = this.visibleLayers.filter(l => !l.hidden).map(l => l.name)
-        const precision = this.project.config.units.position_precision
         const params = {
           extent: extent.map(v => round(v, precision)).join(','),
           overlays: overlays.join(','),
@@ -139,7 +140,8 @@ export default {
         Object.keys(params).forEach(name => url.searchParams.set(name, params[name]))
         return decodeURIComponent(url.toString()) // unescaped url
         // return url.toString()
-      }
+      },
+      formatCoordinate: v => round(v, precision)
     }
     const extentParam = this.queryParams.extent?.split(',').map(parseFloat)
     const extent = extentParam || this.project.config.zoom_extent || this.project.config.project_extent

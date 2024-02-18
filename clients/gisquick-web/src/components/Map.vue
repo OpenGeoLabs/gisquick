@@ -108,6 +108,7 @@ import ScaleLine from '@/components/ol/ScaleLine.vue'
 import MapTools from '@/components/MapTools.vue'
 import AppMenu from '@/components/AppMenu.vue'
 import SearchTool from '@/components/MapotipSearch.vue'
+// import SearchTool from '@/components/SearchTool.vue'
 
 export default {
   name: 'Map',
@@ -242,7 +243,11 @@ export default {
     grid-row: 1 / 2;
     align-self: start;
     justify-self: start;
+    align-items: start;
     z-index: 2;
+    .search-tool {
+      min-height: 35px;
+    }
   }
   .panel-toggle {
     grid-column: 2 / 3;

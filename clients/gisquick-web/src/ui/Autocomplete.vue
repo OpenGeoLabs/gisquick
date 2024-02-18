@@ -36,6 +36,9 @@
       </v-btn>
       <slot name="append"/>
     </div>
+    <template v-slot:error="scope">
+      <slot name="error" v-bind="scope"/>
+    </template>
     <popup-content
       backhandler
       :align="align"
@@ -338,7 +341,7 @@ export default {
     },
     clear () {
       this.text = ''
-      if (!this.multi) {
+      if (!this.multi && this.value) {
         this.$emit('input', null)
       }
       this.$emit('clear')
