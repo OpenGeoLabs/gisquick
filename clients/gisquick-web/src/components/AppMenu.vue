@@ -109,7 +109,7 @@ export default {
       const height = parseInt(window.innerWidth * 0.85)
       const left = parseInt((window.innerWidth - width) / 2)
       const params = `left=${left},width=${width},height=${height},resizable=yes,menubar=no,scrollbars=yes,status=no`
-      const link = 'https://www.mapotip.cz/napoveda.html'
+      const link = 'https://www.mapotip.com/podpora'
       window.open(link, '_blank', params)
     },
     createPermalink () {

@@ -210,7 +210,7 @@ msgstr "Stiahnuť"
 
 #: src/components/AppMenu.vue:64
 msgid "DTM Storage"
-msgstr "Úložisko DTM"
+msgstr "Úložisko dát"
 
 #: src/components/MobileAttributesTable.vue:351
 msgid "Edit"
@@ -327,7 +327,7 @@ msgstr "je väčší"
 
 #: src/components/AppMenu.vue:83
 msgid "Help"
-msgstr "Dokumentácia"
+msgstr "Vzdialená podpora"
 
 #: src/components/content-panel/LayersTree.vue:87
 msgid "Identification"
