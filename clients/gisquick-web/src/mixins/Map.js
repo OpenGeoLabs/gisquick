@@ -33,7 +33,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['project', 'activeTool']),
+    ...mapState(['app', 'project', 'activeTool']),
     ...mapGetters(['visibleBaseLayer', 'visibleLayers'])
   },
   watch: {
@@ -135,8 +135,11 @@ export default {
           baselayer: this.visibleBaseLayer?.name ?? '',
           ...toolParams
         }
+        if (location.pathname === '/') {
+          params['PROJECT'] = this.project.config.name
+        }
         const url = new URL(location.href)
-        Array.from(url.searchParams.keys()).filter(k => k !== 'PROJECT').forEach(k => url.searchParams.delete(k))
+        Array.from(url.searchParams.keys()).forEach(k => url.searchParams.delete(k))
         Object.keys(params).forEach(name => url.searchParams.set(name, params[name]))
         return decodeURIComponent(url.toString()) // unescaped url
         // return url.toString()
