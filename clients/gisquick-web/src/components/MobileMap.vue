@@ -87,7 +87,8 @@ import MapTools from '@/components/MapTools.vue'
 import AppMenu from '@/components/AppMenu.vue'
 import SwipeContainer from '@/components/SwipeContainer.vue'
 import LocationTool from '@/components/LocationTool.vue'
-import SearchTool from '@/components/SearchTool.vue'
+import SearchTool from '@/components/MapotipSearch.vue'
+// import SearchTool from '@/components/SearchTool.vue'
 
 export default {
   name: 'Map',
@@ -234,6 +235,7 @@ export default {
     justify-self: start;
     margin-left: 4px;
     z-index: 1;
+    max-width: calc(100% - 8px);
   }
 }
 

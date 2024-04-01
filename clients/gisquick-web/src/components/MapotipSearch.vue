@@ -27,6 +27,7 @@
       <v-select
         v-if="parcelsLayer"
         class="flat"
+        align="ll,rr;bb,tt"
         :items="sources"
         v-model="source"
         @input="clear"
@@ -262,12 +263,22 @@ export default {
   --border-color: #5a5a5a;
   border-radius: 4px;
   background-color: #333;
+  overflow: hidden;
+  .toolbar {
+    overflow: hidden;
+  }
   .btn {
     width: 32px;
     height: 32px;
   }
   .i-field.autocomplete {
     min-width: 280px;
+    @media (max-width: 500px) {
+      min-width: 0;
+      flex-shrink: 1;
+      width: 280px;
+      overflow: hidden;
+    }
     ::v-deep {
       .input {
         height: 28px;
@@ -278,6 +289,7 @@ export default {
     line-height: 28px;
     min-width: 80px;
     font-size: 15px;
+    flex-shrink: 0;
     ::v-deep {
       .input {
         height: 28px;
