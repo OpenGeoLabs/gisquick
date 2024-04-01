@@ -25,17 +25,18 @@ msgid "A new version of the map application is available"
 msgstr "K dispozícii je nová verzia mapovej aplikácie"
 
 #: src/components/content-panel/BaseLayersTree.vue:43
-#: src/components/content-panel/LayersTree.vue:91
+#: src/components/content-panel/LayersTree.vue:99
 #: src/components/content-panel/TopicsList.vue:36
 msgid "Abstract"
 msgstr "Popis"
 
-#: src/components/feature-editor/GeometryEditor.vue:10
+#: src/components/feature-editor/GeometryEditor.vue:16
+#: src/components/feature-editor/GeometryEditor.vue:51
 msgid "Add geometry"
 msgstr "Pridať geometriu"
 
-#: src/components/AttributesTable.vue:119
-#: src/components/MobileAttributesTable.vue:278
+#: src/components/AttributesTable.vue:122
+#: src/components/MobileAttributesTable.vue:280
 msgid "Add new feature"
 msgstr "Pridať nový objekt"
 
@@ -69,7 +70,7 @@ msgstr "Apríl"
 msgid "Area"
 msgstr "Plocha"
 
-#: src/components/MobileAttributesTable.vue:330
+#: src/components/MobileAttributesTable.vue:332
 msgid "Attributes"
 msgstr "Atribúty"
 
@@ -99,7 +100,7 @@ msgid "between"
 msgstr "od - do"
 
 #: src/components/feature-editor/ImageInput.vue:156
-#: src/components/MobileAttributesTable.vue:164
+#: src/components/MobileAttributesTable.vue:166
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -116,8 +117,8 @@ msgstr "Zmazať"
 msgid "Clear all"
 msgstr "Zmazať všetko"
 
-#: src/components/AttributesTable.vue:146
-#: src/components/MobileAttributesTable.vue:323
+#: src/components/AttributesTable.vue:149
+#: src/components/MobileAttributesTable.vue:325
 msgid "Clear attributes filters"
 msgstr "Vymazať filtre atribútov"
 
@@ -162,17 +163,17 @@ msgstr "Vytvorené"
 msgid "Current password"
 msgstr "Aktuálne heslo"
 
-#: src/components/content-panel/LayersTree.vue:95
-#: src/components/MobileAttributesTable.vue:95
+#: src/components/content-panel/LayersTree.vue:103
+#: src/components/MobileAttributesTable.vue:96
 msgid "Data"
 msgstr "Data"
 
-#: src/components/MobileAttributesTable.vue:44
+#: src/components/MobileAttributesTable.vue:45
 msgid "Data Filters"
 msgstr "Dátové filtre"
 
-#: src/components/feature-editor/FeatureEditor.vue:89
-#: src/components/feature-editor/NewFeatureEditor.vue:43
+#: src/components/feature-editor/FeatureEditor.vue:90
+#: src/components/feature-editor/NewFeatureEditor.vue:44
 msgid "Data updated"
 msgstr "Údaje aktualizované"
 
@@ -180,15 +181,24 @@ msgstr "Údaje aktualizované"
 msgid "December"
 msgstr "December"
 
-#: src/components/feature-editor/FeatureEditor.vue:98
+#: src/components/feature-editor/FeatureEditor.vue:115
+#: src/components/feature-editor/FeatureEditor.vue:99
 msgid "Delete current object?"
 msgstr "Odstrániť aktuálny objekt?"
 
-#: src/components/feature-editor/FeatureEditor.vue:55
+#: src/components/feature-editor/FeatureEditor.vue:56
 msgid "Delete object"
 msgstr "Odstrániť objekt"
 
-#: src/components/feature-editor/FeatureEditor.vue:64
+#: src/components/feature-editor/GeometryEditor.vue:371
+msgid "Delete selected geometry"
+msgstr "Odstrániť vybratú geometriu"
+
+#: src/components/feature-editor/GeometryEditor.vue:370
+msgid "Delete selected nodes"
+msgstr "Odstrániť vybrané uzly"
+
+#: src/components/feature-editor/FeatureEditor.vue:65
 msgid "Discard changes"
 msgstr "Zrušiť zmeny"
 
@@ -204,7 +214,7 @@ msgstr "Vzdialenosť"
 msgid "Don't show this message again"
 msgstr "Túto správu už nezobrazovať"
 
-#: src/components/content-panel/LayersTree.vue:110
+#: src/components/content-panel/LayersTree.vue:118
 msgid "Download"
 msgstr "Stiahnuť"
 
@@ -212,11 +222,11 @@ msgstr "Stiahnuť"
 msgid "DTM Storage"
 msgstr "Úložisko dát"
 
-#: src/components/MobileAttributesTable.vue:351
+#: src/components/MobileAttributesTable.vue:354
 msgid "Edit"
 msgstr "Upraviť"
 
-#: src/components/MobileAttributesTable.vue:142
+#: src/components/MobileAttributesTable.vue:143
 msgid "Edit feature"
 msgstr "Upraviť objekt"
 
@@ -250,14 +260,15 @@ msgid "equal to"
 msgstr "rovná sa"
 
 #: src/components/content-panel/JsonLegend.vue:12
-#: src/components/feature-editor/FeatureEditor.vue:229
-#: src/components/feature-editor/NewFeatureEditor.vue:117
-#: src/ui/ListTable.vue:105 src/ui/Table.vue:211
+#: src/components/feature-editor/FeatureEditor.vue:251
+#: src/components/feature-editor/NewFeatureEditor.vue:119
+#: src/components/SearchTool.vue:257 src/ui/ListTable.vue:105
+#: src/ui/Table.vue:211
 msgid "Error"
 msgstr "Chyba"
 
-#: src/components/AttributesTable.vue:130
-#: src/components/MobileAttributesTable.vue:285
+#: src/components/AttributesTable.vue:133
+#: src/components/MobileAttributesTable.vue:287
 msgid "Export"
 msgstr "Export"
 
@@ -265,7 +276,7 @@ msgstr "Export"
 msgid "Failed to change the password!"
 msgstr "Heslo sa nepodarilo zmeniť!"
 
-#: src/components/AttributesTable.vue:457
+#: src/components/AttributesTable.vue:465
 msgid "Failed to load data"
 msgstr "Údaje sa nepodarilo sa načítať"
 
@@ -287,7 +298,7 @@ msgstr "Február"
 msgid "File exceeds maximum allowed size"
 msgstr "Súbor presahuje maximálnu povolenú veľkosť"
 
-#: src/components/AttributesTable.vue:156
+#: src/components/AttributesTable.vue:159
 #: src/components/AttributeFilter.vue:255
 msgid "Filter"
 msgstr "Filter"
@@ -296,7 +307,7 @@ msgstr "Filter"
 msgid "Filter by attribute value"
 msgstr "Filtrovať podľa hodnoty atribútu"
 
-#: src/components/AttributesTable.vue:321
+#: src/components/AttributesTable.vue:324
 msgid "Filter to visible area"
 msgstr "Filter viditeľnej oblasti"
 
@@ -329,7 +340,7 @@ msgstr "je väčší"
 msgid "Help"
 msgstr "Vzdialená podpora"
 
-#: src/components/content-panel/LayersTree.vue:87
+#: src/components/content-panel/LayersTree.vue:95
 msgid "Identification"
 msgstr "Identifikácia"
 
@@ -338,7 +349,7 @@ msgid "Image will be saved in lower resolution"
 msgstr "Obrázok bude uložený v nižšom rozlíšení"
 
 #: src/components/Identification.vue:155
-#: src/components/MobileAttributesTable.vue:345
+#: src/components/MobileAttributesTable.vue:348
 msgid "Info Panel"
 msgstr "Infopanel"
 
@@ -380,7 +391,7 @@ msgid "Keywords list"
 msgstr "Kľúčové slová"
 
 #: src/components/Identification.vue:180
-#: src/components/MobileAttributesTable.vue:241
+#: src/components/MobileAttributesTable.vue:243
 msgid "Layer"
 msgstr "Vrstva"
 
@@ -400,7 +411,7 @@ msgstr "Legenda"
 msgid "less than"
 msgstr "je menší"
 
-#: src/components/AttributesTable.vue:324
+#: src/components/AttributesTable.vue:327
 msgid "link"
 msgstr "odkaz"
 
@@ -430,7 +441,7 @@ msgid "May"
 msgstr "Máj"
 
 #: src/components/Identification.vue:181 src/components/measure/Measure.vue:188
-#: src/components/MobileAttributesTable.vue:243
+#: src/components/MobileAttributesTable.vue:245
 #: src/components/print/Print.vue:86 src/UserDashboard.vue:210
 msgid "Menu"
 msgstr "Menu"
@@ -447,7 +458,7 @@ msgstr "Môj profil"
 msgid "My Projects"
 msgstr "Moje projekty"
 
-#: src/components/AttributesTable.vue:167
+#: src/components/AttributesTable.vue:170
 #: src/components/MobileAttributesTable.vue:34
 msgid "New Feature"
 msgstr "Nový objekt"
@@ -462,25 +473,23 @@ msgid ""
 "own maps!"
 msgstr ""
 
-#: src/App.vue:47 src/components/feature-editor/FeatureEditor.vue:102
+#: src/App.vue:47 src/components/feature-editor/FeatureEditor.vue:103
+#: src/components/feature-editor/FeatureEditor.vue:119
+#: src/components/feature-editor/GeometryEditor.vue:156
 msgid "No"
 msgstr "Nie"
 
-#: src/components/MobileAttributesTable.vue:137
+#: src/components/MobileAttributesTable.vue:138
 msgid "No Data"
 msgstr "Žiadne dáta"
 
-#: src/components/AttributesTable.vue:323
+#: src/components/AttributesTable.vue:54 src/components/AttributesTable.vue:326
 msgid "No geometry"
 msgstr "Žiadna geometria"
 
 #: src/components/feature-editor/ImageInput.vue:75
 msgid "No image assigned"
 msgstr "Žiadny obrázok"
-
-#: src/components/feature-editor/GeometryEditor.vue:22
-msgid "Node tool"
-msgstr "Editácia bodov"
 
 #: src/components/AttributeFilter.vue:269
 msgid "not empty"
@@ -548,8 +557,8 @@ msgstr "Výstupný formát"
 msgid "Overlay Layers"
 msgstr "Prekryvné vrstvy"
 
-#: src/components/AttributesTable.vue:322
-#: src/components/MobileAttributesTable.vue:290
+#: src/components/AttributesTable.vue:325
+#: src/components/MobileAttributesTable.vue:292
 msgid "Page size"
 msgstr "Počet riadkov"
 
@@ -607,7 +616,7 @@ msgstr "Rozlíšenie"
 msgid "Saturday"
 msgstr "Sobota"
 
-#: src/components/feature-editor/FeatureEditor.vue:74
+#: src/components/feature-editor/FeatureEditor.vue:75
 msgid "Save changes"
 msgstr "Uložiť zmeny"
 
@@ -615,9 +624,13 @@ msgstr "Uložiť zmeny"
 msgid "Scale"
 msgstr "Mierka"
 
-#: src/components/MapotipSearch.vue:103
+#: src/components/MapotipSearch.vue:103 src/components/SearchTool.vue:125
 msgid "Search address"
 msgstr "Vyhľadať adresu"
+
+#: src/components/SearchTool.vue:126
+msgid "Search location"
+msgstr "Vyhľadajte miesto"
 
 #: src/components/MapotipSearch.vue:104
 msgid "Search parcel"
@@ -627,7 +640,7 @@ msgstr "Vyhľadať parcelu"
 msgid "Select"
 msgstr "Vybrať"
 
-#: src/components/MobileAttributesTable.vue:242
+#: src/components/MobileAttributesTable.vue:244
 msgid "Select layer"
 msgstr "Vyberte vrstvu"
 
@@ -690,9 +703,14 @@ msgstr "Celková dĺžka"
 msgid "Tuesday"
 msgstr "Utorok"
 
-#: src/components/content-panel/LayersTree.vue:76
+#: src/components/content-panel/LayersTree.vue:84
 msgid "Type"
 msgstr "Typ"
+
+#: src/components/feature-editor/GeometryEditor.vue:37
+#: src/components/feature-editor/GeometryEditor.vue:72
+msgid "Undo"
+msgstr "Vrátiť späť"
 
 #: src/components/measure/Measure.vue:192
 msgid "Units"
@@ -706,8 +724,8 @@ msgstr "do"
 msgid "Updated"
 msgstr "Aktualizované"
 
-#: src/components/feature-editor/FeatureEditor.vue:88
-#: src/components/feature-editor/NewFeatureEditor.vue:42
+#: src/components/feature-editor/FeatureEditor.vue:89
+#: src/components/feature-editor/NewFeatureEditor.vue:43
 msgid "Updating data"
 msgstr "Údaje sa aktualizujú"
 
@@ -729,7 +747,7 @@ msgstr "Používateľské meno"
 msgid "Username / Email"
 msgstr "Používateľské meno / Email"
 
-#: src/components/content-panel/LayersTree.vue:101
+#: src/components/content-panel/LayersTree.vue:109
 msgid "Visit"
 msgstr "Navštíviť"
 
@@ -745,7 +763,9 @@ msgstr "Streda"
 msgid "Welcome to the Gisquick"
 msgstr ""
 
-#: src/App.vue:50 src/components/feature-editor/FeatureEditor.vue:105
+#: src/App.vue:50 src/components/feature-editor/FeatureEditor.vue:106
+#: src/components/feature-editor/FeatureEditor.vue:122
+#: src/components/feature-editor/GeometryEditor.vue:159
 msgid "Yes"
 msgstr "Áno"
 
@@ -753,7 +773,7 @@ msgstr "Áno"
 msgid "You didn't publish any project yet!"
 msgstr "Zatiaľ ste nevytvorili žiaden projekt!"
 
-#: src/components/MobileAttributesTable.vue:339
+#: src/components/MobileAttributesTable.vue:341
 msgid "Zoom to"
 msgstr "Priblížiť"
 
@@ -791,6 +811,9 @@ msgstr "Otvoriť"
 msgctxt "verb"
 msgid "Update"
 msgstr "Aktualizovať"
+
+#~ msgid "Node tool"
+#~ msgstr "Editácia bodov"
 
 #~ msgid "Last segment"
 #~ msgstr "Posledný segment"
