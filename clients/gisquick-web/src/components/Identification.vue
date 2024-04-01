@@ -43,7 +43,7 @@
       <portal to="right-panel">
         <info-panel
           v-if="displayMode === 'info-panel' || displayMode === 'both'"
-          class="mx-1 mb-2 shadow-2"
+          class="mx-1 mb-2"
           :features="displayedFeatures"
           :layer="displayedLayer"
           :layers="resultLayers"
@@ -164,10 +164,10 @@ export default {
       return this.selection && this.layersFeatures.find(i => i.layer.name === this.selection.layer)
     },
     displayedLayer () {
-      return this.resultItem && this.resultItem.layer
+      return this.resultItem?.layer
     },
     displayedFeatures () {
-      return this.resultItem && this.resultItem.features
+      return this.resultItem?.features
     },
     selectedFeature () {
       return this.selection && this.displayedFeatures[this.selection.featureIndex]
@@ -376,13 +376,14 @@ export default {
         this.resultItem.features = currentLayerFeatures
         this.selection.featureIndex = 0
       } else {
-        this.layersFeatures = this.layersFeatures.filter(i => i.layer !== this.resultItem)
+        this.layersFeatures = this.layersFeatures.filter(i => i.layer !== this.resultItem.layer)
         if (this.layersFeatures.length) {
           this.selection = {
             layer: this.layersFeatures[0].layer.name,
             featureIndex: 0
           }
         } else {
+          // this.clearResults()
           this.selection = null
         }
       }

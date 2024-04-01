@@ -42,15 +42,18 @@
           @clear="clearFilter(column.key)"
         />
       </template>
-      <template v-slot:cell(actions)="{ row }">
+      <template v-slot:cell(actions)="{ row, item }">
         <div class="f-row-ac">
-          <v-btn v-if="features[row].getGeometry()" class="icon flat m-0" @click="zoomToFeature(features[row])">
+          <v-btn
+            class="icon flat m-0"
+            :disabled="!item.geometry"
+            @click="zoomToFeature(features[row])"
+          >
             <v-icon name="zoom-to"/>
+            <v-tooltip v-if="!item.geometry" slot="tooltip">
+              <translate>No geometry</translate>
+            </v-tooltip>
           </v-btn>
-          <v-btn v-else class="icon flat m-0" disabled :title="tr.NoGeometry">
-            <v-icon name="zoom-to"/>
-          </v-btn>
-
           <v-btn class="icon flat my-0 mr-0" @click="showInfoPanel = true">
             <v-icon name="circle-i-outline"/>
           </v-btn>
@@ -181,7 +184,7 @@
 
       <info-panel
         v-else-if="showInfoPanel"
-        class="mx-1 mb-2 shadow-2"
+        class="mx-1 mb-2"
         :features="features"
         :layer="layer"
         :selected="infoPanelSelection"
@@ -413,8 +416,13 @@ export default {
       }
       return { geom, filters }
     },
-    async fetchFeatures (page = 1, lastQuery = false) {
+    readFeatures (data) {
       const mapProjection = this.$map.getView().getProjection().getCode()
+      const parser = new GeoJSON()
+      const features = parser.readFeatures(data, { featureProjection: mapProjection })
+      return formatFeatures(this.project, this.layer, features)
+    },
+    async fetchFeatures (page = 1, lastQuery = false) {
       let query
       if (lastQuery) {
         query = this.pagination.query
@@ -460,12 +468,7 @@ export default {
         this.loading = false
       }
 
-      const parser = new GeoJSON()
-
-      // const features = ShallowArray(parser.readFeatures(geojson, { featureProjection: mapProjection }))
-      let features = parser.readFeatures(geojson, { featureProjection: mapProjection })
-      features = Object.freeze(formatFeatures(this.project, this.layer, features))
-
+      const features = Object.freeze(this.readFeatures(geojson))
       const selectedIndex = this.selectedFeature ? features.findIndex(f => f.getId() === this.selectedFeature.getId()) : -1
       this.selectedFeatureIndex = selectedIndex !== -1 ? selectedIndex : 0
       this.$store.commit('attributeTable/features', features)
@@ -483,11 +486,26 @@ export default {
     zoomToFeature (feature) {
       this.$map.ext.zoomToFeature(feature)
     },
-    newFeatureAdded () {
+    async getFeatureById (fid) {
+      const params = {
+        VERSION: '1.1.0',
+        SERVICE: 'WFS',
+        REQUEST: 'GetFeature',
+        OUTPUTFORMAT: 'GeoJSON',
+        FEATUREID: fid,
+      }
+      const { data } = await this.$http.get(this.project.config.ows_url, { params })
+      return this.readFeatures(data)
+    },
+    async newFeatureAdded (fid) {
       setTimeout(() => {
         this.newFeatureMode = false
       }, 1500)
-      this.fetchFeatures(this.pagination.page, true)
+      const added = await this.getFeatureById(fid)
+      const features = Object.freeze([...this.features, ...added])
+      this.$store.commit('attributeTable/features', features)
+      this.selectedFeatureIndex = features.length - 1
+      this.showInfoPanel = true
       this.$map.ext.refreshOverlays()
     },
     clearAllFilters () {

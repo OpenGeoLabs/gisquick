@@ -21,8 +21,9 @@
         <geometry-editor
           :editor.sync="references.geometryEditor"
           :geometry-type="geomType"
+          :geom-toolbar="geomToolbar"
         />
-        <div class="v-separator"/>
+        <div v-if="!geomToolbar" class="f-grow"/>
         <v-btn
           class="icon"
           :disabled=" status === 'loading'"
@@ -33,7 +34,7 @@
       </div>
     </portal>
     <transition name="fade">
-      <div v-if="status" class="notification f-row">
+      <div v-if="status" class="status-notification f-row">
         <div
           class="content shadow-2 f-row-ac p-2"
           :class="status"
@@ -64,7 +65,8 @@ export default {
   components: { GeometryEditor, GenericEditForm, ProgressAction },
   props: {
     layer: Object,
-    toolbarTarget: String
+    toolbarTarget: String,
+    geomToolbar: String
   },
   data () {
     return {
@@ -165,10 +167,13 @@ export default {
 
       this.statusController.set('loading', 1000)
       wfsTransaction(this.project.config.ows_url, this.layer.name, { inserts: [f] })
-        .then(async () => {
+        .then(async ( { data }) => {
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(data, 'application/xml')
+          const fid = doc.querySelector('InsertResults > Feature FeatureId')?.getAttribute('fid')
           await this.statusController.set('success', 1500)
           this.statusController.set(null, 100)
-          this.$emit('edit')
+          this.$emit('edit', fid)
         })
         .catch(err => {
           this.showError(err.message)
@@ -180,13 +185,14 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar {
+  padding: 0 2px;
+  --gutter: 3px 2px;
   ::v-deep .btn.icon {
-    margin: 3px 2px;
     width: 26px;
     height: 26px;
   }
 }
-.notification {
+.status-notification {
   position: absolute;
   inset: 0;
   align-items: center;
