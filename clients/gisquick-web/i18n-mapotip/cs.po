@@ -44,7 +44,7 @@ msgstr "Přidat nový objekt"
 msgid "Add to Home screen?"
 msgstr "Přidat na plochu?"
 
-#: src/components/MapotipSearch.vue:77
+#: src/components/MapotipSearch.vue:78
 msgid "Addresses"
 msgstr "Adresy"
 
@@ -561,7 +561,7 @@ msgstr "Překryvné vrstvy"
 msgid "Page size"
 msgstr "Počet řádků"
 
-#: src/components/MapotipSearch.vue:80
+#: src/components/MapotipSearch.vue:81
 msgid "Parcels"
 msgstr "Parcely"
 
@@ -623,7 +623,7 @@ msgstr "Uložit změny"
 msgid "Scale"
 msgstr "Měřítko"
 
-#: src/components/MapotipSearch.vue:103 src/components/SearchTool.vue:125
+#: src/components/MapotipSearch.vue:104 src/components/SearchTool.vue:125
 msgid "Search address"
 msgstr "Vyhledat adresu"
 
@@ -631,7 +631,7 @@ msgstr "Vyhledat adresu"
 msgid "Search location"
 msgstr "Vyhledat místo"
 
-#: src/components/MapotipSearch.vue:104
+#: src/components/MapotipSearch.vue:105
 msgid "Search parcel"
 msgstr "Vyhledat parcelu"
 
@@ -642,6 +642,10 @@ msgstr "Vybrat"
 #: src/components/MobileAttributesTable.vue:244
 msgid "Select layer"
 msgstr "Vyberte vrstvu"
+
+#: src/components/feature-editor/GeometryEditor.vue:485
+msgid "Selected geometry was deleted"
+msgstr "Vybraná geometrie byla smazána"
 
 #: src/ui/DatePicker.vue:180
 msgid "September"

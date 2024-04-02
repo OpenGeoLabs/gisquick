@@ -34,7 +34,7 @@ msgstr ""
 msgid "Add to Home screen?"
 msgstr ""
 
-#: src/components/MapotipSearch.vue:77
+#: src/components/MapotipSearch.vue:78
 msgid "Addresses"
 msgstr ""
 
@@ -562,7 +562,7 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: src/components/MapotipSearch.vue:80
+#: src/components/MapotipSearch.vue:81
 msgid "Parcels"
 msgstr ""
 
@@ -628,7 +628,7 @@ msgstr ""
 msgid "Scale"
 msgstr ""
 
-#: src/components/MapotipSearch.vue:103
+#: src/components/MapotipSearch.vue:104
 #: src/components/SearchTool.vue:125
 msgid "Search address"
 msgstr ""
@@ -637,7 +637,7 @@ msgstr ""
 msgid "Search location"
 msgstr ""
 
-#: src/components/MapotipSearch.vue:104
+#: src/components/MapotipSearch.vue:105
 msgid "Search parcel"
 msgstr ""
 
@@ -647,6 +647,10 @@ msgstr ""
 
 #: src/components/MobileAttributesTable.vue:244
 msgid "Select layer"
+msgstr ""
+
+#: src/components/feature-editor/GeometryEditor.vue:485
+msgid "Selected geometry was deleted"
 msgstr ""
 
 #: src/ui/DatePicker.vue:180
