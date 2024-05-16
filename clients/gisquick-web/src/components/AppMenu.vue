@@ -62,7 +62,7 @@ export default {
         customItems.push({
           key: 'dtm-link',
           text: this.$gettext('DTM Storage'),
-          link: 'https://dtm.mapotip.cz/'
+          link: 'https://uloziste.mapotip.cz/'
         })
       }
       return [
