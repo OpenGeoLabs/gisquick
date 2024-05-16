@@ -186,7 +186,6 @@ export default {
 <style lang="scss" scoped>
 .toolbar {
   padding: 0 2px;
-  --gutter: 3px 2px;
   ::v-deep .btn.icon {
     width: 26px;
     height: 26px;
@@ -205,7 +204,8 @@ export default {
     // color: var(--icon-color);
   }
   .content {
-    width: 150px;
+    min-width: 150px;
+    max-width: 250px;
     font-size: 14px;
     border-radius: 3px;
     margin: 6px;
