@@ -25,7 +25,7 @@ msgstr ""
 msgid "Add geometry"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:122
+#: ./src/components/AttributesTable.vue:126
 #: src/components/MobileAttributesTable.vue:280
 msgid "Add new feature"
 msgstr ""
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-#: src/components/MapTools.vue:103
+#: src/components/MapTools.vue:104
 msgid "Attributes Table"
 msgstr ""
 
@@ -87,8 +87,8 @@ msgstr ""
 msgid "Base Layers"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:258
-#: src/components/AttributeFilter.vue:270
+#: src/components/AttributeFilter.vue:264
+#: src/components/AttributeFilter.vue:276
 msgid "between"
 msgstr ""
 
@@ -111,7 +111,7 @@ msgstr ""
 msgid "Clear all"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:149
+#: ./src/components/AttributesTable.vue:153
 #: src/components/MobileAttributesTable.vue:325
 msgid "Clear attributes filters"
 msgstr ""
@@ -131,7 +131,7 @@ msgstr ""
 msgid "Confirm password"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:267
+#: src/components/AttributeFilter.vue:273
 msgid "contain"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgstr ""
 msgid "Email was sent to given email address."
 msgstr ""
 
-#: src/components/AttributeFilter.vue:268
+#: src/components/AttributeFilter.vue:274
 msgid "empty"
 msgstr ""
 
@@ -250,8 +250,8 @@ msgstr ""
 msgid "Enter your email address below and we will email instructions for setting a new password."
 msgstr ""
 
-#: src/components/AttributeFilter.vue:257
-#: src/components/AttributeFilter.vue:261
+#: src/components/AttributeFilter.vue:263
+#: src/components/AttributeFilter.vue:267
 msgid "equal to"
 msgstr ""
 
@@ -264,7 +264,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:133
+#: ./src/components/AttributesTable.vue:137
 #: src/components/MobileAttributesTable.vue:287
 msgid "Export"
 msgstr ""
@@ -273,7 +273,7 @@ msgstr ""
 msgid "Failed to change the password!"
 msgstr ""
 
-#: src/components/AttributesTable.vue:465
+#: src/components/AttributesTable.vue:451
 msgid "Failed to load data"
 msgstr ""
 
@@ -296,16 +296,16 @@ msgstr ""
 msgid "File exceeds maximum allowed size"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:159
-#: src/components/AttributeFilter.vue:255
+#: ./src/components/AttributesTable.vue:163
+#: src/components/AttributeFilter.vue:261
 msgid "Filter"
 msgstr ""
 
-#: ./src/components/AttributeFilter.vue:45
+#: ./src/components/AttributeFilter.vue:48
 msgid "Filter by attribute value"
 msgstr ""
 
-#: src/components/AttributesTable.vue:324
+#: src/components/AttributesTable.vue:309
 msgid "Filter to visible area"
 msgstr ""
 
@@ -331,7 +331,7 @@ msgstr ""
 msgid "Geolocation Error"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:263
+#: src/components/AttributeFilter.vue:269
 msgid "greater than"
 msgstr ""
 
@@ -352,15 +352,15 @@ msgstr ""
 msgid "Info Panel"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:273
+#: src/components/AttributeFilter.vue:279
 msgid "Integer"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:275
+#: src/components/AttributeFilter.vue:281
 msgid "Integer,Integer"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:274
+#: src/components/AttributeFilter.vue:280
 msgid "Integer,Integer,..."
 msgstr ""
 
@@ -384,6 +384,7 @@ msgstr ""
 msgid "Keywords list"
 msgstr ""
 
+#: src/components/EditTool.vue:155
 #: src/components/Identification.vue:180
 #: src/components/MobileAttributesTable.vue:243
 msgid "Layer"
@@ -401,11 +402,11 @@ msgstr ""
 msgid "Legend"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:264
+#: src/components/AttributeFilter.vue:270
 msgid "less than"
 msgstr ""
 
-#: src/components/AttributesTable.vue:327
+#: src/components/AttributesTable.vue:312
 msgid "link"
 msgstr ""
 
@@ -436,6 +437,7 @@ msgstr ""
 msgid "May"
 msgstr ""
 
+#: src/components/EditTool.vue:157
 #: src/components/Identification.vue:181
 #: src/components/measure/Measure.vue:188
 #: src/components/MobileAttributesTable.vue:245
@@ -456,7 +458,7 @@ msgstr ""
 msgid "My Projects"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:170
+#: ./src/components/InfoPanel.vue:34
 #: ./src/components/MobileAttributesTable.vue:34
 msgid "New Feature"
 msgstr ""
@@ -482,8 +484,8 @@ msgstr ""
 msgid "No Data"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:54
-#: src/components/AttributesTable.vue:326
+#: ./src/components/AttributesTable.vue:58
+#: src/components/AttributesTable.vue:311
 msgid "No geometry"
 msgstr ""
 
@@ -491,15 +493,15 @@ msgstr ""
 msgid "No image assigned"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:269
+#: src/components/AttributeFilter.vue:275
 msgid "not empty"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:262
+#: src/components/AttributeFilter.vue:268
 msgid "not equal to"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:266
+#: src/components/AttributeFilter.vue:272
 msgid "not in"
 msgstr ""
 
@@ -521,15 +523,15 @@ msgstr ""
 msgid "November"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:276
+#: src/components/AttributeFilter.vue:282
 msgid "Number"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:278
+#: src/components/AttributeFilter.vue:284
 msgid "Number,Number"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:277
+#: src/components/AttributeFilter.vue:283
 msgid "Number,Number,..."
 msgstr ""
 
@@ -537,7 +539,7 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:265
+#: src/components/AttributeFilter.vue:271
 msgid "one of"
 msgstr ""
 
@@ -557,7 +559,7 @@ msgstr ""
 msgid "Overlay Layers"
 msgstr ""
 
-#: src/components/AttributesTable.vue:325
+#: src/components/AttributesTable.vue:310
 #: src/components/MobileAttributesTable.vue:292
 msgid "Page size"
 msgstr ""
@@ -645,6 +647,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
+#: src/components/EditTool.vue:156
 #: src/components/MobileAttributesTable.vue:244
 msgid "Select layer"
 msgstr ""
@@ -669,7 +672,7 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:259
+#: src/components/AttributeFilter.vue:265
 msgid "since"
 msgstr ""
 
@@ -692,7 +695,7 @@ msgstr ""
 msgid "Table & Info Panel"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:279
+#: src/components/AttributeFilter.vue:285
 msgid "Text,Text,..."
 msgstr ""
 
@@ -725,7 +728,7 @@ msgstr ""
 msgid "Units"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:260
+#: src/components/AttributeFilter.vue:266
 msgid "until"
 msgstr ""
 
@@ -790,17 +793,22 @@ msgctxt "adverb"
 msgid "Next"
 msgstr ""
 
-#: src/components/MapTools.vue:65
+#: src/components/MapTools.vue:136
+msgctxt "noun"
+msgid "Edit layer"
+msgstr ""
+
+#: src/components/MapTools.vue:66
 msgctxt "noun"
 msgid "Identification"
 msgstr ""
 
-#: src/components/MapTools.vue:81
+#: src/components/MapTools.vue:82
 msgctxt "noun"
 msgid "Measure"
 msgstr ""
 
-#: src/components/MapTools.vue:90
+#: src/components/MapTools.vue:91
 msgctxt "noun"
 msgid "Print"
 msgstr ""
