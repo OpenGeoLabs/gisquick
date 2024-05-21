@@ -184,8 +184,8 @@ export default {
         value: text
       }]
       const query = getFeatureQuery(
-        formatLayerQuery(this.parcelsLayer, null, filters1),
-        formatLayerQuery(this.parcelsLayer, null, filters2)
+        formatLayerQuery(this.parcelsLayer, { filters: filters1 }),
+        formatLayerQuery(this.parcelsLayer, { filters: filters2 })
       )
       const params = {
         'VERSION': '1.1.0',
