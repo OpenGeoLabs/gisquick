@@ -58,7 +58,7 @@
               <translate>No geometry</translate>
             </v-tooltip>
           </v-btn>
-          <v-btn class="icon flat my-0 mr-0" @click="showInfoPanel = true">
+          <v-btn class="icon flat my-0 mr-0" @click="[mode = '', showInfoPanel = true]">
             <v-icon name="circle-i-outline"/>
           </v-btn>
         </div>
@@ -202,7 +202,7 @@ import {
 } from '@/components/GenericInfopanel.vue'
 import { simpleStyle } from '@/map/styles'
 import { layerFeaturesQuery } from '@/map/featureinfo'
-// import { ShallowArray } from '@/utils'
+import { ShallowArray } from '@/utils'
 import { eventCoord, DragHandler } from '@/events'
 import { formatFeatures } from '@/formatters'
 import { valueMapItems } from '@/adapters/attributes'
@@ -402,6 +402,42 @@ export default {
       }
       return { geom, filters }
     },
+    async fetchRelations (features) {
+      const mapProjection = this.$map.getView().getProjection().getCode()
+      const relationsToFetch = this.layer.relations.filter(r => r.infopanel_view !== 'hidden')
+
+      const tasks = relationsToFetch.map(async rel => {
+        const filters = rel.referencing_fields.map((field, i) => ({
+          attribute: field,
+          operator: 'IN',
+          value: features.map(f => f.get(rel.referenced_fields[i]))
+        }))
+        const layer = this.project.overlays.byName[rel.referencing_layer]
+        const query = layerFeaturesQuery(layer, { filters })
+        const params = {
+          'VERSION': '1.1.0',
+          'SERVICE': 'WFS',
+          'REQUEST': 'GetFeature',
+          'OUTPUTFORMAT': 'GeoJSON'
+        }
+        const headers = { 'Content-Type': 'text/xml' }
+        const { data } = await this.$http.post(this.project.config.ows_url, query, { params, headers })
+        const parser = new GeoJSON()
+        const relFeatures = parser.readFeatures(data, { featureProjection: mapProjection })
+        formatFeatures(this.project, layer, relFeatures)
+        return ShallowArray(relFeatures)
+        // return features
+      })
+      const results = await Promise.all(tasks)
+      features.forEach(feature => {
+        if (!feature._relationsData) {
+          feature._relationsData = {}
+        }
+        relationsToFetch.forEach((r, i) => {
+          feature._relationsData[r.name] = results[i].filter(rf => r.referencing_fields.every((field, j) => rf.get(field) == feature.get(r.referenced_fields[j])))
+        })
+      })
+    },
     readFeatures (data) {
       const mapProjection = this.$map.getView().getProjection().getCode()
       const parser = new GeoJSON()
@@ -454,7 +490,11 @@ export default {
         this.loading = false
       }
 
+      // const features = ShallowArray(parser.readFeatures(geojson, { featureProjection: mapProjection }))
       const features = Object.freeze(this.readFeatures(geojson))
+      if (this.layer.relations) {
+        this.fetchRelations(features)
+      }
       const selectedIndex = this.selectedFeature ? features.findIndex(f => f.getId() === this.selectedFeature.getId()) : -1
       this.selectedFeatureIndex = selectedIndex !== -1 ? selectedIndex : 0
       this.$store.commit('attributeTable/features', features)

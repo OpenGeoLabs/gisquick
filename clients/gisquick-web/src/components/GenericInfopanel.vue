@@ -13,12 +13,24 @@
         </slot>
       </template>
     </div>
-    <template v-if="relations">
-      <div v-for="(relation) in relations" :key="relation.name" class="relations">
-        <div class="header f-row-ac" @click="expanded[relation.name] = !expanded[relation.name]">
+    <template v-if="relations && showRelations">
+      <div v-for="(relation, ri) in relations" :key="relation.name" class="relations f-col">
+        <div class="header dark f-row-ac" @click="expanded[relation.name] = !expanded[relation.name]">
           <span class="label" v-text="relation.name"/>
-          <span v-if="relationsData" class="mx-2">({{ relationsData[relation.name].length }})</span>
-          <div class="f-grow"/>
+          <span v-if="relationsData && relationsData[relation.name] && relationsData[relation.name].length > 1" class="mx-2">
+            ({{ relationsData[relation.name].length }})
+          </span>
+          <template v-if="relationsData && relationsData[relation.name] && relationsData[relation.name].length === 1">
+            <span v-if="relationLabels[relation.name]" class="mx-2">- {{ relationLabels[relation.name][0] }}</span>
+            <div class="f-grow"/>
+            <v-btn
+              class="icon"
+              @click="showRelation(relation, 0)"
+            >
+              <v-icon name="exit_to_app"/>
+            </v-btn>
+          </template>
+          <div v-else class="f-grow"/>
           <v-icon
             class="toggle mx-2"
             :class="{expanded: expanded[relation.name]}"
@@ -26,17 +38,35 @@
             size="12"
           />
         </div>
-          <div v-if="relationsData && expanded[relation.name]" class="f-col">
+        <template v-if="relationsData && expanded[relation.name]">
+          <template v-for="(f, fi) in relationsData[relation.name]">
+            <div
+              v-if="relationsData[relation.name].length > 1"
+              :key="`h_${ri}-${fi}`"
+              class="item-header f-row-ac ml-2"
+            >
+              <div class="badge">{{ fi + 1 }}</div>
+              <span v-if="relationLabels[relation.name]" class="mx-2">- {{ relationLabels[relation.name][fi] }}</span>
+              <div class="f-grow"/>
+              <v-btn
+                class="icon my-0"
+                @click="showRelation(relation, fi)"
+              >
+                <v-icon name="exit_to_app"/>
+              </v-btn>
+            </div>
             <component
-              v-for="(f, fi) in relationsData[relation.name]"
-              :key="`${relation.name}-${fi}`"
+              :key="`${ri}-${fi}`"
               :is="relation.component"
               :feature="f"
               :layer="relation.layer"
               :project="project"
+              :properties="relation.properties"
+              :show-relations="false"
               class="nested"
             />
-          </div>
+          </template>
+        </template>
       </div>
     </template>
   </div>
@@ -146,8 +176,8 @@ export function createImageTableWidget (createUrl) {
 }
 
 export const DateWidget = Widget((h, ctx) => {
-  let { value } = ctx.props
-  const cfg = ctx.data.attrs?.attribute?.config
+  let { value, attribute } = ctx.props
+  const cfg = attribute?.config
   if (value && cfg && cfg.display_format && cfg.field_format) {
     const date = parse(value, cfg.field_format, new Date())
     try {
@@ -161,9 +191,9 @@ export const DateWidget = Widget((h, ctx) => {
 
 // or define as factory function with attribute as argument?
 export const DateTimeWidget = Widget((h, ctx) => {
-  let { value } = ctx.props
+  let { value, attribute } = ctx.props
   if (value) {
-    const cfg = ctx.data.attrs?.attribute?.config
+    const cfg = attribute?.config
     const displayFormat = cfg?.display_format || 'yyyy-MM-dd HH:mm:ss'
     const date = cfg?.field_format ? parse(value, cfg.field_format, new Date()) : new Date(value)
     try {
@@ -270,8 +300,13 @@ const GenericInfoPanel = {
   name: 'GenericInfoPanel',
   props: {
     feature: Object,
+    properties: Array,
     layer: Object,
-    project: Object
+    project: Object,
+    showRelations: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
@@ -283,13 +318,17 @@ const GenericInfoPanel = {
     fields () {
       const { attributes, bands, info_panel_fields } = this.layer
       if (attributes) {
-        if (info_panel_fields) {
+        const fields = this.properties || info_panel_fields
+        if (fields) {
           const attrsMap = keyBy(attributes, 'name')
-          return info_panel_fields.map(name => attrsMap[name])
+          return fields.map(name => attrsMap[name])
         }
         return attributes
-      } else if (bands) {
-        return bands.map(name => ({ name, type: 'text' }))
+      // } else if (bands) {
+      //   return bands.map(name => ({ name, type: 'text' }))
+      // }
+      } else if (this.layer.type === 'RasterLayer' && this.feature) {
+        return this.feature.getKeys().filter(n => n !== 'geometry').map(name => ({ name, type: 'text' }))
       }
       return []
     },
@@ -299,7 +338,6 @@ const GenericInfoPanel = {
     widgets () {
       return this.fields.map(attr => {
         const type = attr.type.split('(')[0]?.toLowerCase()
-
         if (attr.widget === 'ValueMap') {
           return ValueMapWidget
         } else if (attr.widget === 'Hyperlink') {
@@ -307,9 +345,9 @@ const GenericInfoPanel = {
         } else if (attr.widget === 'Image') {
           return ImageWidget
         } else if (attr.widget === 'MediaFile') {
-          return createMediaFileWidget(this.project.name, this.layer, attr)
+          return createMediaFileWidget(this.project.config.name, this.layer, attr)
         } else if (attr.widget === 'MediaImage') {
-          return createMediaImageWidget(this.project.name, this.layer, attr)
+          return createMediaImageWidget(this.project.config.name, this.layer, attr)
         }
         if (type === 'bool') {
           return BoolWidget
@@ -329,31 +367,40 @@ const GenericInfoPanel = {
             if (isAbsoluteUrl(value)) {
               return ImageWidget
             }
-            return createMediaImageWidget(this.project.name, this.layer, attr)
+            return createMediaImageWidget(this.project.config.name, this.layer, attr)
           }
         }
         return RawWidget
       })
     },
     relations () {
-      return this.layer.relations?.map(r => {
-        r.referencing_layer
-        this.project.layers
-        // let component = 'generic-infopanel'
+      return this.layer.relations?.filter(r => r.infopanel_view !== 'hidden').map(r => {
+        const rLayer = this.project.overlays.byName[r.referencing_layer]
         let component = GenericInfoPanel
-        if (r.referencing_layer.infopanel_component) {
+        if (rLayer.infopanel_component) {
           try {
-            component = externalComponent(this.project, r.referencing_layer.infopanel_component)
+            component = externalComponent(this.project.config, rLayer.infopanel_component)
           } catch (err) {
             console.error(`Failed to load infopanel component: ${this.layer.infopanel_component}`)
           }
         }
         return {
           name: r.name,
-          layer: r.referencing_layer,
-          component
+          layer: rLayer,
+          properties: r.infopanel_view === 'selected' ? r.fields : null,
+          component,
+          config: r
         }
       })
+    },
+    relationLabels () {
+      const labels = {}
+      this.relations?.filter(r => r.config.label_fields && this.relationsData[r.name]).forEach(r => {
+        const features = this.relationsData[r.name]
+        // console.log(features)
+        labels[r.name] = features.map(f => r.config.label_fields.map(field => f.get(field)).join(r.config.label_separator || ' '))
+      })
+      return labels
     }
   },
   watch: {
@@ -361,7 +408,7 @@ const GenericInfoPanel = {
       immediate: true,
       async handler (f) {
         this.relationsData = null
-        if (this.layer.relations) {
+        if (this.relations?.length && this.showRelations) {
           this.relationsData = await this.fetchRelationsData(this.layer, f)
         }
       }
@@ -378,41 +425,45 @@ const GenericInfoPanel = {
     }
   },
   methods: {
+    readFeatures (data, layer) {
+      const mapProjection = this.$map?.getView().getProjection().getCode()
+      const parser = new GeoJSON()
+      const features = parser.readFeatures(data, { featureProjection: mapProjection })
+      return formatFeatures(this.$store.state.project, layer, features)
+    },
     async fetchRelationsData (layer, feature) {
-      if (feature._relationsData) {
-        return feature._relationsData
+      if (!feature._relationsData) {
+        feature._relationsData = {}
       }
-      const mapProjection = this.$map.getView().getProjection().getCode()
-      const tasks = layer.relations.map(async rel => {
+      const relationsToFetch = layer.relations.filter(r => r.infopanel_view !== 'hidden' && !feature._relationsData[r.name])
+      const tasks = relationsToFetch.map(async rel => {
         const filters = rel.referencing_fields.map((field, i) => ({
           attribute: field,
           operator: '=',
           value: feature.get(rel.referenced_fields[i])
         }))
-        const query = layerFeaturesQuery(rel.referencing_layer, { filters })
+        const referencingLayer = this.project.overlays.byName[rel.referencing_layer]
+        const query = layerFeaturesQuery(referencingLayer, { filters })
         const params = {
           'VERSION': '1.1.0',
           'SERVICE': 'WFS',
           'REQUEST': 'GetFeature',
-          'OUTPUTFORMAT': 'GeoJSON',
-          'MAXFEATURES': 100
+          'OUTPUTFORMAT': 'GeoJSON'
         }
         const headers = { 'Content-Type': 'text/xml' }
-        const { data } = await this.$http.post(this.project.ows_url, query, { params, headers })
-        const parser = new GeoJSON()
-        const features = parser.readFeatures(data, { featureProjection: mapProjection })
-        formatFeatures(this.$store.state.project, rel.referencing_layer, features)
+        const { data } = await this.$http.post(this.project.config.ows_url, query, { params, headers })
+        const features = this.readFeatures(data, referencingLayer)
         return ShallowArray(features)
-        // return features
       })
       const results = await Promise.all(tasks)
-      let relationsData = {}
-      layer.relations.map((r, i) => {
-        relationsData[r.name] = results[i]
+      relationsToFetch.forEach((r, i) => {
+        feature._relationsData[r.name] = results[i]
       })
-      // relationsData = Object.freeze(relationsData)
-      feature._relationsData = relationsData
-      return relationsData
+      return feature._relationsData
+    },
+    showRelation (relation, index) {
+      const data = this.relationsData[relation.name]
+      this.$emit('relation', relation, data[index])
     }
   }
 }
@@ -423,7 +474,7 @@ export default GenericInfoPanel
 .generic-infopanel {
   padding: 6px;
   &.nested {
-    padding: 3px 0 6px 0;
+    padding: 3px 0;
   }
 }
 .fields {
@@ -550,6 +601,17 @@ export default GenericInfoPanel
   .header {
     cursor: pointer;
     padding: 2px 6px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1;
+    position: sticky;
+    top: 1px;
+    border-radius: 3px;
+    background-color: #fff;
+    background-color: #707070;
+    color: #fff;
+    margin-bottom: 2px;
+    --gutter: 2px 6px;
     .toggle {
       transition: .3s cubic-bezier(.25,.8,.5,1);
       &.expanded {
@@ -557,6 +619,21 @@ export default GenericInfoPanel
       }
     }
   }
+}
+.link {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+.badge {
+  border-radius: 5px;
+  width: 18px;
+  height: 18px;
+  background-color: #707070;
+  // background-color: var(--color-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
 }
 </style>
 

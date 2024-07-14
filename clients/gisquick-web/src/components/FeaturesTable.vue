@@ -31,8 +31,12 @@
         :selected="selectedFeatureId"
         @row-click="selectFeature"
       >
-        <template v-slot:cell(actions)="{ row }">
-          <v-btn class="icon flat m-0" @click="zoomToFeature(features[row])">
+        <template v-slot:cell(actions)="{ row, item }">
+          <v-btn
+            class="icon flat m-0"
+            :disabled="!item.geometry"
+            @click="zoomToFeature(features[row])"
+          >
             <v-icon name="zoom-to"/>
           </v-btn>
         </template>
@@ -128,6 +132,9 @@ export default {
     columns () {
       if (this.attributes) {
         return [ActionsHeader, ...this.attributes.map(createColumn)]
+      } else if (this.layer.type === 'RasterLayer' && this.features?.length > 0) {
+        const attrs = this.features[0].getKeys().filter(n => n !== 'geometry').map(name => ({ name }))
+        return [ActionsHeader, ...attrs.map(createColumn)]
       } else if (this.layer?.bands) {
         const fields = this.layer.bands.map(name => ({ name }))
         return fields.map(createColumn)

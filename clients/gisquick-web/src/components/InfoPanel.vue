@@ -1,7 +1,17 @@
 <template>
   <div v-if="feature || mode === 'add'" class="f-col info-panel light">
     <div class="f-col main-content shadow-2">
-      <div class="toolbar dark top f-row-ac">
+      <div v-if="relationData" class="toolbar dark top f-row-ac">
+        <v-btn class="icon" @click="popRelation">
+          <v-icon name="arrow-backward"/>
+        </v-btn>
+        <span class="f-grow" v-text="relationData.layer.title"/>
+        <v-btn @click="$emit('close')" class="icon flat">
+          <v-icon name="x"/>
+        </v-btn>
+        <features-viewer :features="[relationData.feature]" :color="[31,203,124]"/>
+      </div>
+      <div v-else class="toolbar dark top f-row-ac">
         <template v-if="mode !== 'add'">
           <v-select
             class="flat f-grow my-0"
@@ -63,12 +73,18 @@
                 :layer="layer"
                 @edit="$emit('insert', $event)"
               />
-              <component
+              <!-- <component
                 v-else
                 :is="formComponent"
                 :feature="feature"
                 :layer="layer"
                 :project="$store.state.project.config"
+              /> -->
+              <component
+                v-else
+                :is="formComponent"
+                v-bind="viewerParams"
+                @relation="showRelationFeature"
               />
             </switch-transition>
           </scroll-area>
@@ -109,14 +125,20 @@
 </template>
 
 <script>
+import GeoJSON from 'ol/format/GeoJSON'
+import { layerFeaturesQuery } from '@/map/featureinfo'
+import { formatFeatures } from '@/formatters'
+
 import GenericInfopanel from '@/components/GenericInfopanel.vue'
+import FeaturesViewer from '@/components/ol/FeaturesViewer.vue'
 import FeatureEditor from '@/components/feature-editor/FeatureEditor.vue'
 import NewFeatureEditor from '@/components/feature-editor/NewFeatureEditor.vue'
 import { externalComponent } from '@/components-loader'
+import { ShallowArray, ShallowObj } from '@/utils'
 
 export default {
   name: 'info-panel',
-  components: { GenericInfopanel, FeatureEditor, NewFeatureEditor },
+  components: { GenericInfopanel, FeaturesViewer, FeatureEditor, NewFeatureEditor },
   props: {
     selected: Object,
     layer: Object,
@@ -126,7 +148,8 @@ export default {
   },
   data () {
     return {
-      collapsed: false
+      collapsed: false,
+      relationsData: []
     }
   },
   computed: {
@@ -143,10 +166,26 @@ export default {
     feature () {
       return this.selected && this.features[this.index]
     },
+    project () {
+      return this.$store.state.project
+    },
+    viewerParams () {
+      if (this.relationData) {
+        return {
+          ...this.relationData,
+          project: this.project
+        }
+      }
+      return {
+        feature: this.feature,
+        layer: this.layer,
+        project: this.project
+      }
+    },
     formComponent () {
       if (this.layer.infopanel_component) {
         try {
-          const project = this.$store.state.project.config
+          const project = this.project.config
           return externalComponent(project, this.layer.infopanel_component)
         } catch (err) {
           console.error(`Failed to load infopanel component: ${this.layer.infopanel_component}`)
@@ -157,6 +196,9 @@ export default {
     layerEditable () {
       const { permissions = {} } = this.layer
       return permissions.update || permissions.delete
+    },
+    relationData () {
+      return this.relationsData[this.relationsData.length - 1]
     }
   },
   methods: {
@@ -168,7 +210,25 @@ export default {
     },
     zoomToFeature () {
       const geom = this.$refs.editor?.getGeometry()
-      geom ? this.$map.ext.zoomToGeometry(geom) : this.$map.ext.zoomToFeature(this.feature)
+      if (geom) {
+        this.$map.ext.zoomToGeometry(geom)
+      } else {
+        this.$map.ext.zoomToFeature(this.relationData?.feature || this.feature)
+      }
+    },
+    async showRelationFeature (relation, feature) {
+      const relationData = ShallowObj({
+        layer: relation.layer,
+        feature
+      })
+      this.relationsData.push(relationData)
+      // this.$map.ext.zoomToFeature(feature)
+      this.$map.ext.centerToGeometry(feature.getGeometry())
+    },
+    popRelation () {
+      this.relationsData.pop()
+      const currentFeature = this.relationData?.feature || this.feature
+      this.$map.ext.centerToGeometry(currentFeature.getGeometry())
     }
   }
 }

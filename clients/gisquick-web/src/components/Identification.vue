@@ -84,7 +84,7 @@ import InfoPanel from '@/components/InfoPanel.vue'
 import PointMarker from '@/components/ol/PointMarker.vue'
 import FeaturesViewer from '@/components/ol/FeaturesViewer.vue'
 import { simpleStyle } from '@/map/styles'
-import { layersFeaturesQuery } from '@/map/featureinfo'
+import { layersFeaturesQuery, layerFeaturesQuery } from '@/map/featureinfo'
 import { ShallowArray } from '@/utils'
 import { formatFeatures } from '@/formatters'
 import { TaskState, watchTask } from '@/tasks'
@@ -237,10 +237,10 @@ export default {
       const s = map.overlay.getSource()
       const layersParam = layers.map(l => l.name).join(',')
       const params = {
-        INFO_FORMAT: 'application/json', // 'application/vnd.ogc.gml'
+        INFO_FORMAT: 'application/json',
         LAYERS: layersParam,
         QUERY_LAYERS: layersParam,
-        FEATURE_COUNT: layers.length
+        FEATURE_COUNT: 10
       }
       const projCode = map.getView().getProjection().getCode()
       const url = s.getFeatureInfoUrl(coordinate, r, projCode, params)
@@ -248,6 +248,7 @@ export default {
       // this.$http.get(url)
       // this.$http.get(this.project.config.ows_url, { params: qParams })
       const { data } = await this.$http.get(url)
+      data.features = data.features.filter(f => Object.keys(f.properties).length > 0)
       return this.readFeatures(data)
     },
     async onClick (evt) {
@@ -340,19 +341,18 @@ export default {
       this.queryableLayers.forEach(l => {
         WfsToLayerName[l.name.replace(/ /g, '_')] = l.name
       })
+
       // group features by layer name
       const layersFeatures = {}
       if (features.length > 0) {
         features.forEach(feature => {
           if (feature instanceof Feature) {
             const fid = feature.getId()
-            const layername = WfsToLayerName[fid.substring(0, fid.lastIndexOf('.'))]
-            if (layername) {
-              if (!layersFeatures[layername]) {
-                layersFeatures[layername] = []
-              }
-              layersFeatures[layername].push(feature)
+            const layer = WfsToLayerName[fid.substring(0, fid.lastIndexOf('.'))] ?? fid
+            if (!layersFeatures[layer]) {
+              layersFeatures[layer] = []
             }
+            layersFeatures[layer].push(feature)
           }
         })
       }
