@@ -9,7 +9,7 @@
     <footer>
       <p class="xl">mapotip@mapotip.cz</p>
       <p class="xl">+420 704 11 22 00</p>
-      <p>Copyright © 2022 Mapotip Česko s.r.o.</p>
+      <p>Copyright © {{ new Date().getFullYear() }} Mapotip Česko s.r.o.</p>
     </footer>
   </div>
 </template>
