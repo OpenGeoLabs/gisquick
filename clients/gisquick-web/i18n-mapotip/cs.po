@@ -25,7 +25,7 @@ msgid "A new version of the map application is available"
 msgstr "K dispozici je nová verze mapové aplikace"
 
 #: src/components/content-panel/BaseLayersTree.vue:43
-#: src/components/content-panel/LayersTree.vue:99
+#: src/components/content-panel/LayersTree.vue:100
 #: src/components/content-panel/TopicsList.vue:36
 msgid "Abstract"
 msgstr "Popis"
@@ -163,7 +163,7 @@ msgstr "Vytvořeno"
 msgid "Current password"
 msgstr "Aktuálne heslo"
 
-#: src/components/content-panel/LayersTree.vue:103
+#: src/components/content-panel/LayersTree.vue:104
 #: src/components/MobileAttributesTable.vue:96
 msgid "Data"
 msgstr "Data"
@@ -173,7 +173,7 @@ msgid "Data Filters"
 msgstr "Datové filtry"
 
 #: src/components/feature-editor/FeatureEditor.vue:90
-#: src/components/feature-editor/NewFeatureEditor.vue:44
+#: src/components/feature-editor/NewFeatureEditor.vue:45
 msgid "Data updated"
 msgstr "Údaje aktualizovány"
 
@@ -190,11 +190,11 @@ msgstr "Smazat aktuální objekt?"
 msgid "Delete object"
 msgstr "Odstranit objekt"
 
-#: src/components/feature-editor/GeometryEditor.vue:371
+#: src/components/feature-editor/GeometryEditor.vue:376
 msgid "Delete selected geometry"
 msgstr "Smazat vybranou geometrii"
 
-#: src/components/feature-editor/GeometryEditor.vue:370
+#: src/components/feature-editor/GeometryEditor.vue:375
 msgid "Delete selected nodes"
 msgstr "Smazat vybrané uzly"
 
@@ -214,7 +214,7 @@ msgstr "Vzdálenost"
 msgid "Don't show this message again"
 msgstr "Tuto zprávu již nezobrazovat"
 
-#: src/components/content-panel/LayersTree.vue:118
+#: src/components/content-panel/LayersTree.vue:119
 msgid "Download"
 msgstr "Stáhnout"
 
@@ -261,7 +261,7 @@ msgstr "rovná se"
 
 #: src/components/content-panel/JsonLegend.vue:12
 #: src/components/feature-editor/FeatureEditor.vue:251
-#: src/components/feature-editor/NewFeatureEditor.vue:119
+#: src/components/feature-editor/NewFeatureEditor.vue:121
 #: src/components/SearchTool.vue:257 src/ui/ListTable.vue:105
 #: src/ui/Table.vue:211
 msgid "Error"
@@ -276,7 +276,7 @@ msgstr "Export"
 msgid "Failed to change the password!"
 msgstr "Heslo se nepodařilo změnit!"
 
-#: src/components/AttributesTable.vue:451
+#: src/components/AttributesTable.vue:487
 msgid "Failed to load data"
 msgstr "Data se nepodařilo načíst"
 
@@ -291,6 +291,10 @@ msgstr "Nahrání souboru se nezdařilo"
 #: src/ui/DatePicker.vue:173
 msgid "February"
 msgstr "Únor"
+
+#: src/components/feature-editor/GenericEditForm.vue:79
+msgid "Field is required"
+msgstr "Pole je povinné"
 
 #: src/components/feature-editor/ImageInput.vue:244
 #: src/components/feature-editor/ImageInput.vue:296
@@ -340,7 +344,7 @@ msgstr "je větší"
 msgid "Help"
 msgstr "Vzdálená podpora"
 
-#: src/components/content-panel/LayersTree.vue:95
+#: src/components/content-panel/LayersTree.vue:96
 msgid "Identification"
 msgstr "Identifikace"
 
@@ -389,7 +393,7 @@ msgstr "Červen"
 msgid "Keywords list"
 msgstr "Klíčová slova"
 
-#: src/components/EditTool.vue:155 src/components/Identification.vue:180
+#: src/components/EditTool.vue:153 src/components/Identification.vue:180
 #: src/components/MobileAttributesTable.vue:243
 msgid "Layer"
 msgstr "Vrstva"
@@ -439,7 +443,7 @@ msgstr "Březen"
 msgid "May"
 msgstr "Květen"
 
-#: src/components/EditTool.vue:157 src/components/Identification.vue:181
+#: src/components/EditTool.vue:155 src/components/Identification.vue:181
 #: src/components/measure/Measure.vue:188
 #: src/components/MobileAttributesTable.vue:245
 #: src/components/print/Print.vue:86 src/UserDashboard.vue:210
@@ -458,7 +462,7 @@ msgstr "Můj profil"
 msgid "My Projects"
 msgstr "Moje projekty"
 
-#: src/components/InfoPanel.vue:34 src/components/MobileAttributesTable.vue:34
+#: src/components/InfoPanel.vue:44 src/components/MobileAttributesTable.vue:34
 msgid "New Feature"
 msgstr "Nový objekt"
 
@@ -474,7 +478,7 @@ msgstr ""
 
 #: src/App.vue:47 src/components/feature-editor/FeatureEditor.vue:103
 #: src/components/feature-editor/FeatureEditor.vue:119
-#: src/components/feature-editor/GeometryEditor.vue:156
+#: src/components/feature-editor/GeometryEditor.vue:157
 msgid "No"
 msgstr "Ne"
 
@@ -506,12 +510,12 @@ msgstr "neobsahují"
 msgid "Not now"
 msgstr "Teď ne"
 
-#: src/components/feature-editor/GenericEditForm.vue:66
+#: src/components/feature-editor/GenericEditForm.vue:78
 #: src/components/feature-editor/NumberField.vue:48
 msgid "Not valid integer number"
 msgstr "Neplatné celé číslo"
 
-#: src/components/feature-editor/GenericEditForm.vue:65
+#: src/components/feature-editor/GenericEditForm.vue:77
 #: src/components/feature-editor/NumberField.vue:47
 msgid "Not valid number"
 msgstr "Neplatné číslo"
@@ -639,11 +643,11 @@ msgstr "Vyhledat parcelu"
 msgid "Select"
 msgstr "Vybrat"
 
-#: src/components/EditTool.vue:156 src/components/MobileAttributesTable.vue:244
+#: src/components/EditTool.vue:154 src/components/MobileAttributesTable.vue:244
 msgid "Select layer"
 msgstr "Vyberte vrstvu"
 
-#: src/components/feature-editor/GeometryEditor.vue:485
+#: src/components/feature-editor/GeometryEditor.vue:497
 msgid "Selected geometry was deleted"
 msgstr "Vybraná geometrie byla smazána"
 
@@ -706,7 +710,7 @@ msgstr "Celková délka"
 msgid "Tuesday"
 msgstr "Úterý"
 
-#: src/components/content-panel/LayersTree.vue:84
+#: src/components/content-panel/LayersTree.vue:85
 msgid "Type"
 msgstr "Typ"
 
@@ -728,7 +732,7 @@ msgid "Updated"
 msgstr "Aktualizováno"
 
 #: src/components/feature-editor/FeatureEditor.vue:89
-#: src/components/feature-editor/NewFeatureEditor.vue:43
+#: src/components/feature-editor/NewFeatureEditor.vue:44
 msgid "Updating data"
 msgstr "Data se aktualizují"
 
@@ -750,7 +754,7 @@ msgstr "Uživatelské jméno"
 msgid "Username / Email"
 msgstr "Uživatelské jméno / Email"
 
-#: src/components/content-panel/LayersTree.vue:109
+#: src/components/content-panel/LayersTree.vue:110
 msgid "Visit"
 msgstr "Navštívit"
 
@@ -768,7 +772,7 @@ msgstr ""
 
 #: src/App.vue:50 src/components/feature-editor/FeatureEditor.vue:106
 #: src/components/feature-editor/FeatureEditor.vue:122
-#: src/components/feature-editor/GeometryEditor.vue:159
+#: src/components/feature-editor/GeometryEditor.vue:160
 msgid "Yes"
 msgstr "Ano"
 
