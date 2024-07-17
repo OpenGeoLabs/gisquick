@@ -65,6 +65,7 @@ import {
   createImageTableWidget, createMediaFileTableWidget, mediaUrlFormat
 } from '@/components/GenericInfopanel.vue'
 import { eventCoord, DragHandler } from '@/events'
+import { dtmFeatureFields } from '@/mapotip.js'
 
 
 const ActionsHeader = {
@@ -133,7 +134,8 @@ export default {
       if (this.attributes) {
         return [ActionsHeader, ...this.attributes.map(createColumn)]
       } else if (this.layer.type === 'RasterLayer' && this.features?.length > 0) {
-        const attrs = this.features[0].getKeys().filter(n => n !== 'geometry').map(name => ({ name }))
+        // const attrs = this.features[0].getKeys().filter(n => n !== 'geometry').map(name => ({ name }))
+        const attrs = dtmFeatureFields(this.features[0])
         return [ActionsHeader, ...attrs.map(createColumn)]
       } else if (this.layer?.bands) {
         const fields = this.layer.bands.map(name => ({ name }))

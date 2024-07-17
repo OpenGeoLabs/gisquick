@@ -85,6 +85,7 @@ import { layerFeaturesQuery } from '@/map/featureinfo'
 import { externalComponent } from '@/components-loader'
 import { formatFeatures } from '@/formatters'
 import { ShallowArray } from '@/utils'
+import { dtmFeatureFields } from '@/mapotip.js'
 
 
 function isAbsoluteUrl (val) {
@@ -328,7 +329,8 @@ const GenericInfoPanel = {
       //   return bands.map(name => ({ name, type: 'text' }))
       // }
       } else if (this.layer.type === 'RasterLayer' && this.feature) {
-        return this.feature.getKeys().filter(n => n !== 'geometry').map(name => ({ name, type: 'text' }))
+        // return this.feature.getKeys().filter(n => n !== 'geometry').map(name => ({ name, type: 'text' }))
+        return dtmFeatureFields(this.feature)
       }
       return []
     },
