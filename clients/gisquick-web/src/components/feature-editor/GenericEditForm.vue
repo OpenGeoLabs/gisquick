@@ -76,11 +76,11 @@ export default {
       return {
         NotValidNumber: this.$gettext('Not valid number'),
         NotValidInteger: this.$gettext('Not valid integer number'),
-        RequiredField: this.$gettext('Field is required')
+        RequiredFieldErr: this.$gettext('Field is required')
       }
     },
     requiredValidator () {
-      return v => !v ? this.tr.RequiredField : ''
+      return v => (v === null || v === '') ? this.tr.RequiredFieldErr : ''
     },
     integerValidator () {
       return v => v && !isIntegerString(v) ? this.tr.NotValidInteger : ''
@@ -90,8 +90,8 @@ export default {
     },
     widgets () {
       return this.attributes.map(attr => {
-        const disabled = attr.constrains?.includes('readonly')
-        const required = attr.constrains?.includes('not_null')
+        const disabled = attr.constraints?.includes('readonly')
+        const required = attr.constraints?.includes('not_null')
         const type = attr.type.split('(')[0]?.toLowerCase()
         let validators = []
         if (required) {
