@@ -26,10 +26,10 @@
   "IDObjektuLetiste": "ID objektu letiště",
   "IDObjektuSilnicniStavby": "ID objektu silniční stavby",
   "IDObjektuStavbyProVodniDopravu": "ID objektu stavby pro vodní dopravu",
-  "IDProvozovatele": "Provozovatel",
-  "IDProvozovateleZeZakona": "Provozovatel ze zákona",
-  "IDSpravce": "Správce",
-  "IDVlastnika": "Vlastník",
+  "IDProvozovatele": "ID provozovatele",
+  "IDProvozovateleZeZakona": "ID provozovatele ze zákona",
+  "IDSpravce": "ID správce",
+  "IDVlastnika": "ID vlastníka",
   "IDZmeny": "ID změny",
   "InstalovanyVykon": "Instalovaný výkon",
   "IzolaceVenkovnihoVedeni": "Izolace venkovního vedení",
@@ -173,5 +173,9 @@
   "ZpusobRekultivace": "Způsob rekultivace",
   "code_base": "Kód typu objektu",
   "id_html": "ID prvku",
-  "objektovytypnazev": "Popis prvku"
+  "objektovytypnazev": "Popis prvku",
+  "idzmenydtmk": "ID změny DTM",
+  "nazevprovozovatele": "Provozovatel",
+  "nazevspravce": "Správce",
+  "nazevvlastnika": "Vlastník"
 }
