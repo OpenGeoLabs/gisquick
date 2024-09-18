@@ -87,7 +87,6 @@ import { formatFeatures } from '@/formatters'
 import { ShallowArray } from '@/utils'
 import { dtmFeatureFields } from '@/mapotip.js'
 
-
 function isAbsoluteUrl (val) {
   return /(https?:\/\/.*\.)/i.test(val)
 }
@@ -105,6 +104,10 @@ function Widget (render) {
 
 const RawWidget = Widget((h, ctx) => (
   <span {...ctx.data}>{ctx.props.value}</span>
+))
+
+export const HtmlWidget = Widget((h, ctx) => (
+  <span {...ctx.data} domPropsInnerHTML={ctx.props.value} class="html-widget"></span>
 ))
 
 const FloatWidget = Widget((h, ctx) => (
@@ -371,6 +374,9 @@ const GenericInfoPanel = {
             }
             return createMediaImageWidget(this.project.config.name, this.layer, attr)
           }
+        }
+        if (attr.config?.UseHtml) {
+          return HtmlWidget
         }
         return RawWidget
       })

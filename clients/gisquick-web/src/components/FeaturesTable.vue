@@ -64,6 +64,7 @@ import {
   DateWidget, ValueMapWidget, BoolWidget, UrlWidget,
   createImageTableWidget, createMediaFileTableWidget, mediaUrlFormat
 } from '@/components/GenericInfopanel.vue'
+import HtmlText from '@/components/attributes-table/HtmlText.vue'
 import { eventCoord, DragHandler } from '@/events'
 import { dtmFeatureFields } from '@/mapotip.js'
 
@@ -169,6 +170,8 @@ export default {
           widget = DateWidget
         } else if (attr.type === 'bool') {
           widget = BoolWidget
+        } else if (attr.config?.UseHtml) {
+          widget = HtmlText
         }
         if (widget) {
           slots[attr.name] = { component: widget, attribute: attr }
