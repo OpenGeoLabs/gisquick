@@ -132,6 +132,7 @@ import NewFeatureEditor from '@/components/feature-editor/NewFeatureEditor.vue'
 import FeaturesReader from '@/components/attributes-table/features.js'
 import { externalComponent } from '@/components-loader'
 import { ShallowArray, ShallowObj } from '@/utils'
+import DtmPanel from './DtmPanel.vue'
 
 export default {
   name: 'info-panel',
@@ -178,6 +179,9 @@ export default {
     },
     formComponent () {
       const { layer } = this.displayedData
+      if (layer.source.dbname === 'dtm') {
+        return DtmPanel
+      }
       if (layer.infopanel_component) {
         try {
           const project = this.project.config
