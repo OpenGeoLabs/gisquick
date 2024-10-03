@@ -24,7 +24,7 @@
       <div class="toolbar f-row-ac">
         <v-btn
           class="icon flat"
-          :disabled="!permissions.edit_geom"
+          :disabled="!geomEditable"
           :color="editGeometry ? 'primary' : ''"
           @click="editGeometry = !editGeometry"
         >
@@ -210,6 +210,14 @@ export default {
     },
     permissions () {
       return this.layer.permissions || {}
+    },
+    geomEditable () {
+      const editable = this.permissions.edit_geom
+      if (editable && this.feature.getKeys().includes('tridapresnostipoloha')) {
+        const val = this.feature.get('tridapresnostipoloha')
+        return !Number.isInteger(val) || val === 9
+      }
+      return editable
     }
   },
   watch: {
