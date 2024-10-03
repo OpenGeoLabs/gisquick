@@ -27,6 +27,14 @@
             <span v-text="selectedNodes.length ? tr.DeleteNodes : tr.DeleteGeometry"/>
           </v-tooltip>
         </v-btn>
+        <div class="v-separator"/>
+        <snap-tool
+          :project="project"
+          :layers="snapping.layers"
+          :offset="snapping.offset"
+          :active.sync="snapping.active"
+        />
+        <div class="v-separator"/>
         <v-btn
           class="icon"
           :disabled="!history.length"
@@ -62,6 +70,14 @@
           <span v-text="selectedNodes.length ? tr.DeleteNodes : tr.DeleteGeometry"/>
         </v-tooltip>
       </v-btn>
+      <div class="v-separator"/>
+      <snap-tool
+        :project="project"
+        :layers="snapping.layers"
+        :offset="snapping.offset"
+        :active.sync="snapping.active"
+      />
+      <div class="v-separator"/>
       <v-btn
         class="icon"
         :disabled="!history.length"
@@ -85,15 +101,16 @@
       v-if="drawingActive"
       :type="drawGeomType"
       :layout="geometryLayout"
-      :ol-style="editStyle"
+      :ol-style="drawStyle"
+      @drawstart="$emit('drawstart')"
       @drawend="onDrawEnd"
     />
     <translate-interaction
       v-if="!nodeFeature"
       key="translate-handler1"
       :features="selected"
-      @translatestart="saveState"
-      @translateend="geomModified = true"
+      @translatestart="onTranslateStart"
+      @translateend="[geomModified = true, snapping.offset = null]"
     />
     <!-- Selection of geometry parts -->
     <select-interaction
@@ -141,8 +158,9 @@
         v-if="selectedNodes.length"
         key="translate-handler"
         :features="selectedNodes"
-        @translatestart="saveState"
+        @translatestart="onTranslateStart"
         @translating="handleNodesTranslate"
+        @translateend="snapping.offset = null"
       />
     </template>
 
@@ -171,9 +189,10 @@ import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
 import MultiPoint from 'ol/geom/MultiPoint'
 import MultiPolygon from 'ol/geom/MultiPolygon'
+import LineString from 'ol/geom/LineString'
 import MultiLineString from 'ol/geom/MultiLineString'
 import Icon from 'ol/style/Icon'
-import { Style } from 'ol/style'
+import { Style, Fill, Circle, Stroke } from 'ol/style'
 import last from 'lodash/last'
 
 import VNotification from '@/ui/Notification.vue'
@@ -182,6 +201,7 @@ import SelectInteraction from '@/components/ol/SelectInteraction.vue'
 import DrawInteraction from '@/components/ol/DrawInteraction.vue'
 import ModifyInteraction from '@/components/ol/ModifyInteraction.vue'
 import TranslateInteraction from '@/components/ol/TranslateInteraction.vue'
+import SnapTool from './SnapTool.vue'
 import { simpleStyle, highlightedStyle } from '@/map/styles'
 import { ShallowObj, ShallowArray } from '@/utils'
 import MoveIcon from '@/assets/gis-move.svg?raw'
@@ -266,8 +286,9 @@ const icon = new Icon({
 })
 
 export default {
-  components: { VNotification, VectorLayer, SelectInteraction, DrawInteraction, ModifyInteraction, TranslateInteraction },
+  components: { VNotification, VectorLayer, SelectInteraction, DrawInteraction, ModifyInteraction, SnapTool, TranslateInteraction },
   props: {
+    project: Object,
     feature: Object,
     geometryType: String,
     geomToolbar: String,
@@ -289,6 +310,11 @@ export default {
         geometry: null,
         nodes: null
       }),
+      snapping: {
+        active: false,
+        offset: null,
+        layers: []
+      },
       history: [],
       showConfirm: false,
       confirmMessage: ''
@@ -349,6 +375,44 @@ export default {
     },
     editMoveStyle () {
       return this.isMobileDevice ? [...this.editStyle, this.translateStyle] : this.editStyle
+    },
+    drawStyle () {
+      const firstPointStyle = new Style({
+        image: new Circle({
+          fill: new Fill({
+            // color: '#55aaaaff'
+            color: '#E64A19ff'
+          }),
+          radius: 4
+        }),
+        geometry (feature) {
+          const geom = feature.getGeometry()
+          if (geom.getType() === 'Polygon') {
+            return new Point(geom.getFirstCoordinate())
+          }
+          return null
+        }
+      })
+      const createLineStyle = strokeOpts => new Style({
+        stroke: new Stroke(strokeOpts),
+        geometry (feature) {
+          const geom = feature.getGeometry()
+          if (geom.getType() === 'Polygon') {
+            const coords = geom.getCoordinates()[0]
+            if (coords.length > 3) {
+              // return new LineString([...coords[0], ...coords[coords.length - 2]], geom.getLayout())
+              return new LineString([coords[0], coords[coords.length - 2]])
+            }
+          }
+          return null
+        }
+      })
+      return [
+        ...this.editStyle,
+        firstPointStyle,
+        createLineStyle({ color: '#ffffff', width: 4 }),
+        createLineStyle({ color: '#55aaaaff', width: 1 })
+      ]
     },
     nodesStyle () {
       return simpleStyle({
@@ -468,6 +532,7 @@ export default {
         this.selected = this.geomFeatures
       }
       this.geomModified = true
+      this.$emit('drawend')
     },
     getGeometry () {
       if (this.isMultiPart) {
@@ -561,6 +626,19 @@ export default {
         selected: this.geomFeatures.indexOf(this.selected[0])
       })
     },
+    onTranslateStart (e) {
+      if (this.snapping.active) {
+        const { pixel } = e.mapBrowserEvent
+        const refFeature = this.selectedNodes.length ? last(this.selectedNodes) : this.selected[0]
+        const coord = refFeature.getGeometry().getCoordinates()
+        const p = this.$map.getPixelFromCoordinate(coord)
+        this.snapping.offset = {
+          offset: [coord[0] - e.coordinate[0], coord[1] - e.coordinate[1]],
+          pixelOffset: [p[0] - pixel[0], p[1] - pixel[1]]
+        }
+      }
+      this.saveState()
+    },
     undo () {
       if (this.history.length > 0) {
         const { geoms, selected } = this.history.pop()
@@ -591,11 +669,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.map-toolbar {
-  margin: 6px;
-  border-radius: 4px;
-  background-color: #333;
-}
 .geom-toolbar {
   background-color: #eee;
   margin: 4px;
