@@ -57,7 +57,7 @@ export default new Vuex.Store({
         return
       }
       const { base_layers: baseLayers = [], layers = [] } = project
-
+      layersList({ layers }).forEach(l => Vue.set(l, 'opacity', 255))
       const overlaysTree = filterLayers(layers, l => !l.hidden)
       const groups = [].concat(...overlaysTree.map(filterGroups))
       groups.filter(g => !g.virtual_layer).forEach(g => Vue.set(g, 'visible', true))
@@ -88,8 +88,8 @@ export default new Vuex.Store({
         l.relations = l.relations.filter(r => {
           const rlayer = projectData.overlays.byName[r.referencing_layer]
           return rlayer
-            && r.referenced_fields.every(field => l.attributes.find(a => a.name === field))
-            && r.referencing_fields.every(field => rlayer.attributes.find(a => a.name === field))
+            && r.referenced_fields.every(field => l.attributes?.some(a => a.name === field))
+            && r.referencing_fields.every(field => rlayer.attributes?.some(a => a.name === field))
         })
       })
       state.project = projectData
@@ -120,6 +120,9 @@ export default new Vuex.Store({
         .forEach(l => {
           l.visible = layersNames.includes(l.name)
         })
+    },
+    layerOpacity (state, { layer, opacity }) {
+      layer.opacity = opacity
     },
     showLogin (state, value) {
       state.showLogin = value

@@ -97,7 +97,7 @@ export default {
     }
   },
   mounted () {
-    this.checkLength = this.$refs.checkPath.getTotalLength()
+    this.checkLength = this.$refs.checkPath?.getTotalLength()
   },
   methods: {
     toggleValue () {
@@ -128,7 +128,7 @@ export default {
   outline: none;
   user-select: none;
   cursor: pointer;
-  margin: 6px;
+  margin: var(--gutter, 6px);
   &[disabled] {
     opacity: 0.75;
     cursor: not-allowed;

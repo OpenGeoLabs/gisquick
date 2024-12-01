@@ -77,13 +77,24 @@ function createApp (data) {
     // render: h => null
     render: h => h(App)
   })
-  const lang = {
+
+  let lang = {
     cz: 'cs',
     sk: 'sk'
   }[location.hostname.split('.').pop()]
+  if (!lang && data.app.languages) {
+    const appLangs = data.app.languages.map(l => l.code)
+    for (const l of navigator.languages) {
+      const match = appLangs.find(al => al.toLowerCase() === l.toLowerCase())
+      if (match) {
+        lang = match
+        break
+      }
+    }
+  }
   if (lang) {
     vm.$language.current = lang
-    document.documentElement.setAttribute('lang', lang)
+    document.documentElement.setAttribute('lang', lang.split('-')[0])
   }
   vm.$mount('#app')
 }
