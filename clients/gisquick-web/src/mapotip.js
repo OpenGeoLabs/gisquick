@@ -16,3 +16,7 @@ export function dtmFeatureFields (feature) {
     .map(name => name.toLowerCase())
     .map(name => ({ name, type: 'text', alias: DtmAttributes[name], ...Widgets[name] }))
 }
+
+export function isDtmField (name) {
+  return !!DtmAttributes[name]
+}

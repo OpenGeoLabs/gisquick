@@ -210,6 +210,7 @@ export default {
 
 <style lang="scss">
 @import './theme.scss';
+@import './mapotip.scss';
 @import './transitions.scss';
 
 html {
