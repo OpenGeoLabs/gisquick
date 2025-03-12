@@ -23,13 +23,7 @@ import { mapGetters } from 'vuex'
 import { unByKey } from 'ol/Observable'
 import debounce from 'lodash/debounce'
 
-function createUrl (baseUrl, params = {}, optParams = {}) {
-  const url = new URL(baseUrl, location.origin)
-  const baseParams = new Set(url.searchParams.keys())
-  Object.keys(params).forEach(k => url.searchParams.set(k, params[k]))
-  Object.keys(optParams).filter(n => !baseParams.has(n)).forEach(k => url.searchParams.set(k, optParams[k]))
-  return url.href
-}
+import { getWmsLegendUrl } from '@/map/wms'
 
 export default {
   props: {
@@ -91,23 +85,11 @@ export default {
           }
         }
         if (l.provider_type === 'wms') {
-          const params = {
-            SERVICE: 'WMS',
-            REQUEST: 'GetLegendGraphic',
-            FORMAT: 'image/png',
-            LAYER: l.source.layers
-            // SCALE: Math.round(view.getScale())
-          }
-          const optParams = {
-            VERSION: '1.3.0',
-            SLD_VERSION: '1.1.0',
-            STYLE: 'DEFAULT'
-          }
           return {
             layer: l,
             type: 'image',
             params: {
-              src: createUrl(l.source.url, params, optParams),
+              src: getWmsLegendUrl(l),
               crossorigin: 'anonymous'
             }
           }
