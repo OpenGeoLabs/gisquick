@@ -91,7 +91,12 @@ export default {
   computed: {
     ...mapState(['app', 'user', 'project', 'showLogin']),
     projectName () {
-      return new URLSearchParams(location.search).get('PROJECT') || this.app.landing_project
+      const queryParam = new URLSearchParams(location.search).get('PROJECT')
+      const alias = location.pathname.split('/').filter(v => v !== '').pop()
+      if (!queryParam && alias) {
+        return alias
+      }
+      return queryParam || this.app.landing_project
     },
     projectStatus () {
       return this.project && this.project.config.status
@@ -153,13 +158,10 @@ export default {
   },
   methods: {
     async loadProject () {
-      let project = null
-      const pathParts = location.pathname.split('/').filter(v => v !== '')
-      let name = pathParts[pathParts.length - 1]
-      if (name) {
-        const portal = location.hostname.split('.').pop()
-        const { data } = await this.$http.get(`/media/portal_${portal}.json`)
-        project = data[name]
+      const data = await this.$http.project(this.projectName).catch(data => data)
+      this.$store.commit('project', data)
+      if (data.status === 200) {
+        projectsHistory.push(this.user, data.name)
       }
       if (!project) {
         project = this.projectName

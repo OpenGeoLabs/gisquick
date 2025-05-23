@@ -14,12 +14,17 @@
       <div v-else class="toolbar dark top f-row-ac">
         <template v-if="mode !== 'add'">
           <v-select
-            class="flat f-grow my-0"
+            class="flat f-grow trim-text my-0"
+            toggle-size="12,6"
             :disabled="layersOptions.length < 2"
             :items="layersOptions"
             :value="selected ? selected.layer : layersOptions[0].value"
             @input="setActiveLayer"
-          />
+          >
+            <template v-slot:append>
+              <div class="f-row-ac"><v-icon name="layers"/><small>{{ layersOptions.length }}</small></div>
+            </template>
+          </v-select>
           <v-btn
             class="icon flat"
             :disabled="index === 0"
@@ -360,7 +365,7 @@ export default {
       */
       this.exportPending = true
       try {
-        const [svgs] = await domToSvg(component, props, 1.33 * (pageSize.width - 30), 1.33 * (pageSize.height - 30), splitContent)
+        const [svgs] = await domToSvg(component, props, 1.33 * (pageSize.width - 30), 1.33 * (pageSize.height - 30), splitContent, 'pdf-export')
         const PDFDocument = (await import(/* webpackChunkName: "pdf-lib" */'@/export/pdf-lib')).PDFDocument
         const pdfDoc = await PDFDocument.create()
         for (let i = 0; i < svgs.length; i++) {
@@ -432,6 +437,9 @@ export default {
       --fill-color: transparent;
       .i-field ::v-deep .input {
         height: 28px;
+      }
+      .i-field.select ::v-deep .value {
+        max-width: 210px;
       }
     }
     &.tools {
@@ -508,12 +516,12 @@ export default {
 </style>
 
 <style lang="scss">
-.generic-infopanel.print {
+.pdf-export {
   width: 100%;
   .fields {
     border: 1px solid #999;
   }
-  .tabs ::v-deep {
+  .tabs {
     .swiper {
       flex-direction: column;
       transform: none!important;
@@ -521,8 +529,8 @@ export default {
         &:not(.visible) {
           display: flex;
         }
-        &[title]::before {
-          content: attr(title);
+        &[export-title]::before {
+          content: attr(export-title);
           margin: 8px 4px 0 4px;
           font-weight: 500;
         }
