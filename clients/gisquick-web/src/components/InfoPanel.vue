@@ -15,7 +15,7 @@
         <template v-if="mode !== 'add'">
           <v-select
             class="flat f-grow trim-text my-0"
-            toggle-size="12,6"
+            toggle-size="12,7"
             :disabled="layersOptions.length < 2"
             :items="layersOptions"
             :value="selected ? selected.layer : layersOptions[0].value"
@@ -30,7 +30,7 @@
             :disabled="index === 0"
             @click="setSelected(index - 1)"
           >
-            <v-icon name="arrow-left" size="16"/>
+            <v-icon name="arrow-left" size="20"/>
           </v-btn>
           <span v-if="selected" style="font-size: 14px">
             {{ index + 1 }}/{{ features.length }}
@@ -41,7 +41,7 @@
             :disabled="index === features.length - 1"
             @click="setSelected(index + 1)"
           >
-            <v-icon name="arrow-right" size="16"/>
+            <v-icon name="arrow-right" size="20"/>
           </v-btn>
         </template>
         <template v-else>
@@ -374,6 +374,9 @@ export default {
           // FileSaver.saveAs(new Blob([svg], { type: 'text/plain' }), 'export.svg')
           const f = new FormData()
           f.append('svg', new Blob([svg], { type: 'image/svg+xml' }))
+          const resp = await this.$http.post('/api/services/pdf/convert', f, { responseType: 'blob' })
+          FileSaver.saveAs(resp.data, 'ip.pdf')
+
           const { data } = await this.$http.post('/api/services/pdf/convert', f, { responseType: 'arraybuffer' })
           const pdfDoc2 = await PDFDocument.load(data)
           const pages = await pdfDoc.copyPages(pdfDoc2, pdfDoc2.getPageIndices())

@@ -32,7 +32,7 @@ function projectBackwardCompatibility (config) {
   return config
 }
 
-HTTP.project = function (project) {
+HTTP.project = function (project, params) {
   let extendProject
   if (process.env.NODE_ENV === 'development') {
     const dev = require('@/dev/index.js')

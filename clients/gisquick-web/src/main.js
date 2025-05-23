@@ -100,6 +100,7 @@ function createApp (data) {
 }
 
 function errorPage (err) {
+  console.error(err)
   const status = err && err.response && err.response.status
   const vm = new Vue({
     render: h => h(ServerError, { props: { status }})

@@ -15,7 +15,8 @@ export function getWmsLegendUrl (layer) {
     // SCALE: Math.round(view.getScale())
   }
   const optParams = {
-    VERSION: '1.3.0'
+    VERSION: '1.3.0',
+    SLD_VERSION: '1.1.0'
   }
   return createUrl(layer.source.url, params, optParams)
 }

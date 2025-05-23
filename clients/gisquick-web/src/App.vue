@@ -158,23 +158,19 @@ export default {
   },
   methods: {
     async loadProject () {
-      const data = await this.$http.project(this.projectName).catch(data => data)
-      this.$store.commit('project', data)
-      if (data.status === 200) {
-        projectsHistory.push(this.user, data.name)
-      }
-      if (!project) {
-        project = this.projectName
-      }
-      if (this.isStandaloneApp) {
+      const project = this.projectName
+      if (!project && this.isStandaloneApp) {
         const recent = await projectsHistory.getProjectsHistory(this.user)
         project = recent[0]
+        if (!project) {
+          project = get('pwa-url-path')?.split('/')[1]
+        }
       }
       if (project) {
         const data = await this.$http.project(project).catch(data => data)
         this.$store.commit('project', data)
         if (data.status === 200) {
-          projectsHistory.push(this.user, project)
+          projectsHistory.push(this.user, data.name)
         }
         const title = data.title || data.root_title
         if (title) {
@@ -202,6 +198,7 @@ export default {
       this.loadProject()
     },
     installApp () {
+      set('pwa-url-path', location.pathname)
       this.deferredPrompt.prompt()
       this.showInstallPrompt = false
     },

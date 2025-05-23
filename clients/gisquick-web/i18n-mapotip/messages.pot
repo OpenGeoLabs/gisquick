@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-#: ./src/components/measure/Measure.vue:9
+#: ./src/components/measure/Measure.vue:37
 msgid "1st coordinate"
 msgstr ""
 
-#: ./src/components/measure/Measure.vue:10
+#: ./src/components/measure/Measure.vue:38
 msgid "2nd coordinate"
 msgstr ""
 
@@ -14,19 +14,19 @@ msgstr ""
 msgid "A new version of the map application is available"
 msgstr ""
 
-#: ./src/components/content-panel/BaseLayersTree.vue:43
-#: ./src/components/content-panel/LayersTree.vue:100
+#: ./src/components/content-panel/BaseLayersTree.vue:46
+#: ./src/components/content-panel/LayersTree.vue:135
 #: ./src/components/content-panel/TopicsList.vue:36
 msgid "Abstract"
 msgstr ""
 
 #: ./src/components/feature-editor/GeometryEditor.vue:16
-#: ./src/components/feature-editor/GeometryEditor.vue:51
+#: ./src/components/feature-editor/GeometryEditor.vue:59
 msgid "Add geometry"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:126
-#: src/components/MobileAttributesTable.vue:280
+#: ./src/components/attributes-table/AttributesTable.vue:57
+#: src/components/attributes-table/MobileAttributesTable.vue:281
 msgid "Add new feature"
 msgstr ""
 
@@ -34,11 +34,28 @@ msgstr ""
 msgid "Add to Home screen?"
 msgstr ""
 
+#: ./src/components/print/Print.vue:36
+msgid "Additional content"
+msgstr ""
+
 #: src/components/MapotipSearch.vue:78
 msgid "Addresses"
 msgstr ""
 
-#: src/components/Identification.vue:147
+#: src/ui/TextEditor.vue:368
+msgid "Align center"
+msgstr ""
+
+#: src/ui/TextEditor.vue:367
+msgid "Align left"
+msgstr ""
+
+#: src/ui/TextEditor.vue:369
+msgid "Align right"
+msgstr ""
+
+#: src/components/feature-editor/SnapTool.vue:85
+#: src/components/Identification.vue:149
 msgid "All visible layers"
 msgstr ""
 
@@ -56,16 +73,16 @@ msgstr ""
 msgid "April"
 msgstr ""
 
-#: ./src/components/measure/Measure.vue:97
-#: src/components/measure/Measure.vue:222
+#: ./src/components/measure/Measure.vue:125
+#: src/components/measure/Measure.vue:259
 msgid "Area"
 msgstr ""
 
-#: src/components/MobileAttributesTable.vue:332
+#: src/components/attributes-table/MobileAttributesTable.vue:333
 msgid "Attributes"
 msgstr ""
 
-#: src/components/MapTools.vue:104
+#: src/components/MapTools.vue:107
 msgid "Attributes Table"
 msgstr ""
 
@@ -83,41 +100,51 @@ msgstr ""
 msgid "Back to Login"
 msgstr ""
 
-#: src/components/content-panel/ContentPanel.vue:107
+#: src/ui/TextEditor.vue:365
+msgid "Background color"
+msgstr ""
+
+#: src/components/content-panel/ContentPanel.vue:140
 msgid "Base Layers"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:264
-#: src/components/AttributeFilter.vue:276
+#: src/components/attributes-table/AttributeFilter.vue:264
+#: src/components/attributes-table/AttributeFilter.vue:276
 msgid "between"
 msgstr ""
 
+#: src/ui/TextEditor.vue:357
+msgid "Bold"
+msgstr ""
+
+#: ./src/components/attributes-table/MobileAttributesTable.vue:166
 #: ./src/components/feature-editor/ImageInput.vue:156
-#: ./src/components/MobileAttributesTable.vue:166
+#: ./src/components/print/Print.vue:164
 msgid "Cancel"
 msgstr ""
 
 #: ./src/components/ChangePassword.vue:14
 #: ./src/components/ChangePasswordDialog.vue:8
-#: src/components/AppMenu.vue:47
+#: src/components/AppMenu.vue:63
 msgid "Change password"
 msgstr ""
 
-#: src/components/measure/Measure.vue:189
+#: src/components/measure/Measure.vue:226
 msgid "Clear"
 msgstr ""
 
-#: src/components/measure/Measure.vue:190
+#: src/components/measure/Measure.vue:227
 msgid "Clear all"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:153
-#: src/components/MobileAttributesTable.vue:325
+#: ./src/components/attributes-table/TableView.vue:123
+#: src/components/attributes-table/MobileAttributesTable.vue:326
 msgid "Clear attributes filters"
 msgstr ""
 
 #: ./src/AppNotifications.vue:17
 #: ./src/components/ChangePasswordDialog.vue:59
+#: ./src/components/feature-editor/RelationWidget.vue:76
 #: ./src/components/LocationTool.vue:20
 #: ./src/UserDashboard.vue:109
 msgid "Close"
@@ -131,7 +158,7 @@ msgstr ""
 msgid "Confirm password"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:273
+#: src/components/attributes-table/AttributeFilter.vue:273
 msgid "contain"
 msgstr ""
 
@@ -144,12 +171,16 @@ msgstr ""
 msgid "Continue as Guest"
 msgstr ""
 
-#: src/components/measure/Measure.vue:191
+#: src/components/measure/Measure.vue:228
 msgid "Coordinate systems"
 msgstr ""
 
 #: ./src/components/BottomToolbar.vue:9
 msgid "Coordinates"
+msgstr ""
+
+#: src/ui/TextEditor.vue:338
+msgid "Copy HTML"
 msgstr ""
 
 #: ./src/UserDashboard.vue:64
@@ -160,17 +191,17 @@ msgstr ""
 msgid "Current password"
 msgstr ""
 
-#: ./src/components/content-panel/LayersTree.vue:104
-#: ./src/components/MobileAttributesTable.vue:96
+#: ./src/components/attributes-table/MobileAttributesTable.vue:96
+#: ./src/components/content-panel/LayersTree.vue:139
 msgid "Data"
 msgstr ""
 
-#: ./src/components/MobileAttributesTable.vue:45
+#: ./src/components/attributes-table/MobileAttributesTable.vue:45
 msgid "Data Filters"
 msgstr ""
 
-#: ./src/components/feature-editor/FeatureEditor.vue:90
-#: ./src/components/feature-editor/NewFeatureEditor.vue:45
+#: ./src/components/feature-editor/FeatureEditor.vue:93
+#: ./src/components/feature-editor/NewFeatureEditor.vue:49
 msgid "Data updated"
 msgstr ""
 
@@ -178,24 +209,24 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: ./src/components/feature-editor/FeatureEditor.vue:115
-#: ./src/components/feature-editor/FeatureEditor.vue:99
+#: ./src/components/feature-editor/FeatureEditor.vue:102
+#: ./src/components/feature-editor/FeatureEditor.vue:118
 msgid "Delete current object?"
 msgstr ""
 
-#: ./src/components/feature-editor/FeatureEditor.vue:56
+#: ./src/components/feature-editor/FeatureEditor.vue:59
 msgid "Delete object"
 msgstr ""
 
-#: src/components/feature-editor/GeometryEditor.vue:376
+#: src/components/feature-editor/GeometryEditor.vue:440
 msgid "Delete selected geometry"
 msgstr ""
 
-#: src/components/feature-editor/GeometryEditor.vue:375
+#: src/components/feature-editor/GeometryEditor.vue:439
 msgid "Delete selected nodes"
 msgstr ""
 
-#: ./src/components/feature-editor/FeatureEditor.vue:65
+#: ./src/components/feature-editor/FeatureEditor.vue:68
 msgid "Discard changes"
 msgstr ""
 
@@ -203,7 +234,7 @@ msgstr ""
 msgid "Display attributions"
 msgstr ""
 
-#: src/components/measure/Measure.vue:221
+#: src/components/measure/Measure.vue:258
 msgid "Distance"
 msgstr ""
 
@@ -211,24 +242,44 @@ msgstr ""
 msgid "Don't show this message again"
 msgstr ""
 
-#: ./src/components/content-panel/LayersTree.vue:119
+#: ./src/components/content-panel/LayersTree.vue:154
 msgid "Download"
 msgstr ""
 
-#: src/components/AppMenu.vue:64
+#: ./src/components/InfoPanel.vue:116
+#: ./src/components/print/Preview.vue:20
+#: ./src/components/print/Print.vue:104
+msgid "Download PDF file"
+msgstr ""
+
+#: ./src/components/print/Preview.vue:26
+#: ./src/components/print/Print.vue:114
+msgid "Download PNG image"
+msgstr ""
+
+#: src/components/GoogleStreetView.vue:60
+msgid "Drag and drop to initialize Google Street View"
+msgstr ""
+
+#: src/components/AppMenu.vue:80
 msgid "DTM Storage"
 msgstr ""
 
-#: src/components/MobileAttributesTable.vue:354
+#: src/components/attributes-table/MobileAttributesTable.vue:355
 msgid "Edit"
 msgstr ""
 
-#: ./src/components/MobileAttributesTable.vue:143
+#: ./src/components/attributes-table/MobileAttributesTable.vue:143
 msgid "Edit feature"
 msgstr ""
 
 #: ./src/components/feature-editor/FeatureEditor.vue:32
+#: ./src/components/measure/Measure.vue:13
 msgid "Edit geometry"
+msgstr ""
+
+#: ./src/components/feature-editor/GenericEditForm.vue:33
+msgid "Edit value manually"
 msgstr ""
 
 #: src/components/ChangePassword.vue:144
@@ -241,7 +292,7 @@ msgstr ""
 msgid "Email was sent to given email address."
 msgstr ""
 
-#: src/components/AttributeFilter.vue:274
+#: src/components/attributes-table/AttributeFilter.vue:274
 msgid "empty"
 msgstr ""
 
@@ -250,22 +301,34 @@ msgstr ""
 msgid "Enter your email address below and we will email instructions for setting a new password."
 msgstr ""
 
-#: src/components/AttributeFilter.vue:263
-#: src/components/AttributeFilter.vue:267
+#: src/components/attributes-table/AttributeFilter.vue:263
+#: src/components/attributes-table/AttributeFilter.vue:267
 msgid "equal to"
 msgstr ""
 
 #: ./src/components/content-panel/JsonLegend.vue:12
-#: src/components/feature-editor/FeatureEditor.vue:251
-#: src/components/feature-editor/NewFeatureEditor.vue:121
+#: src/components/feature-editor/FeatureEditor.vue:263
+#: src/components/feature-editor/NewFeatureEditor.vue:129
 #: src/components/SearchTool.vue:257
 #: src/ui/ListTable.vue:105
 #: src/ui/Table.vue:211
 msgid "Error"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:137
-#: src/components/MobileAttributesTable.vue:287
+#: src/components/GoogleStreetView.vue:58
+msgid "Exit"
+msgstr ""
+
+#: src/components/GoogleStreetView.vue:59
+msgid "Exit Street View mode"
+msgstr ""
+
+#: src/components/GoogleStreetView.vue:64
+msgid "Expand"
+msgstr ""
+
+#: ./src/components/attributes-table/AttributesTable.vue:68
+#: src/components/attributes-table/MobileAttributesTable.vue:288
 msgid "Export"
 msgstr ""
 
@@ -273,7 +336,7 @@ msgstr ""
 msgid "Failed to change the password!"
 msgstr ""
 
-#: src/components/AttributesTable.vue:487
+#: src/components/attributes-table/fetch.js:140
 msgid "Failed to load data"
 msgstr ""
 
@@ -290,7 +353,7 @@ msgstr ""
 msgid "February"
 msgstr ""
 
-#: src/components/feature-editor/GenericEditForm.vue:79
+#: src/components/feature-editor/GenericEditForm.vue:117
 msgid "Field is required"
 msgstr ""
 
@@ -300,17 +363,26 @@ msgstr ""
 msgid "File exceeds maximum allowed size"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:163
-#: src/components/AttributeFilter.vue:261
+#: ./src/components/attributes-table/TableView.vue:133
+#: src/components/attributes-table/AttributeFilter.vue:261
 msgid "Filter"
 msgstr ""
 
-#: ./src/components/AttributeFilter.vue:48
+#: ./src/components/attributes-table/AttributeFilter.vue:48
 msgid "Filter by attribute value"
 msgstr ""
 
-#: src/components/AttributesTable.vue:309
+#: src/components/content-panel/ContentPanel.vue:170
+msgid "Filter layers"
+msgstr ""
+
+#: src/components/attributes-table/MobileAttributesTable.vue:382
+#: src/components/attributes-table/TableView.vue:192
 msgid "Filter to visible area"
+msgstr ""
+
+#: src/components/content-panel/ContentPanel.vue:171
+msgid "Find a layer"
 msgstr ""
 
 #: ./src/components/ChangePassword.vue:107
@@ -327,7 +399,7 @@ msgstr ""
 msgid "Friday"
 msgstr ""
 
-#: src/components/AppMenu.vue:73
+#: src/components/AppMenu.vue:100
 msgid "Full screen"
 msgstr ""
 
@@ -335,15 +407,23 @@ msgstr ""
 msgid "Geolocation Error"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:269
+#: src/components/GoogleStreetView.vue:61
+msgid "Google Maps Library is not loaded"
+msgstr ""
+
+#: src/components/attributes-table/AttributeFilter.vue:269
 msgid "greater than"
 msgstr ""
 
-#: src/components/AppMenu.vue:83
+#: src/components/AppMenu.vue:110
 msgid "Help"
 msgstr ""
 
-#: ./src/components/content-panel/LayersTree.vue:96
+#: src/ui/TextEditor.vue:361
+msgid "Hyperlink"
+msgstr ""
+
+#: ./src/components/content-panel/LayersTree.vue:131
 msgid "Identification"
 msgstr ""
 
@@ -351,25 +431,30 @@ msgstr ""
 msgid "Image will be saved in lower resolution"
 msgstr ""
 
-#: src/components/Identification.vue:155
-#: src/components/MobileAttributesTable.vue:348
+#: src/components/attributes-table/MobileAttributesTable.vue:349
+#: src/components/Identification.vue:157
+#: src/components/print/Print.vue:249
 msgid "Info Panel"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:279
+#: src/components/attributes-table/AttributeFilter.vue:279
 msgid "Integer"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:281
+#: src/components/attributes-table/AttributeFilter.vue:281
 msgid "Integer,Integer"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:280
+#: src/components/attributes-table/AttributeFilter.vue:280
 msgid "Integer,Integer,..."
 msgstr ""
 
 #: ./src/App.vue:42
 msgid "It will give you the experience of a native app, with easy access and a standalone window without the browser's address bar and other controls."
+msgstr ""
+
+#: src/ui/TextEditor.vue:358
+msgid "Italic"
 msgstr ""
 
 #: src/ui/DatePicker.vue:172
@@ -384,51 +469,57 @@ msgstr ""
 msgid "June"
 msgstr ""
 
-#: ./src/components/content-panel/BaseLayersTree.vue:46
+#: ./src/components/content-panel/BaseLayersTree.vue:49
 msgid "Keywords list"
 msgstr ""
 
+#: ./src/components/AppMenu.vue:17
+#: src/components/AppMenu.vue:91
+msgid "Language"
+msgstr ""
+
+#: src/components/attributes-table/MobileAttributesTable.vue:379
 #: src/components/EditTool.vue:153
-#: src/components/Identification.vue:180
-#: src/components/MobileAttributesTable.vue:243
+#: src/components/Identification.vue:191
 msgid "Layer"
 msgstr ""
 
-#: src/components/content-panel/ContentPanel.vue:115
+#: src/components/content-panel/ContentPanel.vue:148
 msgid "Layers"
 msgstr ""
 
-#: src/components/print/Print.vue:87
+#: src/components/print/Print.vue:246
 msgid "Layout"
 msgstr ""
 
-#: src/components/content-panel/ContentPanel.vue:109
+#: src/components/content-panel/ContentPanel.vue:142
+#: src/components/print/Print.vue:247
 msgid "Legend"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:270
+#: src/components/attributes-table/AttributeFilter.vue:270
 msgid "less than"
 msgstr ""
 
-#: src/components/AttributesTable.vue:312
+#: src/components/attributes-table/tool.js:105
 msgid "link"
 msgstr ""
 
-#: ./src/components/Map.vue:51
+#: ./src/components/Map.vue:56
 msgid "Loading"
 msgstr ""
 
-#: src/components/measure/Measure.vue:220
+#: src/components/measure/Measure.vue:257
 msgid "Location"
 msgstr ""
 
 #: ./src/components/ChangePassword.vue:86
 #: ./src/components/LoginDialog.vue:94
-#: src/components/AppMenu.vue:54
+#: src/components/AppMenu.vue:70
 msgid "Login"
 msgstr ""
 
-#: src/components/AppMenu.vue:42
+#: src/components/AppMenu.vue:58
 #: src/UserDashboard.vue:202
 msgid "Logout"
 msgstr ""
@@ -441,13 +532,22 @@ msgstr ""
 msgid "May"
 msgstr ""
 
+#: src/components/print/Print.vue:248
+msgid "Measurements"
+msgstr ""
+
+#: src/components/attributes-table/MobileAttributesTable.vue:381
 #: src/components/EditTool.vue:155
-#: src/components/Identification.vue:181
-#: src/components/measure/Measure.vue:188
-#: src/components/MobileAttributesTable.vue:245
-#: src/components/print/Print.vue:86
+#: src/components/Identification.vue:192
+#: src/components/measure/Measure.vue:225
+#: src/components/print/Print.vue:245
+#: src/ui/TextEditor.vue:370
 #: src/UserDashboard.vue:210
 msgid "Menu"
+msgstr ""
+
+#: src/components/GoogleStreetView.vue:65
+msgid "Minimize"
 msgstr ""
 
 #: src/ui/DatePicker.vue:163
@@ -462,8 +562,8 @@ msgstr ""
 msgid "My Projects"
 msgstr ""
 
-#: ./src/components/InfoPanel.vue:44
-#: ./src/components/MobileAttributesTable.vue:34
+#: ./src/components/attributes-table/MobileAttributesTable.vue:34
+#: src/components/InfoPanel.vue:234
 msgid "New Feature"
 msgstr ""
 
@@ -478,18 +578,17 @@ msgid ""
 msgstr ""
 
 #: ./src/App.vue:47
-#: ./src/components/feature-editor/FeatureEditor.vue:103
-#: ./src/components/feature-editor/FeatureEditor.vue:119
-#: ./src/components/feature-editor/GeometryEditor.vue:157
+#: ./src/components/feature-editor/FeatureEditor.vue:106
+#: ./src/components/feature-editor/FeatureEditor.vue:122
+#: ./src/components/feature-editor/GeometryEditor.vue:175
 msgid "No"
 msgstr ""
 
-#: ./src/components/MobileAttributesTable.vue:138
+#: ./src/components/attributes-table/MobileAttributesTable.vue:138
 msgid "No Data"
 msgstr ""
 
-#: ./src/components/AttributesTable.vue:58
-#: src/components/AttributesTable.vue:311
+#: ./src/components/attributes-table/TableView.vue:49
 msgid "No geometry"
 msgstr ""
 
@@ -497,15 +596,19 @@ msgstr ""
 msgid "No image assigned"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:275
+#: src/components/GoogleStreetView.vue:62
+msgid "No images found. Click on the map to move"
+msgstr ""
+
+#: src/components/attributes-table/AttributeFilter.vue:275
 msgid "not empty"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:268
+#: src/components/attributes-table/AttributeFilter.vue:268
 msgid "not equal to"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:272
+#: src/components/attributes-table/AttributeFilter.vue:272
 msgid "not in"
 msgstr ""
 
@@ -513,12 +616,12 @@ msgstr ""
 msgid "Not now"
 msgstr ""
 
-#: src/components/feature-editor/GenericEditForm.vue:78
+#: src/components/feature-editor/GenericEditForm.vue:116
 #: src/components/feature-editor/NumberField.vue:48
 msgid "Not valid integer number"
 msgstr ""
 
-#: src/components/feature-editor/GenericEditForm.vue:77
+#: src/components/feature-editor/GenericEditForm.vue:115
 #: src/components/feature-editor/NumberField.vue:47
 msgid "Not valid number"
 msgstr ""
@@ -527,15 +630,15 @@ msgstr ""
 msgid "November"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:282
+#: src/components/attributes-table/AttributeFilter.vue:282
 msgid "Number"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:284
+#: src/components/attributes-table/AttributeFilter.vue:284
 msgid "Number,Number"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:283
+#: src/components/attributes-table/AttributeFilter.vue:283
 msgid "Number,Number,..."
 msgstr ""
 
@@ -543,8 +646,16 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:271
+#: ./src/components/print/Print.vue:167
+msgid "Ok"
+msgstr ""
+
+#: src/components/attributes-table/AttributeFilter.vue:271
 msgid "one of"
+msgstr ""
+
+#: ./src/components/content-panel/LayersTree.vue:106
+msgid "Opacity"
 msgstr ""
 
 #: ./src/components/content-panel/BaseLayerOpacity.vue:5
@@ -555,16 +666,20 @@ msgstr ""
 msgid "Opacity of overlay layers"
 msgstr ""
 
-#: src/components/print/Print.vue:114
+#: src/ui/TextEditor.vue:363
+msgid "Ordered list"
+msgstr ""
+
+#: src/components/print/Print.vue:286
 msgid "Output format"
 msgstr ""
 
-#: src/components/content-panel/ContentPanel.vue:108
+#: src/components/content-panel/ContentPanel.vue:141
 msgid "Overlay Layers"
 msgstr ""
 
-#: src/components/AttributesTable.vue:310
-#: src/components/MobileAttributesTable.vue:292
+#: src/components/attributes-table/MobileAttributesTable.vue:293
+#: src/components/attributes-table/TableView.vue:193
 msgid "Page size"
 msgstr ""
 
@@ -577,11 +692,15 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: ./src/components/measure/Measure.vue:96
+#: src/ui/TextEditor.vue:341
+msgid "Paste HTML"
+msgstr ""
+
+#: ./src/components/measure/Measure.vue:124
 msgid "Perimeter"
 msgstr ""
 
-#: src/components/AppMenu.vue:79
+#: src/components/AppMenu.vue:106
 msgid "Permalink"
 msgstr ""
 
@@ -594,7 +713,7 @@ msgstr ""
 msgid "Print Preview"
 msgstr ""
 
-#: src/components/print/Print.vue:116
+#: src/components/print/Print.vue:288
 msgid "Print quality"
 msgstr ""
 
@@ -608,6 +727,14 @@ msgstr ""
 
 #: src/UserDashboard.vue:222
 msgid "Recent"
+msgstr ""
+
+#: src/ui/TextEditor.vue:356
+msgid "Redo"
+msgstr ""
+
+#: src/ui/TextEditor.vue:344
+msgid "Reset formatting"
 msgstr ""
 
 #: ./src/components/ChangePassword.vue:58
@@ -625,7 +752,7 @@ msgstr ""
 msgid "Saturday"
 msgstr ""
 
-#: ./src/components/feature-editor/FeatureEditor.vue:75
+#: ./src/components/feature-editor/FeatureEditor.vue:78
 msgid "Save changes"
 msgstr ""
 
@@ -648,15 +775,16 @@ msgid "Search parcel"
 msgstr ""
 
 #: ./src/components/feature-editor/MediaFileField.vue:59
+#: ./src/components/feature-editor/RelationWidget.vue:83
 msgid "Select"
 msgstr ""
 
+#: src/components/attributes-table/MobileAttributesTable.vue:380
 #: src/components/EditTool.vue:154
-#: src/components/MobileAttributesTable.vue:244
 msgid "Select layer"
 msgstr ""
 
-#: src/components/feature-editor/GeometryEditor.vue:497
+#: src/components/feature-editor/GeometryEditor.vue:562
 msgid "Selected geometry was deleted"
 msgstr ""
 
@@ -676,7 +804,7 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:265
+#: src/components/attributes-table/AttributeFilter.vue:265
 msgid "since"
 msgstr ""
 
@@ -687,19 +815,47 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
+#: ./src/components/feature-editor/SnapTool.vue:10
+msgid "Snapping"
+msgstr ""
+
+#: ./src/components/feature-editor/SnapTool.vue:22
+msgid "Snapping layers"
+msgstr ""
+
+#: src/ui/TextEditor.vue:360
+msgid "Strike"
+msgstr ""
+
 #: src/ui/DatePicker.vue:169
 msgid "Sunday"
 msgstr ""
 
-#: src/components/Identification.vue:154
+#: src/components/Identification.vue:156
 msgid "Table"
 msgstr ""
 
-#: src/components/Identification.vue:156
+#: src/components/Identification.vue:158
 msgid "Table & Info Panel"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:285
+#: src/components/GoogleStreetView.vue:63
+msgid "Terms of Service"
+msgstr ""
+
+#: src/components/print/Print.vue:250
+msgid "Text"
+msgstr ""
+
+#: src/ui/TextEditor.vue:366
+msgid "Text color"
+msgstr ""
+
+#: src/ui/TextEditor.vue:364
+msgid "Text size"
+msgstr ""
+
+#: src/components/attributes-table/AttributeFilter.vue:285
 msgid "Text,Text,..."
 msgstr ""
 
@@ -707,11 +863,11 @@ msgstr ""
 msgid "Thursday"
 msgstr ""
 
-#: src/components/content-panel/ContentPanel.vue:114
+#: src/components/content-panel/ContentPanel.vue:147
 msgid "Topics"
 msgstr ""
 
-#: ./src/components/measure/Measure.vue:50
+#: ./src/components/measure/Measure.vue:78
 msgid "Total length"
 msgstr ""
 
@@ -719,20 +875,33 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
-#: ./src/components/content-panel/LayersTree.vue:85
+#: ./src/components/content-panel/LayersTree.vue:120
 msgid "Type"
 msgstr ""
 
-#: ./src/components/feature-editor/GeometryEditor.vue:37
-#: ./src/components/feature-editor/GeometryEditor.vue:72
+#: src/components/feature-editor/SnapTool.vue:110
+msgid "Unable to retrieve snapping geometry."
+msgstr ""
+
+#: src/ui/TextEditor.vue:359
+msgid "Underline"
+msgstr ""
+
+#: ./src/components/feature-editor/GeometryEditor.vue:45
+#: ./src/components/feature-editor/GeometryEditor.vue:88
+#: src/ui/TextEditor.vue:355
 msgid "Undo"
 msgstr ""
 
-#: src/components/measure/Measure.vue:192
+#: src/components/measure/Measure.vue:229
 msgid "Units"
 msgstr ""
 
-#: src/components/AttributeFilter.vue:266
+#: src/ui/TextEditor.vue:362
+msgid "Unordered list"
+msgstr ""
+
+#: src/components/attributes-table/AttributeFilter.vue:266
 msgid "until"
 msgstr ""
 
@@ -740,8 +909,8 @@ msgstr ""
 msgid "Updated"
 msgstr ""
 
-#: ./src/components/feature-editor/FeatureEditor.vue:89
-#: ./src/components/feature-editor/NewFeatureEditor.vue:44
+#: ./src/components/feature-editor/FeatureEditor.vue:92
+#: ./src/components/feature-editor/NewFeatureEditor.vue:48
 msgid "Updating data"
 msgstr ""
 
@@ -761,7 +930,7 @@ msgstr ""
 msgid "Username / Email"
 msgstr ""
 
-#: ./src/components/content-panel/LayersTree.vue:110
+#: ./src/components/content-panel/LayersTree.vue:145
 msgid "Visit"
 msgstr ""
 
@@ -778,9 +947,9 @@ msgid "Welcome to the Gisquick"
 msgstr ""
 
 #: ./src/App.vue:50
-#: ./src/components/feature-editor/FeatureEditor.vue:106
-#: ./src/components/feature-editor/FeatureEditor.vue:122
-#: ./src/components/feature-editor/GeometryEditor.vue:160
+#: ./src/components/feature-editor/FeatureEditor.vue:109
+#: ./src/components/feature-editor/FeatureEditor.vue:125
+#: ./src/components/feature-editor/GeometryEditor.vue:178
 msgid "Yes"
 msgstr ""
 
@@ -788,7 +957,11 @@ msgstr ""
 msgid "You didn't publish any project yet!"
 msgstr ""
 
-#: src/components/MobileAttributesTable.vue:341
+#: src/components/feature-editor/SnapTool.vue:109
+msgid "You have reached the geometry snapping limit. Please zoom in to a smaller map area."
+msgstr ""
+
+#: src/components/attributes-table/MobileAttributesTable.vue:342
 msgid "Zoom to"
 msgstr ""
 
@@ -797,22 +970,22 @@ msgctxt "adverb"
 msgid "Next"
 msgstr ""
 
-#: src/components/MapTools.vue:136
+#: src/components/MapTools.vue:142
 msgctxt "noun"
 msgid "Edit layer"
 msgstr ""
 
-#: src/components/MapTools.vue:66
+#: src/components/MapTools.vue:71
 msgctxt "noun"
 msgid "Identification"
 msgstr ""
 
-#: src/components/MapTools.vue:82
+#: src/components/MapTools.vue:87
 msgctxt "noun"
 msgid "Measure"
 msgstr ""
 
-#: src/components/MapTools.vue:91
+#: src/components/MapTools.vue:96
 msgctxt "noun"
 msgid "Print"
 msgstr ""
